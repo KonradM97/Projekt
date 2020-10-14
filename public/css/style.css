@@ -1,0 +1,40 @@
+body{
+    background-color:#333;
+    background-image: linear-gradient(to bottom,#333,#444);
+}
+#forms
+{
+    text-align: center;
+    font-family:monospace;
+}
+#addtrack
+{
+    display: inline-block;
+    background-color: #095500;
+    width: 30%;
+    vertical-align:top;
+}
+#addalbum
+{
+    display: inline-block;
+    background-color: #999900;
+    width: 30%;
+    vertical-align:top;
+}
+#addtracktoalbum
+{
+    display: inline-block;
+    background-color: #009999;
+    width: 30%;
+    vertical-align:top;
+}
+
+
+
+
+
+
+
+
+
+

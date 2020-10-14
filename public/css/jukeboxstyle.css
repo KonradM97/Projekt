@@ -1,0 +1,34 @@
+#jukebox
+{
+    background-color: white;
+    position: fixed;
+    width: 30%;
+    bottom: 90px;
+    right: 0;
+}
+#song
+{
+
+    color: gray;
+}
+#song a
+{
+        text-decoration: none;
+        margin-left: 5px;
+        color: black;
+        font-weight: bold;
+}
+#song:hover
+{
+    background-color: orange;
+    color: black;
+}
+#tytul
+{
+    float: left;
+    
+}
+.autor
+{
+    float: right;
+}
