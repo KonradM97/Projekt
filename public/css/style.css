@@ -12,23 +12,26 @@ body{
     display: inline-block;
     background-color: #095500;
     width: 30%;
-    vertical-align:top;
+vertical-align:top;
 }
 #addalbum
 {
     display: inline-block;
     background-color: #999900;
     width: 30%;
-    vertical-align:top;
+vertical-align:top;
 }
 #addtracktoalbum
 {
     display: inline-block;
     background-color: #009999;
     width: 30%;
-    vertical-align:top;
+vertical-align:top;
 }
-
+#addSong
+{
+    background-color: #0099ff;
+}
 
 
 
