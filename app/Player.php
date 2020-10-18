@@ -1,4 +1,5 @@
 <?php
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -23,7 +24,7 @@ class Player {
         private $jukebox_size;
 	private $index;
             function __construct() {
-                //Na starcie
+                
                 if(!isset($_GET['songid'])&&!isset($_GET['playlistid'])&&!isset($_GET['albumid']))
                 {
                    $this->fetch_most_liked();
@@ -70,7 +71,7 @@ class Player {
         <?php
                 
 	}
-        //walidator dla id (liczby)
+        
         private function validate($id) {
             if (filter_var($id, FILTER_VALIDATE_INT)) {
                 return true;
@@ -79,8 +80,9 @@ class Player {
             }
         }
         public function fetch_most_liked() {
-                    
-                   
+             $_SESSION["first"]=false;
+                    $this->index = 0;
+                    //weź ostatnin nutwór użytkownika
 
                      $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
                     if(!$connect)
@@ -111,7 +113,8 @@ class Player {
 
         public function fetch_song($id)
         {
-            
+            $this->index = 0;
+		//weź ostatnin nutwór użytkownika
 		 $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
 		if(!$connect)
 		{
@@ -141,7 +144,7 @@ class Player {
 
         public function fetch_playlist($id)
         {
-            
+            $this->index = 0;
                 $this->titles=array();
                 $this->sources=array();
                  $this->authors=array();
@@ -180,13 +183,14 @@ class Player {
         }
         public function fetch_album($id)
         {
-            
+            $this->index = 0;
                 $this->titles=array();
                 $this->sources=array();
                  $this->authors=array();
                 $this->authorsId=array();
                 $this->covers=array();
                  $this->ids=array();
+		//weź ostatnin nutwór użytkownika
 		 $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
 		if(!$connect)
 		{
@@ -215,16 +219,13 @@ class Player {
                 // $this->set_song_by_index($index);  
                  return true;
         }
-        //do debugowania
-        /*function alarm()
+        
+        function alarm()
         {
             ?>
 <script type="text/javascript">alert("w7ywol");</script>
         <?php
-            }*/
-        
-        //Konwersja tablicy na tą dla javascript
-        
+            }
         function transferArrays()
         {
             ?>
@@ -234,7 +235,7 @@ class Player {
                  var titles = <?php echo json_encode($this->titles); ?>;
                   var authors = <?php echo json_encode($this->authors); ?>;
                   var authorsids =  <?php echo json_encode($this->authorsId); ?>;
-                  var ids = <?php echo json_encode($this->ids); ?>;
+                  
                    var p_size = <?php echo json_encode($this->jukebox_size); ?>;
                    var covers = <?php echo json_encode($this->covers); ?>;
                    
@@ -253,7 +254,7 @@ class Player {
         }
         
     
-        
+
 
     //Pokaż odtwarzacz
     
@@ -282,7 +283,7 @@ class Player {
                            document.write("</div></div><br/>");
                            
                        }
-                      /* function index(c)
+                       function index(c)
                        {
                            currentSong=c;
                            song.src = songs[currentSong];
@@ -298,7 +299,7 @@ class Player {
                             }
                             document.getElementById('playbutton').src='img/Pause.png';
                             song.play();
-                       }*/
+                       }
                 </script>
             </div>
             
@@ -322,8 +323,7 @@ class Player {
                             <button id="pre" onclick="pre()"><img src="img/Pre.png" height="90%" width="90%"/></button>
                             <button id="play" onclick="playOrPauseSong()"><img id="playbutton" src="img/Play.png"/></button>
                             <button id="next" onclick="next()"><img src="img/Next.png" height="90%" width="90%"/></button>
-                            <button id="show" ><img src="img/playlist.png"  height="90%" width="90%"/></button>
-                            
+                             <button id="show" ><img src="img/playlist.png" height="90%" width="90%"/></button>
                         </div>
                             
 
@@ -393,6 +393,7 @@ class Player {
                          song.src = songs[currentSong];
                          songTitle.textContent = titles[currentSong];
                          author.textContent = authors[currentSong];//authors[currentSong];
+                         start_it();
                          }
                      else{
                         song.src = shuffled_songs[currentSong];
@@ -401,7 +402,7 @@ class Player {
                         
                         }
                      
-                    //pobierz okładkę
+                    
                      if(!shufflePressed){
                           //Jeśli utwór ma okładkę
                             if(covers[currentSong])
@@ -499,7 +500,7 @@ class Player {
                          repeatPressed = 0;
                     }
                 }
-                   //pomieszanie utworów
+                   //pomieszane utwory
                    function shufflearray(a,b,c,d,e) {
                         for (let i = a.length - 1; i > 0; i--) {
                             const j = Math.floor(Math.random() * (i + 1));
@@ -511,7 +512,7 @@ class Player {
                         }
                         
                     }
-                    //Przucisk mieszania
+
                    function shuffle()
                    {
                        if(shufflePressed == false){
@@ -604,7 +605,7 @@ class Player {
                 volBar.addEventListener("mouseup",function (e){
                     activeBar = false;
                 },false);
-
+                
             </script>
     <?php
     
