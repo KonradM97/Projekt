@@ -1,0 +1,6 @@
+14.10 Konrad Mazur
+  Zamienione pliki jukebox.php i Player.php
+18.10 Konrad Mazur
+    Zmienione wszystkie pliki, bo scaliłem projekt ze swoim, gdzie umieściłem dodawanie utworów, albumów i playlist.
+    w pliku vendor.zip jest brakujący folder vendor który jest za duży i plik .env.
+    Wystarczy je raz pobrać i rozpakować w przypadku braku

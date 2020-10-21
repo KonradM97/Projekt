@@ -1,0 +1,62 @@
+html, body {
+                background-color: #fff;
+                color: #636b6f;
+                font-family: 'Nunito', sans-serif;
+                font-weight: 200;
+                height: 100vh;
+                margin: 0;
+            }
+.row
+{
+    text-align: center;
+}
+.add
+{
+    height: 100px;
+}
+#forms
+{
+    text-align: center;
+    font-family:monospace;
+}
+#addSong
+{
+    background-color: #0099ff;
+    
+}
+#addAlbum
+{
+    background-color: #339900;
+}
+#addPlaylist
+{
+    background-color: #cccc00;
+}
+#addSongToPlaylist
+{
+    background-color: #ccff00;
+}
+form
+{
+    margin-top: 100px;
+}
+#albums
+{
+margin-top: 100px;
+}
+#albums a
+{
+    text-decoration: none;
+    color: darkblue;
+}
+#albums a:hover
+{
+    background-color: #0099ff;
+    color: lightgray;
+}
+
+
+
+
+
+

@@ -1,5 +1,4 @@
-
-            html, body {
+html, body {
                 background-color: #fff;
                 color: #636b6f;
                 font-family: 'Nunito', sans-serif;
@@ -71,3 +70,22 @@
             .srodek{
                 text-align: center;
             }
+            td a{
+                text-decoration: none;
+                color: white;
+            }
+            #logo
+            {
+                
+                float: left;
+                margin-top: 20px;
+                margin-left: 20px;
+            }
+                #like
+    {
+         background-color: Transparent;
+        background-repeat:no-repeat;
+        border: none;
+        cursor:pointer;
+        overflow: hidden;   
+    }

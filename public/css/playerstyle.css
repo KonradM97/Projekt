@@ -10,11 +10,12 @@
 #show
 {
     float: right;
-    margin-top: 5px;
+    margin-top: 0px;
     width: 40px;
     height: 30px;
     border: 0;
     cursor: pointer;
+    margin-right: 100px;
 }
 #image img{
     height: 90px;
@@ -196,7 +197,32 @@
 
 
 
+@media screen and (max-width: 850px) {
+    #main{
+       height: 170px; 
+    } 
+    #info{
+        width: 100%;
+        text-align: center;
+    }
+    #songTitle
+    {
+        float: none;
+        text-align: center;
+        margin-top: 5px;
+    }
+    #author
+    {
+        float: none;
+        margin-top: 5px;
+    }
+    #show
+    {
+        margin-right: 0;
+    }
 
+    
+}
 
 
 

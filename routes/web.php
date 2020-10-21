@@ -17,12 +17,9 @@ Route::get('/', function () {
     return view('player');
 });
 
-Route::get('/comments','CommentsController@index');
+Route::get('/profile','UserController@profile')->middleware('auth')->name('profile');
+Route::post('/profile', 'UserController@update_avatar');
 Auth::routes();
+Route::post('/home','HomeController@send_data');
+Route::get('/home', 'HomeController@index')->name('home');
 
-//Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/home', function(){
-    return view('player');
-})->name('home');
-
-Route::get('/profile', 'UserController@profile')->name('profile');
