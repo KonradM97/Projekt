@@ -5,7 +5,6 @@
     // Start the session
     session_start();
     use App\Search;
-    use App\MainPage;
 ?>
 
 <!DOCTYPE html>
@@ -27,9 +26,9 @@
     </head>
 
     <body>
-        <div id="mainPage">
+        <h1>Wyniki wyszukiwania</h1>    
         <?php 
-            $main = new MainPage();
+            
             $search = new Search();
             if(isset($songs)&&$songs!=[]) {
                    $search->showSongs($songs);
@@ -44,31 +43,7 @@
                 $search->showPlaylists($playlists);
             }
         ?>
-        <h1>Strona główna</h1>
-        @guest
-        <h2>Najnowsze utwory</h2>
-        <?php 
-        $main->fetch_newest_songs(); 
-        ?>
-        <h2>Najnowsze albumy</h2>
-        <?php
-        $main->fetch_newest_albums();
-        ?>
-        @else
-        <h2>Najnowsze albumy obserwowanych</h2>
-        <?php 
-        $main->fetch_followers_songs();
-        ?>
-        <h2>Najnowsze utwory</h2>
-        <?php 
-        $main->fetch_newest_songs(); 
-        ?>
-        <h2>Najnowsze albumy</h2>
-        <?php
-        $main->fetch_newest_albums();
-        ?>
-        @endguest
-        </div>
+        
     </body>
     <script>
         $(document).ready(function(){

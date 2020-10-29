@@ -17,7 +17,7 @@ Route::get('/', function () {
 });
 
 Route::get('/profile','UserController@profile')->name('profile');
-Route::post('/profile', 'UserController@update_avatar');
+Route::post('/home', 'HomeController@update_avatar');
 Auth::routes();
 //Kontroler profilu home
 Route::post('/addAlbum','HomeController@addAlbum');

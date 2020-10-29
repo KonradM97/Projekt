@@ -1,13 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
-
-<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <link href="css/homebladestyle.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            
+            <div class="row">
+                <h1>Panel użytkownika</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-md-offset">
+                <img src="{{Auth::user()->avatar}}" style="width: 150px;height:150px; float: left; border-radius: 50%"/>
+                <h2>Profil użytkownika {{ Auth::user()->name}}</h2>
+                <form enctype="multipart/form-data" action="home" method="POST">
+                <label>Nowe zdjęcie</label><br/>
+                <input type="file" name="avatar"><br/>
+                @csrf
+                <input type="submit" value="Dodaj zdjęcie" class="pull-right btn btn-sm btn-primary"><br/>
+                
+            </form>
+        </div>
+            </div>
             <div class="row">
                 <button class="col-md-4 col-md-offset add" id="addSong" onclick="showAddSong()" >Dodaj utwór</button>
                  <button class="col-md-4 col-md-offset add" id="addAlbum"onclick="showAddAlbum()">Dodaj album</button>
