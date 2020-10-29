@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,9 +16,18 @@ Route::get('/', function () {
     return view('player');
 });
 
-Route::get('/profile','UserController@profile')->middleware('auth')->name('profile');
+Route::get('/profile','UserController@profile')->name('profile');
 Route::post('/profile', 'UserController@update_avatar');
 Auth::routes();
-Route::post('/home','HomeController@send_data');
+//Kontroler profilu home
+Route::post('/addAlbum','HomeController@addAlbum');
+Route::post('/addPlaylist','HomeController@addPlaylist');
+Route::post('/addSong','HomeController@addSong');
 Route::get('/home', 'HomeController@index')->name('home');
-
+//kontroler Wyszukiwania
+Route::get('/search', 'SearchController@search');
+//kontroler polubień z odtwarzacza
+Route::post('/like', ['uses' => 'PostController@likePost',
+    'as'=> 'like']);
+//profil
+Route::get('/user={id}', 'UserController@profile')->name('user.profile');

@@ -9,15 +9,16 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
+    <!-- Scripts 
+    <script src="{{ asset('js/app.js') }}" defer></script>-->
+<!--Własny styl -->
+    <link href="css/style.css" rel="stylesheet">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- Styles 
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet"href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css">
@@ -29,6 +30,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
                      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+    
 </head>
 <body>
     <div id="app">
@@ -46,7 +48,17 @@
                     <ul class="navbar-nav mr-auto">
 
                     </ul>
-
+                    <div class="search-panel"> 
+            <!-- Formularz wyszukiwania-->
+            <form action="search" method="GET" name="search_form">
+                <div class="input-group mb-3 w-50 mx-auto">
+                    <input class="form-control" type="text" size="60" name="searchFor" value="" pattern="[0-9a-zA-Z]{3,}" title="Zapytanie wyszukiwania powinno mieć conajmniej 3 znaki!"/>
+                    <div class="input-group-append">
+                        <button class="btn btn-success" type="submit">Szukaj</button>
+                    </div>
+                </div>
+            </form>         
+        </div>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -60,17 +72,19 @@
                                 </li>
                             @endif
                         @else
+                       
                             <li class="nav-item dropdown">
+                                
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->name }} <span class="caret"></span> <img src="{{ Auth::user()->avatar }}" class="rounded float-right" width="50px" height="50px"></img>
                                 </a>
-
+                                
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('home') }}"
                                        >
                                         {{ __('Panel użytkownika') }}
                                     </a>
-                                     <a class="dropdown-item" href="{{ route('profile') }}"
+                                     <a class="dropdown-item" href='user={{ Auth::user()->id }}'
                                        >
                                         {{ __('Profil') }}
                                     </a>
@@ -89,10 +103,14 @@
                 </div>
             </div>
         </nav>
-
+        
         <main class="py-4">
             @yield('content')
         </main>
+        
     </div>
+<?php
+                $player = new Player(); 
+                ?>
 </body>
 </html>

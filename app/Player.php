@@ -1,5 +1,4 @@
 <?php
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,6 +11,7 @@
  * @author Konrad
  */
 
+
 class Player {
     //dostęp do źródeł
     private $album;
@@ -23,8 +23,11 @@ class Player {
         private $ids=array();
         private $jukebox_size;
 	private $index;
+        //dodanie polubień 26.10
+        private $likes=array();
+        //
             function __construct() {
-                
+                //Na starcie
                 if(!isset($_GET['songid'])&&!isset($_GET['playlistid'])&&!isset($_GET['albumid']))
                 {
                    $this->fetch_most_liked();
@@ -65,13 +68,15 @@ class Player {
                                     $this->fetch_most_liked();
                     }
                 }
+                $this->fetch_likes();
+                $this->transferArrays();
                 $this->showPlayer();
                 ?>
 
         <?php
                 
 	}
-        
+        //walidator dla id (liczby)
         private function validate($id) {
             if (filter_var($id, FILTER_VALIDATE_INT)) {
                 return true;
@@ -80,14 +85,14 @@ class Player {
             }
         }
         public function fetch_most_liked() {
-             $_SESSION["first"]=false;
-                    $this->index = 0;
-                    //weź ostatnin nutwór użytkownika
+                    
+                   
 
                      $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
                     if(!$connect)
                     {
                             echo 'Błąd połączenia z serwerem';
+                            return;
                     }
                      $query = "SELECT idsongs,author,title,s.source as songsource,u.name, c.source as coversource FROM `songs` s"
                              . " INNER JOIN users u ON s.author = u.id "
@@ -106,15 +111,14 @@ class Player {
                      }
                      $this->jukebox_size=count($this->ids);
                      //Zkonwertuj tablice php na javascript
-                     $this->transferArrays();
+                     
                      
                      //$this->alarm();
         }
 
         public function fetch_song($id)
         {
-            $this->index = 0;
-		//weź ostatnin nutwór użytkownika
+            
 		 $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
 		if(!$connect)
 		{
@@ -137,14 +141,14 @@ class Player {
                      }
                      $this->jukebox_size=count($this->ids);
                      //Zkonwertuj tablice php na javascript
-                     $this->transferArrays();
+                     
                      
                  return true;
         }
 
         public function fetch_playlist($id)
         {
-            $this->index = 0;
+            
                 $this->titles=array();
                 $this->sources=array();
                  $this->authors=array();
@@ -175,7 +179,7 @@ class Player {
 		 }
                  $this->jukebox_size=count($this->ids);
                  //Zkonwertuj tablice php na javascript
-                 $this->transferArrays();
+                 
 
                  //$this->refresh_player();
                 // $this->set_song_by_index($index);  
@@ -183,18 +187,18 @@ class Player {
         }
         public function fetch_album($id)
         {
-            $this->index = 0;
+            
                 $this->titles=array();
                 $this->sources=array();
                  $this->authors=array();
                 $this->authorsId=array();
                 $this->covers=array();
                  $this->ids=array();
-		//weź ostatnin nutwór użytkownika
 		 $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
 		if(!$connect)
 		{
 			echo 'Błąd połączenia z serwerem';
+                        return;
 		}
 		 $query = "SELECT idsongs,a.author,s.title,s.source as songsource,u.name, c.source as coversource FROM `songs` s"
                          . " INNER JOIN albums a ON s.album = a.idalbums"
@@ -213,19 +217,60 @@ class Player {
 		 }
                  $this->jukebox_size=count($this->ids);
                  //Zkonwertuj tablice php na javascript
-                 $this->transferArrays();
+                 
 
                  //$this->refresh_player();
                 // $this->set_song_by_index($index);  
                  return true;
         }
-        
+        public function fetch_likes()
+        {
+            if(isset(Auth::user()->id))
+                {
+                   $userId = Auth::user()->id;
+                   $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
+                    if(!$connect)
+                    {
+                        echo 'Błąd połączenia z serwerem';
+                        return;
+                    }
+                    //Wyciągnij tylko polubienia użytkownika
+                    $query ="SELECT userId,songId FROM `likes` where userId=".$userId;
+                    for($i=0;$i<count($this->ids);$i++)
+                        {
+                                $this->likes[$i]=false; 
+                                
+                        }
+                    $r=mysqli_query($connect,$query);
+                    while($row=mysqli_fetch_assoc($r))
+                    {
+                        for($i=0;$i<count($this->ids);$i++)
+                        {
+                            if($this->ids[$i]==$row['songId'])
+                            {
+                                $this->likes[$i]=true;
+                                
+                            }
+                            
+                        }
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            
+        }
+        //do debugowania
         function alarm()
         {
             ?>
 <script type="text/javascript">alert("w7ywol");</script>
         <?php
             }
+        
+        //Konwersja tablicy na tą dla javascript
+        
         function transferArrays()
         {
             ?>
@@ -235,12 +280,23 @@ class Player {
                  var titles = <?php echo json_encode($this->titles); ?>;
                   var authors = <?php echo json_encode($this->authors); ?>;
                   var authorsids =  <?php echo json_encode($this->authorsId); ?>;
-                  
+                  var ids = <?php echo json_encode($this->ids); ?>;
                    var p_size = <?php echo json_encode($this->jukebox_size); ?>;
                    var covers = <?php echo json_encode($this->covers); ?>;
-                   
+                   var likes= <?php echo json_encode($this->likes); ?>;
                    var currentSong = 0;
-                   
+                   //Dostanie id użytkownika który teraz korzysta z playera
+                   var myId = <?php
+                    if(isset(Auth::user()->id))
+                    {
+                        echo json_encode(Auth::user()->id);
+                    }
+                    else
+                    {
+                        echo json_encode(null);
+                    }
+                   ?>;
+                    
                   var shuffled_songs=songs.slice();
                  var shuffled_songsTitle=titles.slice();
                   var shuffled_author=authors.slice();
@@ -254,18 +310,16 @@ class Player {
         }
         
     
-
+        
 
     //Pokaż odtwarzacz
     
     function showPlayer()
     {
     ?>
-          
                 <link href="css/playerstyle.css" rel="stylesheet"/>
                   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
                 <link href="css/jukeboxstyle.css" rel="stylesheet"/>
-            
                 <div id="main">
                     
 	<div  id="jukebox">
@@ -297,20 +351,27 @@ class Player {
                             {
                                 document.getElementById("cover").src= "img/nullcover.png";
                             }
+                            //26.10
+                            if(likes[currentSong])
+                            {
+                                 document.getElementById("like").src="img/liked.png";
+                            }
+                            else
+                            {
+                                document.getElementById("like").src="img/like.png";
+                            }
                             document.getElementById('playbutton').src='img/Pause.png';
                             song.play();
                        }
                 </script>
+                
             </div>
             
 	</div>
                     <div id="options">
                             
                             <!-- Pasek głośności-->
-                            <div id="volume-bar">
-                                <div id="vfill"></div>
-                                <div id="vhandle"></div>
-                            </div>
+                            
                             <!-- Guziki powtórzenia i losowania-->
                         <div id="atendofsong">
                             <button id="repeat" onclick="repeat()"><img id="replayButton" src="img/replay.png" height="90%" width="90%"/></button>
@@ -323,13 +384,18 @@ class Player {
                             <button id="pre" onclick="pre()"><img src="img/Pre.png" height="90%" width="90%"/></button>
                             <button id="play" onclick="playOrPauseSong()"><img id="playbutton" src="img/Play.png"/></button>
                             <button id="next" onclick="next()"><img src="img/Next.png" height="90%" width="90%"/></button>
-                             <button id="show" ><img src="img/playlist.png" height="90%" width="90%"/></button>
-                        </div>
                             
-
+                            
+                        </div>
+                        <div id="rightButtons">
+                        <img id="show" src="img/playlist.png" />
+                        <img id="like" class="like" src="img/like.png"/>
+                        </div>
                         <div id="image">
                             <img id="cover" src="img/nullcover.png"/>
                         </div>
+                        
+                        
                         <!-- Informacje o autorze i nazwie utworu-->
                         <div id="info">
                             
@@ -337,54 +403,108 @@ class Player {
                             <div id="songTitle">Demo</div><br/>
                              <div id="author">DemoAuthor</div>
                         </div>
+                        
                     </div>
                     <div id="bar">
                         <!-- Postęp utworu-->
                         <div id="seek-bar">
-                                <div id="fill"></div>
-                                <div id="handle"></div>
+
+                               <input type="range" min="1" max="300" value="1" class="slider" id="timeRange">
                         </div>
-                        
+                        <div id="volume-bar">
+                                <input type="range" min="0" max="100" value="80" class="slider" id="volRange">
+                            </div>
                        <!-- <div id="time">0:00</div> czas nie działa właściwie-->
                     </div>
                     
                 </div>
             </body>
             <script type="text/javascript">
+                //Czy odpalony play
+                var playing=false;
+                ////pasek czasu utworu
+                var fillBar = document.getElementById("fill");
+		var progressBar = document.getElementById("timeRange");		
+                var seekBar= document.getElementById("seek-bar");
+                ///pasek głośności
+                var volBar = document.getElementById("volRange");
+                document.getElementById("volRange").oninput = function() {
+                    this.style.background = 'linear-gradient(to right, #82CFD0 0%, #82CFD0 ' + this.value + '%, #fff ' + this.value + '%, white 100%)'
+                  };
+                $(window).on("load resize", function() {
+                var sliderWidth = $('[type=range]').width();
+                $('.custom-style-element-related-to-range').remove();
+                $('<style class="custom-style-element-related-to-range">input[type="range"]::-webkit-slider-thumb { box-shadow: -' + sliderWidth + 'px 0 0 ' + sliderWidth + 'px;}<style/>').appendTo('head');
+              });
+
                 $(document).ready(function(){
                     $('#jukebox').slideUp(0);
+                    //początkowy dźwięk
+                    var p = volBar.value;
+                    modifyVolume(p);
                 });
                 var showed=false;
                 $( "#show" ).click(function() {
+                    
                     if(showed)
                     {
-                            $( "#jukebox" ).slideUp( "slow", function() {
-                        });
+                            $( "#jukebox" ).slideUp( "slow","swing","complete");
                         showed=false;
                     }
                     else
                     {
-                            $( "#jukebox" ).slideDown( "slow", function() {
-                        });
+                            $( "#jukebox" ).slideDown( "slow","swing","complete");
                         showed=true;
                     }
                   });
+                //kliknięcie polubienia
+                    $(".like").click(function() {
+                        if(myId!=null)
+                        {
+                            event.preventDefault();
+                            var isLike = event.target.previousElementSibling == null;
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            $.ajax({
+                                type: "POST",
+                                url: "like",
+                                data: '{"islike":true,"songId":'+ids[currentSong]+'}',
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json"
+                            });
+                            if(!likes[currentSong])
+                            {
+                                document.getElementById("like").src="img/liked.png";
+                                likes[currentSong]=true;
+                            }
+                            else
+                            {
+                                document.getElementById("like").src="img/like.png";
+                                likes[currentSong]=false;
+                            }
+                            
+                        }
+                        else
+                        {
+                            alert('Zaloguj się by móc polubić utwór!');
+                        }
+                    });
                 
-                
-                ////
-                var fillBar = document.getElementById("fill");
-				
-                var seekBar= document.getElementById("seek-bar");
-                ///
-                var volfillBar = document.getElementById("vfill");
-                var volBar= document.getElementById("volume-bar");
                 var activeBar = false; 
                 var activetBar = false; 
                 //
 
                 var song = new Audio();//Obiekt odpowiedzialny za muzykę
+                song.autoplay=false;
+                song.autostart=false;
+                         
                 var repeatPressed = 1; //czy włączony repeat
                 var shufflePressed = false; //czy włączone losowe wybieranie
+                //
+                //Odtwórz przy odpaleniu strony
                 window.onload = playSong();
                
                //Pobierz dane utworu do odtwarzacza i odtwórz
@@ -393,16 +513,16 @@ class Player {
                          song.src = songs[currentSong];
                          songTitle.textContent = titles[currentSong];
                          author.textContent = authors[currentSong];//authors[currentSong];
-                         start_it();
                          }
                      else{
+                        
                         song.src = shuffled_songs[currentSong];
                         songTitle.textContent = shuffled_songsTitle[currentSong];
                         author.textContent = shuffled_author[currentSong];
                         
                         }
                      
-                    
+                    //pobierz okładkę
                      if(!shufflePressed){
                           //Jeśli utwór ma okładkę
                             if(covers[currentSong])
@@ -427,19 +547,37 @@ class Player {
                             }    
                                 
                         }
+                       //Pobierz polubienie
+                       //26.10
+                            if(likes[currentSong])
+                            {
+                                document.getElementById("like").src="img/liked.png";
+                                 
+                                 
+                            }
+                            else
+                            {
+                                console.log(likes[currentSong],currentSong);
+                                document.getElementById("like").src="img/like.png";
+                            }
                        
-                       //Jeśli nie
-                      
-                    song.play();
+                      if(playing)
+                      {
+                          song.play();
+                      }
+                    
                 }
 		//Wybiera co zrobić po kliknięciu play/pause
                 function playOrPauseSong(){
 
                     if(song.paused){
+                        playing=true;
                         song.play();
+                        
                         document.getElementById('playbutton').src='img/Pause.png';
                     }
                     else{
+                        playing=false;
                         song.pause();
                         document.getElementById('playbutton').src='img/Play.png';
                     }
@@ -451,8 +589,10 @@ class Player {
                     
                     //document.getElementById('time').textContent = song.currentTime //pasek czasu na razie nieaktywny bo potrzebuje funkcji rozkładające
                     //
-                    //Po skończeniu utworu
-                    fillBar.style.width = position * 100 +'%';
+                    //Postęp paska utworu w czasie
+                    //progressBar.setAttribute('value',position*300);
+                    progressBar.value = position*300;
+                    
                     //powtórz 1
                     if(song.currentTime==song.duration&&repeatPressed == 0)
                     {
@@ -465,8 +605,7 @@ class Player {
                         currentSong++;
                         playSong();
                         }
-                        
-                            document.getElementById('playbutton').src='img/Play.png';
+
                         
                     }
                     //powtórz całą playlistę
@@ -500,7 +639,7 @@ class Player {
                          repeatPressed = 0;
                     }
                 }
-                   //pomieszane utwory
+                   //pomieszanie utworów
                    function shufflearray(a,b,c,d,e) {
                         for (let i = a.length - 1; i > 0; i--) {
                             const j = Math.floor(Math.random() * (i + 1));
@@ -512,7 +651,7 @@ class Player {
                         }
                         
                     }
-
+                    //Przucisk mieszania
                    function shuffle()
                    {
                        if(shufflePressed == false){
@@ -554,58 +693,37 @@ class Player {
                     document.getElementById('playbutton').src='img/Pause.png';
                 }
                 /////////////////////////Obsługa paska czasu utworu////////////////////
-				function getPosition () {
+
+                                function getPosition () {
 					let p = (seekBar.offsetLeft) / seekBar.clientWidth;
 					p = clamp(0, p, 1);
 					return p;
 				}
 				 function modifyTime(p) {
-					fillBar.style.width = p * 100 + '%';
+					//fillBar.style.width = p * 100 + '%';
 					song.currentTime = p * song.duration;
-                                        
+                                        progressBar.value = p * 300;
 				}
-				seekBar.addEventListener("click",function (e){
+				progressBar.addEventListener("click",function (e){
 					let p = (e.clientX - seekBar.offsetLeft) / seekBar.clientWidth;
 					modifyTime(p);
 				},false);
-                                seekBar.addEventListener("mousedown",function (e){
-                                    activetBar = true;
-
-                                },false);
-                                seekBar.addEventListener("mousemove",function (e){
-                                    if(activetBar == true){
-                                        let p = (e.clientX - seekBar.offsetLeft) / seekBar.clientWidth;
-					modifyTime(p);
-                                    }
-                                },false);
-                                seekBar.addEventListener("mouseup",function (e){
-                                    activetBar = false;
-                                },false);
+                                
                 //////////////////////////////obsługa paska głośności///////////
                  function modifyVolume(p) {
-                    volfillBar.style.width = p * 100 + '%';
-                    song.volume = 1*p;
+                    song.volume = p * 0.01;
 
                 }
                 volBar.addEventListener("click",function (e){
                     
-                    let p = (e.clientX - volBar.offsetLeft) / volBar.clientWidth;
+                    let p = volBar.value;
                     modifyVolume(p);
                 },false);
-                volBar.addEventListener("mousedown",function (e){
-                    activeBar = true;
-                    
-                },false);
                 volBar.addEventListener("mousemove",function (e){
-                    if(activeBar == true){
-                        let p = (e.clientX - volBar.offsetLeft) / volBar.clientWidth;
+                        let p = volBar.value;
                         modifyVolume(p);
-                    }
                 },false);
-                volBar.addEventListener("mouseup",function (e){
-                    activeBar = false;
-                },false);
-                
+
             </script>
     <?php
     

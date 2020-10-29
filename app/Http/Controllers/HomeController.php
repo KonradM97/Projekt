@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use Validator;
-use File;
+
 class HomeController extends Controller
 {
     /**
@@ -24,6 +24,10 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function like(Request $request)
+    {
+        //console.log($request);
+    }
     public function index()
     {
         return $this->showView();
@@ -31,7 +35,7 @@ class HomeController extends Controller
     }
     public function showView()
     {
-                //return view('home');
+        //return view('home');
         //pobierz utwory danego użytkownika
         $songs = DB::table('songs')->where('author','=',Auth::user()->id)->get();
         //pobierz playlisty danego użytkownika
@@ -39,23 +43,30 @@ class HomeController extends Controller
         $albums = DB::table('albums')->where('author','=',Auth::user()->id)->get();
         return view('home',['songs'=>$songs,'playlists'=>$playlists,'albums'=>$albums]);
     }
-    public function addSong($request)
+    public function addSong(Request $request)
     {
         $data = $request->validate([
             'title' => 'required|max:45',
             'source' => 'required',
         ]);
+        
         $validator = Validator::make($request->all(), [
-            'source' => 'required|mimes:mpga,wav',
-            'cover' => 'mimes:jpeg,jpg,png',
+            'source' => 'required|mimetypes:audio/mp3,application/octet-stream,audio/ogg,audio/wav',
+            'title' => 'required|min:3,max:45'
         ]);
-        if(!is_dir('uploads/'.Auth::user()->id))
+        if($validator->fails())
+        {
+            return view('home',array('error' => 'Błąd w nazwie lub typie pliku!'));
+        }
+        else
+        {
+        if(!is_dir('../storage/app/uploads/'.Auth::user()->id))
                 {
-                    mkdir ( 'uploads/'.Auth::user()->id);
+                    mkdir ( '../storage/app/uploads/'.Auth::user()->id);
                 }
-        if(!is_dir('covers/'.Auth::user()->id))
+        if(!is_dir('../storage/app/covers/'.Auth::user()->id))
                 {
-                    mkdir ( 'covers/'.Auth::user()->id);
+                    mkdir ( '../storage/app/covers/'.Auth::user()->id);
                 }
         $file = $request->file('source');
         $filename = Auth::user()->id.time().".".$file->getClientOriginalExtension();
@@ -77,14 +88,12 @@ class HomeController extends Controller
                 'license' => $request['license'],'cover'=>$cover]
         );
         //okładka
-        
-        $succes = '<h1>Wysłano</h1><br/>'.
-                '<h2><a href="#">Powrót dp strony</a></h2>';
-        return $succes;
+        }
+        return view('home',array('user' => Auth::user()));
     }
     
     //Dodaj album
-    public function addAlbum($request)
+    public function addAlbum(Request $request)
     {
         $data = $request->validate([
             'title' => 'required|max:45',
@@ -109,9 +118,7 @@ class HomeController extends Controller
               ]
         );
         
-        $succes = '<h1>Wysłano</h1><br/>'.
-                '<h2><a href="#">Powrót dp strony</a></h2>';
-        return $succes;
+        return view('home',array('user' => Auth::user()));
     }
     private function ispublic($request)
     {
@@ -122,7 +129,7 @@ class HomeController extends Controller
          
         return false;
     }
-    public function addPlaylist($request)
+    public function addPlaylist(Request $request)
     {
        
         $data = $request->validate([
@@ -150,27 +157,7 @@ class HomeController extends Controller
         }
         
         
-        $succes = '<h1>Wysłano</h1><br/>'.
-                '<h2><a href="#">Powrót dp strony</a></h2>';
-        return dd('test');
+        return view('home',array('user' => Auth::user()));
     }
     
-    public function send_data(Request $request)
-    {
-        if(isset($request['addSong']))
-        {
-            $this->addSong($request);
-        }
-        else if(isset($request['addAlbum']))
-        {
-            $this->addAlbum($request);
-        }
-        else if(isset($request['addPlaylist']))
-        {
-            
-            $this->addPlaylist($request);
-        }
-        //tworzenie katalogu użytkownika jeśli nie istnieje
-        
-    }
 }

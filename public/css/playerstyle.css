@@ -7,24 +7,14 @@
     background-color:#fff;
 }
 
-#show
-{
-    float: right;
-    margin-top: 0px;
-    width: 40px;
-    height: 30px;
-    border: 0;
-    cursor: pointer;
-    margin-right: 100px;
-}
+
 #image img{
     height: 90px;
     float: right;
     width: 100px;
 }
-#player{
-    color:#333;
-}
+
+
 #songTitle{
     float: right;
     text-align: center;
@@ -46,10 +36,29 @@
 {
     float: right;
 }
+#rightButtons
+{
+        width: 40px;
+        float:right;
+}
+#show
+{
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+#like
+{
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
 #options
 {
     
-    float: left;
+
     margin-left: 20px;
     position:fixed;
     margin-top: 5px;
@@ -93,6 +102,14 @@
     transform: translate(-50%,-50%);
     outline:none;
 }
+/*Firefox to taki snowflake wśród przeglądarek*/
+.slider::-moz-range-thumb {
+  width: 10px; 
+  height: 10px; 
+  background: #797979; 
+  cursor: pointer; 
+  border-radius: 50%;
+}
 /*ta brzydka ramka po kliknięciu*/
 #play::-moz-focus-inner{
     border: 0;
@@ -129,38 +146,7 @@
     transform: translate(-50%,-50%);
 }
 
-#volume-bar
-{
-    width: 10%;
-    margin-left: 10px;
-    margin-top: 20px;  
-    display: flex;
-    height: 5px;
-    bottom: 2%;
-    background-color:lightgray;
-    position:fixed;
-    cursor: pointer;
-}
-#vfill
-{
-    height: 5px;
-    background-color:#cecece;
-    border-radius: 20px;
-    background-color:gray;
-    width: 80%;
-}
-#vhandle
-{
-    width: 8px;
-    height: 8px;
-    background-color:#797979;
-    border-radius: 50%;
-    margin-left: -5px;
-    transform: scale(2);
-}
-#bar
-{
-}
+
 #time
 {
     float: right;
@@ -171,7 +157,6 @@
 #seek-bar{
     width: 70%;
     height: 5px;
-    background-color:gray;
     display: flex;
     margin-left: 25px;
     cursor: pointer;
@@ -179,24 +164,87 @@
     position: fixed;
     left: 15%;
 }
-#fill{
-    height: 5px;
-    background-color:rgb(14, 177, 101);
-    border-radius: 20px;
-}
-#handle{
-    width: 8px;
-    height: 8px;
-    background-color:rgb(14, 177, 101);
-    border-radius: 50%;
-    margin-left: -5px;
-    transform: scale(2);
+#timeRange
+{
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  outline: none;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  border-radius: 5px;
+  background-color: #fff;
 }
 
 
 
+/** Dla Firefox*/
 
+#seek-bar input[type="range"]::-moz-range-progress {
+    background-color: #00cc00;
+    height: 10px;
+}
 
+#seek-bar input[type="range"]::-moz-range-track {
+  background-color: #aaa;
+    height: 10px;
+}
+
+/*Chrome*/
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  input[type='range'] {
+    overflow: hidden;
+    -webkit-appearance: none;
+    background-color: #9a905d;
+  }
+  input[type='range']::-webkit-slider-runnable-track {
+    height: 10px;
+    -webkit-appearance: none;
+    color: #13bba4;
+    margin-top: -1px;
+
+    background-color: #aaa;
+  }
+  input[type='range']::-webkit-slider-thumb {
+    width: 15px;
+    -webkit-appearance: none;
+    height: 15px;
+    cursor: pointer;
+    background: #434343;
+    color: #0eb165;
+
+  }
+}
+/*Dla IE*/
+
+#seek-bar input[type="range"]::-ms-fill-lower {
+  background-color: #00cc00;
+}
+
+#seek-bar input[type="range"]::-ms-fill-upper {
+  background-color: #9a905d;
+}
+/*Obsługa suwaka głośności*/
+#volume-bar
+{
+    width: 10%;
+    margin-left: 10px;
+    display: flex;
+    height: 10px;
+    bottom: 8px;
+    background-color:lightgray;
+    position:fixed;
+    cursor: pointer;
+}
+#volume-bar input[type="range"]
+{
+  width: 100%;
+  background-color: #aaa;
+  background: linear-gradient(to right, #82CFD0 0%, #aaa 100%, #fff 100%, #fff 100%);
+  border: solid 1px #aaa;
+  border-radius: 2px;
+}
 @media screen and (max-width: 850px) {
     #main{
        height: 170px; 
@@ -216,9 +264,10 @@
         float: none;
         margin-top: 5px;
     }
-    #show
+    #rightButtons
     {
-        margin-right: 0;
+        float: right;
+        
     }
 
     

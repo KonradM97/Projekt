@@ -4,3 +4,10 @@
     Zmienione wszystkie pliki, bo scaliłem projekt ze swoim, gdzie umieściłem dodawanie utworów, albumów i playlist.
     w pliku vendor.zip jest brakujący folder vendor który jest za duży i plik .env.
     Wystarczy je raz pobrać i rozpakować w przypadku braku
+28.10
+    System polubień dodany!
+    Profile użytkowników -> przekierowywania
+    Slidery
+    Zaawansowane wyszukiwanie. Przeniesienie do kotrolera oraz wykorzystywanie BD laravela.
+    
+    
