@@ -14,33 +14,42 @@ and open the template in the editor.
     width: 80%;
     margin-left: auto;
     margin-right: auto;
-}
-body
-{
     color: white;
-
 }
-#left
+
+#listing
 {
    float: left;
    display:inline-block;
    width: 70%;
 }
-#options
-{
-    display: inline-block;
-    width: 100%;
-    position:relative;
-}
-
 #info
 {
     float: right;
     width: 30%;
 }
-#content
+.singlealbum
 {
-    display: block;
-    margin-right: 5px;
-    margin-bottom: 90px;
+    width: 30%;
+    
+}
+.singlealbum a
+{
+    color: white;
+    font-style: normal;
+}
+#choose button
+{
+    color: white;
+    background: transparent;
+    font-weight: bolder;
+    border: none;
+    margin-bottom: 10px;
+}
+#choose button:hover
+{
+    margin-bottom: 0px;
+    border-color: black;
+    border-bottom-style: solid;
+    background-color: #0eb165
 }

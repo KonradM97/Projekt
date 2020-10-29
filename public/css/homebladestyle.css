@@ -1,14 +1,16 @@
-html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-.row
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 28 paź 2020, 21:12:47
+    Author     : Konrad
+*/
+
+body
 {
-    text-align: center;
+    background-color: white;
 }
 .add
 {
@@ -17,7 +19,7 @@ html, body {
 #forms
 {
     text-align: center;
-    font-family:monospace;
+    font-family: monospace;
 }
 #addSong
 {
@@ -36,10 +38,6 @@ html, body {
 {
     background-color: #ccff00;
 }
-form
-{
-    margin-top: 100px;
-}
 #albums
 {
 margin-top: 100px;
@@ -54,7 +52,6 @@ margin-top: 100px;
     background-color: #0099ff;
     color: lightgray;
 }
-
 
 
 

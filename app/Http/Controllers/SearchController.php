@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
-
+use Auth;
 class SearchController extends Controller
 {
     //transofrmuj
@@ -19,13 +19,38 @@ class SearchController extends Controller
         }
         else
         {
-            $songs = DB::select('select * from songs s INNER JOIN users u ON s.author = u.id LEFT JOIN covers c on s.cover = c.idcovers where UPPER(title) LIKE UPPER("%'.$r['searchFor'].'%")');
-            $albums = DB::select('select * from albums a INNER JOIN users u ON a.author = u.id where UPPER(title) LIKE UPPER("%'.$r['searchFor'].'%")');
-            $playlists = DB::select('select * from playlists where UPPER(playlistName) LIKE UPPER("%'.$r['searchFor'].'%")');
-            $users = DB::select('select id,email,name,avatar from users where UPPER(name) LIKE UPPER("%'.$r['searchFor'].'%") OR UPPER(username) LIKE UPPER("%'.$r['searchFor'].'%")');
+            $songs = DB::select('select idsongs,title,genre,s.source,likes,c.source,s.author,u.name '
+                    . 'from songs s '
+                    . 'INNER JOIN users u ON s.author = u.id '
+                    . 'LEFT JOIN covers c on s.cover = c.idcovers '
+                    . 'where UPPER(title) LIKE UPPER("%'.$r['searchFor'].'%")');
+            $albums = DB::select('select * from albums a '
+                    . 'INNER JOIN users u ON a.author = u.id'
+                    . ' LEFT JOIN covers c on a.cover = c.idcovers'
+                    . ' where UPPER(title) '
+                    . ' LIKE UPPER("%'.$r['searchFor'].'%")');
+            if(isset(Auth::user()->id))
+            {
+                $playlists = DB::select('select idplaylists,playlistName,name,likes from playlists p'
+                    . ' INNER JOIN users u ON p.author = u.id'
+                    . ' where UPPER(playlistName) LIKE UPPER("%'.$r['searchFor'].'%")'
+                    . ' AND (ispublic = 1 OR (ispublic = 0 AND u.id='.Auth::user()->id
+                    . ')) ORDER BY likes DESC');
+            }
+            else
+            {
+                $playlists = DB::select('select idplaylists,playlistName,name,likes from playlists p'
+                    . ' INNER JOIN users u ON p.author = u.id'
+                    . ' where UPPER(playlistName) LIKE UPPER("%'.$r['searchFor'].'%")'
+                    . ' AND ispublic = 1 ORDER BY likes DESC');
+            }
+            
+            $users = DB::select('select id,email,name,avatar'
+                    . ' from users u'
+                    . ' where UPPER(name) LIKE UPPER("%'.$r['searchFor'].'%") OR UPPER(username) LIKE UPPER("%'.$r['searchFor'].'%")');
         }
         
-        return view('player',['songs'=>$songs,'playlists'=>$playlists,'albums'=>$albums,'users'=>$users]);
+        return view('search',['songs'=>$songs,'playlists'=>$playlists,'albums'=>$albums,'users'=>$users]);
         
     }
     
