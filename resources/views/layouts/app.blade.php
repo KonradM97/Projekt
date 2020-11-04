@@ -12,7 +12,7 @@
     <!-- Scripts 
     <script src="{{ asset('js/app.js') }}" defer></script>-->
 <!--Własny styl -->
-    <link href="css/style.css" rel="stylesheet">
+    
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -30,6 +30,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
                      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+    <link href="css/style.css" rel="stylesheet">
     
 </head>
 <body>
@@ -52,7 +53,7 @@
             <!-- Formularz wyszukiwania-->
             <form action="search" method="GET" name="search_form">
                 <div class="input-group mb-3 w-50 mx-auto">
-                    <input class="form-control" type="text" size="60" name="searchFor" value="" pattern="[0-9a-zA-Z]{3,}" title="Zapytanie wyszukiwania powinno mieć conajmniej 3 znaki!"/>
+                    <input class="form-control" type="text" size="200" name="searchFor" value="" pattern="[0-9a-zA-Z\s]{3,}" title="Zapytanie wyszukiwania powinno mieć conajmniej 3 znaki!"/>
                     <div class="input-group-append">
                         <button class="btn btn-success" type="submit">Szukaj</button>
                     </div>

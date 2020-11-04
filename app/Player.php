@@ -28,7 +28,7 @@ class Player {
         //
             function __construct() {
                 //Na starcie
-                if(!isset($_GET['songid'])&&!isset($_GET['playlistid'])&&!isset($_GET['albumid']))
+                if(!isset($_GET['songid'])&&!isset($_GET['playlist'])&&!isset($_GET['album']))
                 {
                    $this->fetch_most_liked();
                 }
@@ -44,9 +44,9 @@ class Player {
                                     $this->fetch_most_liked();
                     }
                 }
-                else if(isset($_GET['playlistid']))
+                else if(isset($_GET['playlist']))
                 {
-                    $id= htmlspecialchars($_GET['playlistid']);
+                    $id= htmlspecialchars($_GET['playlist']);
                     if($this->validate($id))
                     {
                         $this->fetch_playlist($id);
@@ -56,16 +56,16 @@ class Player {
                                     $this->fetch_most_liked();
                     }
                 }
-                else if(isset($_GET['albumid']))
+                else if(isset($_GET['album']))
                 {
-                    $id= htmlspecialchars($_GET['albumid']);
+                    $id= htmlspecialchars($_GET['album']);
                     if($this->validate($id))
                     {
                         $this->fetch_album($id);
                     }
                     else
                     {
-                                    $this->fetch_most_liked();
+                        $this->fetch_most_liked();
                     }
                 }
                 $this->fetch_likes();

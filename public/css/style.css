@@ -1,6 +1,11 @@
 body{
-    background-color:#333;
+    background-color:#444;
+    color: white;
 
+}
+.py-4
+{
+    margin-bottom: 100px;
 }
 #forms
 {
@@ -36,11 +41,3 @@ vertical-align:top;
 {
     max-width: 100%;
 }
-
-
-
-
-
-
-
-

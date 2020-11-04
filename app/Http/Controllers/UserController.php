@@ -42,26 +42,9 @@ class UserController extends Controller
         }
         else
         {
-            echo '<h1>Nie ma takiego użytkownika!</h1>';
-            redirect('/');
+            echo '<div id="error"><h1 style="font-family:monospace">Nie ma takiego użytkownika!</h1>';
         }
     }
     
-    public function update_avatar(Request $request)
-    {
-        if($request->hasFile('avatar')){
-            $avatar = $request->file('avatar');
-            $filename = Auth::user()->id.time().$avatar->getClientOriginalExtension();
-            if(!is_dir('../storage/app/uploads/avatars/'.Auth::user()->id))
-                {
-                    mkdir ( '../storage/app/uploads/avatars/'.Auth::user()->id);
-                }
-            Image::make($avatar)->resize(300,300)->save(public_path('../storage/app/uploads/avatars/'.Auth::user()->id.'\\'.$filename));
-            $user = Auth::user();
-            $user->avatar = '../storage/app/uploads/avatars/'.Auth::user()->id.'/'.$filename;
-            $user->save();
-        }
-        
-       return view('profile',array('user' => Auth::user()));
-    }
+    
 }

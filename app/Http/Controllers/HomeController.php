@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use Validator;
-
+use Image;
 class HomeController extends Controller
 {
     /**
@@ -159,5 +159,21 @@ class HomeController extends Controller
         
         return view('home',array('user' => Auth::user()));
     }
-    
+    public function update_avatar(Request $request)
+    {
+        if($request->hasFile('avatar')){
+            $avatar = $request->file('avatar');
+            $filename = Auth::user()->id.time().$avatar->getClientOriginalExtension();
+            if(!is_dir('../storage/app/uploads/avatars/'.Auth::user()->id))
+                {
+                    mkdir ( '../storage/app/uploads/avatars/'.Auth::user()->id);
+                }
+            Image::make($avatar)->resize(300,300)->save(public_path('../storage/app/uploads/avatars/'.Auth::user()->id.'\\'.$filename));
+            $user = Auth::user();
+            $user->avatar = '../storage/app/uploads/avatars/'.Auth::user()->id.'/'.$filename;
+            $user->save();
+        }
+        
+       return view('home',array('user' => Auth::user()));
+    }
 }
