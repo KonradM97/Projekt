@@ -47,19 +47,14 @@
 
             @if (Route::has('password.request'))
                 <a class="btn btn-secondary" href="{{ route('password.request') }}">
-<<<<<<< HEAD
                     {{ __('Zapomniane hasło?') }}
-=======
                     {{ __('Forgot Your Password?') }}
->>>>>>> 6482298349b823b795641b0be72eab2642f0e4d0
+
                 </a>
             @endif
         </form>
     </div>
 </section>
 
-<<<<<<< HEAD
+
 @endsection
-=======
-@endsection
->>>>>>> 6482298349b823b795641b0be72eab2642f0e4d0
