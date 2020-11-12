@@ -64,9 +64,9 @@ class HomeController extends Controller
                 {
                     mkdir ( '../storage/app/uploads/'.Auth::user()->id);
                 }
-        if(!is_dir('../storage/app/covers/'.Auth::user()->id))
+        if(!is_dir('../storage/app/uploads/covers/'.Auth::user()->id))
                 {
-                    mkdir ( '../storage/app/covers/'.Auth::user()->id);
+                    mkdir ( '../storage/app/uploads/covers/'.Auth::user()->id);
                 }
         $file = $request->file('source');
         $filename = Auth::user()->id.time().".".$file->getClientOriginalExtension();
@@ -76,9 +76,9 @@ class HomeController extends Controller
         {
             $filecover = $request->file('cover');
             $filecovername = Auth::user()->id.time().".".$filecover->getClientOriginalExtension();
-            $coversource = $request->file('cover')->storePubliclyAs('covers/'.Auth::user()->id,$filecovername);
+            $coversource = $request->file('cover')->storePubliclyAs('uploads/covers/'.Auth::user()->id,$filecovername);
             $cover = DB::table('covers')->insertGetId(
-            ['source' => '../storage/app/'.$coversource, 'name'=>$filecovername]
+            ['source' => '../storage/app/'.$coversource]
             );
         }
        //Baza danych
