@@ -1,8 +1,19 @@
+<<<<<<< HEAD
 html, body {
                 background-color: #fff;
-                color: #636b6f;
+                color: #333;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 height: 100vh;
                 margin: 0;
             }
+=======
+html, body {
+                background-color: #fff;
+                color: #333;
+                font-family: 'Nunito', sans-serif;
+                font-weight: 200;
+                height: 100vh;
+                margin: 0;
+            }
+>>>>>>> 6482298349b823b795641b0be72eab2642f0e4d0

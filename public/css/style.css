@@ -1,6 +1,7 @@
+<<<<<<< HEAD
 body{
-    background-color:#444;
-    color: white;
+    background-color:#333;
+    color: #fff;
 
 }
 .py-4
@@ -31,6 +32,49 @@ vertical-align:top;
     display: inline-block;
     background-color: #009999;
     width: 30%;
+    vertical-align:top;
+}
+#addSong
+{
+    background-color: #0099ff;
+}
+.container
+{
+    max-width: 100%;
+}
+=======
+body{
+    background-color:#333;
+    color: #fff;
+}
+.py-4
+{
+    margin-bottom: 100px;
+}
+#forms
+{
+    text-align: center;
+    font-family:monospace;
+}
+#addtrack
+{
+    display: inline-block;
+    background-color: #095500;
+    width: 30%;
+    vertical-align:top;
+}
+#addalbum
+{
+    display: inline-block;
+    background-color: #999900;
+    width: 30%;
+    vertical-align:top;
+}
+#addtracktoalbum
+{
+    display: inline-block;
+    background-color: #009999;
+    width: 30%;
 vertical-align:top;
 }
 #addSong
@@ -41,3 +85,4 @@ vertical-align:top;
 {
     max-width: 100%;
 }
+>>>>>>> 6482298349b823b795641b0be72eab2642f0e4d0

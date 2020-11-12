@@ -11,7 +11,7 @@ and open the template in the editor.
 {
     padding-right: 15px;
     padding-left: 15px;
-    width: 80%;
+    width: 70%;
     margin-left: auto;
     margin-right: auto;
     color: white;
@@ -23,10 +23,33 @@ and open the template in the editor.
    display:inline-block;
    width: 70%;
 }
-#info
+/*Pominięcie odtwarzacza*/
+#choose_content
+{
+    margin-bottom: 100px;
+}
+table thead
+{
+    text-align: left;
+}
+table td, th
+{
+    padding: 20px; 
+}
+#profile_all
+{
+    font-weight: lighter;
+}
+#userinfo
 {
     float: right;
     width: 30%;
+    padding-left: 2%;
+    border-left: 2px,#686868;
+}
+#info img
+{
+    margin-bottom: 5px;
 }
 .singlealbum
 {
@@ -45,6 +68,8 @@ and open the template in the editor.
     font-weight: bolder;
     border: none;
     margin-bottom: 10px;
+    width: 20%;
+    font-size: x-large;
 }
 #choose button:hover
 {
@@ -52,4 +77,37 @@ and open the template in the editor.
     border-color: black;
     border-bottom-style: solid;
     background-color: #0eb165
+}
+#userinfo button
+{
+    background-color: #0eb165;
+    border: none;
+    border-radius: 5%;
+    color: white;
+    margin: 5px;
+    margin-left: 0;
+    width: 50%;
+    cursor: pointer;
+}*/
+#userinfo button:hover
+{
+    background-color: #00582b;
+}
+#userinfo button img
+{
+    margin-right: 5px;
+}
+@media(max-width: 720px) {
+    #listing
+    {
+        width: 100%;
+    }
+    #userinfo
+    {
+        width: 100%;   
+    }
+    #choose button
+    {
+        width: 50%;
+    }
 }
