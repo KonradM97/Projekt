@@ -71,6 +71,11 @@ a {
 #pasek:focus {
     outline: none;
 }
+/* MainPage*/
+#mainPage
+{
+    margin-bottom: 100px;
+}
 
 /* Showcase */
 .showcase {
@@ -154,6 +159,21 @@ a {
     outline: none;
 }
 
+/* Playerblade */
+#newest_followed_albums
+{
+    width: 100%;
+}
+#newest_songs
+{
+    width: 50%;
+    float: left;
+}
+#newest_albums
+{
+    width: 50%;
+    float: right;
+}
 /* Tablety */
 @media(max-width: 768px) {
     .grid,

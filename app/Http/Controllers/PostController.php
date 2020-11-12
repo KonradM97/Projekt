@@ -22,10 +22,25 @@ class PostController extends Controller
             }
             else 
             {
-                //usuń like
+                //usuń like (to pierwesze można jako wyzwalacz)
                 DB::update("UPDATE `songs` SET `likes` = `likes`-1 WHERE `songs`.`idsongs` =".$r['songId']);
                 $result = DB::delete("DELETE from `likes` where `userId` = ".$userId." AND songId = ".$r['songId']);
             }
        }
+    }
+    public function followPost(Request $request)
+    {
+        $userId = Auth::user()->id;
+        $follows = $request['follower'];
+        $repeat = DB::select('SELECT follower, follows FROM user_follows WHERE follower='.$userId.' AND  follows='.$follows);
+        if($repeat==[])
+            {
+                //dodaj like z wyzwalaczem dodającym o 1
+                $result = DB::insert("INSERT INTO `user_follows` (`follower`, `follows`) VALUES ('".$userId."', '".$follows."')");      
+            }
+        else
+        {
+            DB::delete("DELETE from `user_follows` where `follower` = ".$userId." AND follows = ".$follows);
+        }
     }
 }
