@@ -1,15 +1,6 @@
 @extends('layouts.app2')
 
 @section('content')
-<!--
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-@@ -70,4 +71,49 @@
-        </div>
-    </div>
-</div>
--->
 
 <section class="login text-center">
     <div class="container">

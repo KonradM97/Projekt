@@ -133,13 +133,11 @@ $profile = new Profile();
         </div>
         <div class="showlist" id="profile_playlist">
            <h1>Playlisty</h1><br/>
-<<<<<<< HEAD
+
            <?php
            $profile->fetch_playlists($user->id);
            ?>
-=======
 
->>>>>>> 6482298349b823b795641b0be72eab2642f0e4d0
         </div>
     </div>
    </div>

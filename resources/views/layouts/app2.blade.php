@@ -46,7 +46,6 @@
                         <li><a href="{{ route('home') }}">{{ __('Panel') }}</a></li>
                         <li><a href="user={{ Auth::user()->id }}">{{ __('Profil') }}</a></li>
                         <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Wyloguj') }}</a></li>
-                        <li><img src="{{ Auth::user()->avatar }}" class="rounded float-right" width="50px" height="50px"></li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
@@ -67,5 +66,3 @@
 
 </body>
 </html>
-</html>
-
