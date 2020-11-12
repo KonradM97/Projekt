@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 
 @section('content')
 <?php
@@ -47,7 +47,7 @@ $profile = new Profile();
                 }
   </script>
 <div class="content">
-   <div id="listing"> 
+   <div id="listing">
     <div id="choose">
         <button onclick="showAll()">Wszystko</button>
         <button onclick="showSongs()">Utwory</button>
@@ -72,7 +72,7 @@ $profile = new Profile();
         </div>
         <div class="showlist" id="profile_playlist">
            <h1>Playlisty</h1><br/>
-           
+
         </div>
     </div>
    </div>
@@ -82,6 +82,6 @@ $profile = new Profile();
         <h3>Obserwujący</h3>
         <h3>Obserwowani</h3>
     </div>
-    
+
 </div>
 @endsection

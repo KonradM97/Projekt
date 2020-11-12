@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 
 @section('content')
 <link href="css/homebladestyle.css" rel="stylesheet">
@@ -6,9 +6,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            
 
-            
+
+
         </div>
     </div>
 </div>

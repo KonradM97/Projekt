@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
+
+:root {
+    --primary-color: #333;
+    --secondary-color: #008700;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    color: #fff;
+    background-color: #333;
+    line-height: 1.6;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--primary-color);
+    color: #fff;
+    height: 70px;
+}
+
+.navbar ul {
+    display: flex;
+}
+
+.navbar a {
+    color: #fff;
+    padding: 10px;
+    margin: 0 5px;
+}
+
+.navbar a:hover {
+    border-bottom: 2px var(--secondary-color) solid;
+}
+
+.navbar .flex {
+    justify-content: space-between;
+}
+
+.navbar .logo {
+    font-size: 26px;
+}
+
+.navbar .logo:hover {
+    border: 0;
+}
+
+#pasek {
+    border: 0;
+    border-bottom: 1px solid var(--secondary-color);
+    background-color: (var(--primary-color));
+    color: #fff;
+    text-align: right;
+}
+
+#pasek:focus {
+    outline: none;
+}
+
+/* Showcase */
+.showcase {
+    height: 400px;
+    background-color: var(--secondary-color);
+    color: #fff;
+    position: relative;
+}
+
+.showcase h1 {
+    font-size: 40px;
+}
+
+.showcase p {
+    margin: 20px 0;
+}
+
+.showcase .grid {
+    overflow: visible;
+    grid-template-columns: 55% 45%;
+    gap: 30px;
+}
+
+.showcase-card {
+    position: relative;
+    top: 60px;
+    height: 250px;
+    width: 250px;
+    padding: 40px;
+    z-index: 100;
+    justify-self: flex-end;
+    transition: transform 0.2s ease-in;
+}
+
+.showcase-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.showcase-card:hover {
+    transform: translateY(-15px);
+}
+
+.showcase::before, .showcase::after {
+    content: '';
+    position: absolute;
+    height: 100px;
+    bottom: -70px;
+    right: 0;
+    left: 0;
+    background: var(--primary-color);
+    transform: skewY(-3deg);
+    -webkit-transform: skewY(-3deg);
+    -moz-transform: skewY(-3deg);
+    -ms-transform: skewY(-3deg);
+}
+
+#mainPage {
+    padding-top: 150px;
+}
+
+/* Login */
+.login .login-form-control {
+    margin: 30px 0;
+}
+
+.login input[type='email'],
+.login input[type='password'],
+.login input[type='text'] {
+    border: 0;
+    border-bottom: 1px solid var(--secondary-color);
+    width: 50%;
+    padding: 3px;
+    font-size: 16px;
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.login input:focus {
+    outline: none;
+}
+
+/* Tablety */
+@media(max-width: 768px) {
+    .grid,
+    .showcase .grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+    }
+
+    .showcase {
+        height: auto;
+    }
+
+    .showcase-text {
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    .showcase-card {
+        justify-self: center;
+        margin: auto;
+    }
+}
+
+/* Telefony */
+@media(max-width: 500px) {
+    .navbar {
+        height: 110px;
+    }
+
+    .navbar .flex {
+        flex-direction: column;
+    }
+
+    .navbar ul {
+        padding: 10px;
+    }
+}

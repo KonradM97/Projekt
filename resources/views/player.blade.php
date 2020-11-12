@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 
 @section('content')
 <?php
@@ -10,7 +10,7 @@
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-        
+
         <script>jQuery(document).ready(function($) {
             $(".clickable-row").click(function() {
                 window.location = $(this).data("href");
@@ -21,14 +21,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Player</title>
-        <!-- Styles -->  
-        
+        <!-- Styles -->
+
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/style2.css" rel="stylesheet">
+        <link href="css/utilities.css" rel="stylesheet">
     </head>
 
     <body>
-        <div id="mainPage">
-        <?php 
+
+        <section class="showcase">
+            <div class="container grid">
+                <div class="showcase-text">
+                    <h1>Witaj na Songerr!</h1>
+                    <p>
+                        Songerr to nowa platforma do słuchania muzyki
+                        i dzielenia się nią z innymi. Śledź ulubionych artystów
+                        i zapisuj najnowsze wydania w swojej bibliotece.
+                        A wszystko to w zasięgu kilku kliknięć!
+                    </p>
+                </div>
+
+                <div class="showcase-card card">
+                    <i class="fas fa-music fa-8x"></i>
+                </div>
+            </div>
+        </section>
+
+        <div id="mainPage" class="container">
+        <?php
             $main = new MainPage();
             $search = new Search();
             if(isset($songs)&&$songs!=[]) {
@@ -44,11 +65,10 @@
                 $search->showPlaylists($playlists);
             }
         ?>
-        <h1>Strona główna</h1>
         @guest
         <h2>Najnowsze utwory</h2>
-        <?php 
-        $main->fetch_newest_songs(); 
+        <?php
+        $main->fetch_newest_songs();
         ?>
         <h2>Najnowsze albumy</h2>
         <?php
@@ -56,12 +76,12 @@
         ?>
         @else
         <h2>Najnowsze albumy obserwowanych</h2>
-        <?php 
+        <?php
         $main->fetch_followers_songs();
         ?>
         <h2>Najnowsze utwory</h2>
-        <?php 
-        $main->fetch_newest_songs(); 
+        <?php
+        $main->fetch_newest_songs();
         ?>
         <h2>Najnowsze albumy</h2>
         <?php

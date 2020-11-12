@@ -1,7 +1,6 @@
 body{
-    background-color:#444;
-    color: white;
-
+    background-color:#333;
+    color: #fff;
 }
 .py-4
 {
@@ -17,14 +16,14 @@ body{
     display: inline-block;
     background-color: #095500;
     width: 30%;
-vertical-align:top;
+    vertical-align:top;
 }
 #addalbum
 {
     display: inline-block;
     background-color: #999900;
     width: 30%;
-vertical-align:top;
+    vertical-align:top;
 }
 #addtracktoalbum
 {

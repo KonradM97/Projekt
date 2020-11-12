@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 
 @section('content')
 <?php
@@ -9,7 +9,7 @@
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-        
+
         <script>jQuery(document).ready(function($) {
             $(".clickable-row").click(function() {
                 window.location = $(this).data("href");
@@ -20,15 +20,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Player</title>
-        <!-- Styles -->  
-        
+        <!-- Styles -->
+
         <link href="css/style.css" rel="stylesheet">
     </head>
 
     <body>
-        <h1>Wyniki wyszukiwania</h1>    
-        <?php 
-            
+        <h1>Wyniki wyszukiwania</h1>
+        <?php
+
             $search = new Search();
             if(isset($songs)&&$songs!=[]) {
                    $search->showSongs($songs);
@@ -43,7 +43,7 @@
                 $search->showPlaylists($playlists);
             }
         ?>
-        
+
     </body>
     <script>
         $(document).ready(function(){
