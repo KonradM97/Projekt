@@ -9,29 +9,29 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts 
+    <!-- Scripts
     <script src="{{ asset('js/app.js') }}" defer></script>-->
 <!--Własny styl -->
-    
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- Styles 
+    <!-- Styles
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet"href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
                      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
                      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
     <link href="css/style.css" rel="stylesheet">
-    
+
 </head>
 <body>
     <div id="app">
@@ -49,7 +49,7 @@
                     <ul class="navbar-nav mr-auto">
 
                     </ul>
-                    <div class="search-panel"> 
+                    <div class="search-panel">
             <!-- Formularz wyszukiwania-->
             <form action="search" method="GET" name="search_form">
                 <div class="input-group mb-3 w-50 mx-auto">
@@ -58,8 +58,8 @@
                         <button class="btn btn-success" type="submit">Szukaj</button>
                     </div>
                 </div>
-            </form>         
-        </div>
+            </form>
+            </div>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -73,13 +73,13 @@
                                 </li>
                             @endif
                         @else
-                       
+
                             <li class="nav-item dropdown">
-                                
+
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span> <img src="{{ Auth::user()->avatar }}" class="rounded float-right" width="50px" height="50px"></img>
                                 </a>
-                                
+
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('home') }}"
                                        >
@@ -104,14 +104,14 @@
                 </div>
             </div>
         </nav>
-        
+
         <main class="py-4">
             @yield('content')
         </main>
-        
+
     </div>
-<?php
-                $player = new Player(); 
-                ?>
+    <?php
+        $player = new Player();
+    ?>
 </body>
 </html>

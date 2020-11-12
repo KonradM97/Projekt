@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 
 @section('content')
 <link href="css/homebladestyle.css" rel="stylesheet">
@@ -18,7 +18,7 @@
                 <input type="file" name="avatar"><br/>
                 @csrf
                 <input type="submit" value="Dodaj zdjęcie" class="pull-right btn btn-sm btn-primary"><br/>
-                
+
             </form>
         </div>
             </div>
@@ -33,7 +33,7 @@
                      $('#addAlbumForm').slideUp(0);
                      $('#addPlaylistForm').slideUp(0);
                     $('#albums').hide();
-                    
+
                 });
                 function hideall()
                 {
@@ -53,7 +53,7 @@
                 }
                 function setAlbum(a)
                 {
-                    
+
                     document.getElementById('albumset').value=a;
                 }
                 function showAddAlbum()
@@ -68,15 +68,15 @@
                 }
                             </script>
             <div class="row">
-                <?php 
+                <?php
                 if(isset($error))
                 {
                     echo '<p style="color:red">'.$error.'</p>';
                 }
                 ?>
-                
-                
-                
+
+
+
             <div class="form-group col-md-6" id="addSongForm">
                             <form enctype="multipart/form-data" action="addSong" method="POST">
                                 <label>Tytuł</label><input type="text" class="form-control" name="title" required><br/>
@@ -87,7 +87,7 @@
                                 <label>Autor towarzyszący(opcj.)</label><input type="text" class="form-control" name="feat"><br/>
                                 <label>Licencja(opcj.)</label><input type="text" class="form-control" name="license"><br/>
                                 @csrf
-                                
+
                                 <button type="submit" name="addSong" class="btn btn-primary">Dodaj</button>
                             </form>
             </div>
@@ -106,7 +106,7 @@
                                         echo '<div class="col-md-12" id="album"><a href="#" onclick="setAlbum('.$a['idalbums'].')">'
                                        .$a['title'].'</a></div>';
                                     }
-                                    
+
                                 ?>
                             </div>
             <div class="form-group col-md-12" id="addAlbumForm">
@@ -116,23 +116,23 @@
                                 <label>Gatunek(opcj.)</label><input type="text" class="form-control" name="genre" ><br/>
                                 <label>Okładka(opcj.)</label><input type="file" class="form-control" name="cover"><br/>
                                 @csrf
-                                
+
                                 <button type="submit" name="addAlbum" class="btn btn-primary">Dodaj</button>
                             </form>
             </div>
                 <div class="form-group col-md-12" id="addPlaylistForm">
                             <form enctype="multipart/form-data" action="addPlaylist" method="POST">
                                 <label>Tytuł</label><input type="text" class="form-control" name="name" required><br/>
-                                <label>Publiczna?</label><input type="checkbox" class="form-control" name="public" value="publiczna" ><br/>                                
+                                <label>Publiczna?</label><input type="checkbox" class="form-control" name="public" value="publiczna" ><br/>
                                 @csrf
-                                
+
                                 <button type="submit" name="addPlaylist" class="btn btn-primary">Dodaj</button>
                             </form>
             </div>
 
-                            
+
             </div>
-            
+
         </div>
     </div>
 </div>
