@@ -23,9 +23,9 @@
         <title>Player</title>
         <!-- Styles -->
 
-        <link href="css/style.css" rel="stylesheet">
+        <!-- <link href="css/style.css" rel="stylesheet">
         <link href="css/style2.css" rel="stylesheet">
-        <link href="css/utilities.css" rel="stylesheet">
+        <link href="css/utilities.css" rel="stylesheet"> -->
     </head>
 
     <body>
@@ -49,55 +49,55 @@
         </section>
 
         <div id="mainPage" class="container">
-        <?php
-            $main = new MainPage();
-            $search = new Search();
-            if(isset($songs)&&$songs!=[]) {
-                   $search->showSongs($songs);
-            }
-            if(isset($users)&&$users!=[]) {
-                   $search->showUsers($users);
-            }
-            if(isset($albums)&&$albums!=[]) {
-                   $search->showAlbums($albums);
-            }
-            if(isset($playlists)&&$playlists!=[]){
-                $search->showPlaylists($playlists);
-            }
-        ?>
-        @guest
-        <h2>Najnowsze utwory</h2>
-        <?php
-        $main->fetch_newest_songs();
-        ?>
-        <h2>Najnowsze albumy</h2>
-        <?php
-        $main->fetch_newest_albums();
-        ?>
-        @else
-        <h2>Najnowsze albumy obserwowanych</h2>
-        <?php
-        $main->fetch_followers_songs();
-        ?>
-        <h2>Najnowsze utwory</h2>
-        <?php
-        $main->fetch_newest_songs();
-        ?>
-        <h2>Najnowsze albumy</h2>
-        <?php
-        $main->fetch_newest_albums();
-        ?>
-        @endguest
+            <?php
+                $main = new MainPage();
+                $search = new Search();
+                if(isset($songs)&&$songs!=[]) {
+                    $search->showSongs($songs);
+                }
+                if(isset($users)&&$users!=[]) {
+                    $search->showUsers($users);
+                }
+                if(isset($albums)&&$albums!=[]) {
+                    $search->showAlbums($albums);
+                }
+                if(isset($playlists)&&$playlists!=[]){
+                    $search->showPlaylists($playlists);
+                }
+            ?>
+            @guest
+                <h2>Najnowsze utwory</h2>
+                <?php
+                    $main->fetch_newest_songs();
+                ?>
+                <h2>Najnowsze albumy</h2>
+                <?php
+                    $main->fetch_newest_albums();
+                ?>
+            @else
+                <h2>Najnowsze albumy obserwowanych</h2>
+                <?php
+                    $main->fetch_followers_songs();
+                ?>
+                <h2>Najnowsze utwory</h2>
+                <?php
+                    $main->fetch_newest_songs();
+                ?>
+                <h2>Najnowsze albumy</h2>
+                <?php
+                    $main->fetch_newest_albums();
+                ?>
+            @endguest
         </div>
     </body>
     <script>
         $(document).ready(function(){
-                    //$('#wyszukaj').hide();
-                    $('#albums').hide();
-                });
-                function showsearch(){
-                    $('#wyszukaj').slideToggle(500);
-                }
+            //$('#wyszukaj').hide();
+            $('#albums').hide();
+        });
+        function showsearch(){
+            $('#wyszukaj').slideToggle(500);
+        }
     </script>
 </html>
 @endsection
