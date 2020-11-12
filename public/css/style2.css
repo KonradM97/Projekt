@@ -71,15 +71,12 @@ a {
 #pasek:focus {
     outline: none;
 }
-<<<<<<< HEAD
 /* MainPage*/
 #mainPage
 {
     margin-bottom: 100px;
 }
-=======
 
->>>>>>> 6482298349b823b795641b0be72eab2642f0e4d0
 /* Showcase */
 .showcase {
     height: 400px;
@@ -162,7 +159,6 @@ a {
     outline: none;
 }
 
-<<<<<<< HEAD
 /* Playerblade */
 #newest_followed_albums
 {
@@ -178,8 +174,6 @@ a {
     width: 50%;
     float: right;
 }
-=======
->>>>>>> 6482298349b823b795641b0be72eab2642f0e4d0
 /* Tablety */
 @media(max-width: 768px) {
     .grid,
@@ -216,8 +210,4 @@ a {
     .navbar ul {
         padding: 10px;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 6482298349b823b795641b0be72eab2642f0e4d0
