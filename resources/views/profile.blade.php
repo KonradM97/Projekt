@@ -147,7 +147,21 @@ $profile = new Profile();
         @guest
         @else
         <button onclick="follow()" id="follow" class="follow" title="Obserwuj"><img  id="followicon" src="img/follow.png"  width="20px" height="20px">Obserwuj</button><br />
-        <button title="Wiadomość"><img src="img/message.png" width="20px" height="20px">Wiadomość</button>
+        <button  title="Wiadomość" id="message"><img src="img/message.png" width="20px" height="20px">Wiadomość</button>
+        
+<div id="messageform" class="modal">
+
+<!-- Modal content -->
+<div class="modal-content">
+  <span class="close">&times;</span>
+  <h2>Nowa wiadomość</h2>
+  <form aaction="sendmessage" method="POST" name="message_form">
+      <input type="text" name="message_form">
+      <input type="submit" name="send" value="Wyślij"/>
+  </form>
+</div>
+
+</div>
         @endguest
         <h3>Obserwujący <?php $profile->count_followers($user->id);?></h3>
         <?php
@@ -160,4 +174,30 @@ $profile = new Profile();
     </div>
 
 </div>
+<script>
+var modal = document.getElementById("messageform");
+
+// Get the button that opens the modal
+var btn = document.getElementById("message");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
 @endsection
