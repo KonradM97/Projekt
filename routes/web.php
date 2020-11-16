@@ -29,5 +29,8 @@ Route::get('/search', 'SearchController@search');
 //kontroler polubień z odtwarzacza
 Route::post('/like', ['uses' => 'PostController@likePost',
     'as'=> 'like']);
+//kontroler followu
+Route::post('/follow', ['uses' => 'PostController@followPost',
+    'as'=> 'follow']);
 //profil
 Route::get('/user={id}', 'UserController@profile')->name('user.profile');
