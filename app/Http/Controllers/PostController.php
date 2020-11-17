@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use Laravel\Ui\Presets\React;
 
 class PostController extends Controller
 {
@@ -42,5 +43,13 @@ class PostController extends Controller
         {
             DB::delete("DELETE from `user_follows` where `follower` = ".$userId." AND follows = ".$follows);
         }
+    }
+    public function sendMessage(Request $request)
+    {
+        
+        ?>
+        <script type="text/javascript">alert("w7ywol");</script>
+                <?php
+        
     }
 }

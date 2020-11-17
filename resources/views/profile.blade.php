@@ -155,7 +155,7 @@ $profile = new Profile();
 <div class="modal-content">
   <span class="close">&times;</span>
   <h2>Nowa wiadomość</h2>
-  <form aaction="sendmessage" method="POST" name="message_form">
+  <form action="sendmessage" method="POST" name="message_form">
       <input type="text" name="message_form">
       <input type="submit" name="send" value="Wyślij"/>
   </form>

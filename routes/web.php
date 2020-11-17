@@ -32,5 +32,7 @@ Route::post('/like', ['uses' => 'PostController@likePost',
 //kontroler followu
 Route::post('/follow', ['uses' => 'PostController@followPost',
     'as'=> 'follow']);
+//Kontroler wiadomości
+Route::post('/sendmessage', '');
 //profil
 Route::get('/user={id}', 'UserController@profile')->name('user.profile');
