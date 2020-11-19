@@ -20,10 +20,12 @@ Route::get('/profile','UserController@profile')->name('profile');
 Route::post('/home', 'HomeController@update_avatar');
 Auth::routes();
 //Kontroler profilu home
-Route::post('/addAlbum','HomeController@addAlbum');
+Route::post('/addAlbum','HomeController@addAlbum');\
 Route::post('/addPlaylist','HomeController@addPlaylist');
 Route::post('/addSong','HomeController@addSong');
 Route::get('/home', 'HomeController@index')->name('home');
+//Kontroler wiadomości
+Route::get('/messages','MessagesController@mymessages')->name('messages');
 //kontroler Wyszukiwania
 Route::get('/search', 'SearchController@search');
 //kontroler polubień z odtwarzacza
@@ -33,6 +35,8 @@ Route::post('/like', ['uses' => 'PostController@likePost',
 Route::post('/follow', ['uses' => 'PostController@followPost',
     'as'=> 'follow']);
 //Kontroler wiadomości
-Route::post('/sendmessage', '');
+Route::get('/sendmessage', ['uses' => 'PostController@sendMessage',
+'as'=> 'sendmessage']);
 //profil
 Route::get('/user={id}', 'UserController@profile')->name('user.profile');
+?>

@@ -1,3 +1,8 @@
+<?php
+use App\Messages;
+$messages = new Messages();
+
+?>
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -16,9 +21,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
     <link rel="stylesheet" href="css/style2.css">
     <link rel="stylesheet" href="css/utilities.css">
-
+    
     <title>{{ config('app.name', 'Laravel') }}</title>
 </head>
+
 <body>
     <!-- Navbar -->
     <div class="navbar">
@@ -43,12 +49,20 @@
                             </li>
                         @endif
                     @else
+                        <li><button onclick='window.location.href="{{ route('messages') }}"' height=70px width=70px><img src="img/message.png"><p id="unread_count"><p></button></li>
+                        <script>
+                            document.getElementById("unread_count").innerHTML = <?php echo json_encode($messages->getMessageCount()); ?>;
+                        </script>
                         <li><a href="{{ route('home') }}">{{ __('Panel') }}</a></li>
                         <li><a href="user={{ Auth::user()->id }}">{{ __('Profil') }}</a></li>
                         <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Wyloguj') }}</a></li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
+                        <script>
+                            
+                            
+    </script>
                     @endguest
                 </ul>
             </nav>

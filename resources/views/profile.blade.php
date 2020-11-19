@@ -63,8 +63,7 @@ $profile = new Profile();
                 @guest
                 @else
                 function follow()
-                {
-                    
+                {  
                     var follower = <?php echo json_encode($user->id); ?>;
                     event.preventDefault();
                             var isLike = event.target.previousElementSibling == null;
@@ -92,6 +91,30 @@ $profile = new Profile();
                         icon=true;
                     }
                     
+                }
+                function sendmessage()
+                {
+                    console.log('Ja latam!');
+                    modal.style.display = "none";
+                    //Ajax to zło (robione od 21-23:30 bo cudzysłowy)
+                    //Zrobić walidację
+                    var textval, rec;
+                    var val = String(document.getElementById("messageText").value);
+                    var reciver = <?php echo json_encode($user->id); ?>;
+                    console.log(textval);
+                    $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            $.ajax({
+                                type: 'GET',
+                                url: 'sendmessage',
+                                data: {textval: val, rec: reciver},
+                                contentType: 'application/json; charset=utf-8',
+                                dataType: 'json'
+                            });
+                        
                 }
                 @endguest
   </script>
@@ -155,10 +178,9 @@ $profile = new Profile();
 <div class="modal-content">
   <span class="close">&times;</span>
   <h2>Nowa wiadomość</h2>
-  <form action="sendmessage" method="POST" name="message_form">
-      <input type="text" name="message_form">
-      <input type="submit" name="send" value="Wyślij"/>
-  </form>
+
+      <textarea id="messageText" >Napisz</textarea>
+      <button id="sendmessage" onclick="sendmessage()">Wyślij</button>
 </div>
 
 </div>
@@ -176,7 +198,7 @@ $profile = new Profile();
 </div>
 <script>
 var modal = document.getElementById("messageform");
-
+var sendmessagebtn = document.getElementById("sendmessage");
 // Get the button that opens the modal
 var btn = document.getElementById("message");
 
@@ -187,7 +209,6 @@ var span = document.getElementsByClassName("close")[0];
 btn.onclick = function() {
   modal.style.display = "block";
 }
-
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";

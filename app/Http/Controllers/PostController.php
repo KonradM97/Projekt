@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use Laravel\Ui\Presets\React;
-
+use SebastianBergmann\Environment\Console;
+use Validator;
 class PostController extends Controller
 {
     public function likePost(Request $request)
@@ -46,10 +47,13 @@ class PostController extends Controller
     }
     public function sendMessage(Request $request)
     {
+        //walidacja
         
-        ?>
-        <script type="text/javascript">alert("w7ywol");</script>
-                <?php
-        
+            $r=$request;
+            $sender = Auth::user()->id;
+            $reciver =$r['rec'];
+            $te = $r['textval'];
+            DB::insert('INSERT INTO `messages` (`sender`, `reciver`, `messagetext`) VALUES ("'.$sender.'", "'.$reciver.'", "'.$te.'")');
+
     }
 }

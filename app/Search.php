@@ -104,9 +104,5 @@ class Search {
                      }
                      echo '<tbody>';
     }
-    //Sprawdź okładkę
-    private function checkCover()
-    {
-        
-    }
+
 }

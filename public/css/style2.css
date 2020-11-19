@@ -21,7 +21,29 @@ body {
 ul {
     list-style-type: none;
 }
-
+/*guzik wiadomości*/
+ul button
+{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border-radius: 50%;
+    background-color: none;
+    border-color: transparent;
+}
+ul button:hover
+{
+    border-color: #008700;
+    cursor: pointer;
+    
+}
+ul p
+{
+    color: white;
+    font-weight: bolder;
+    display: inline-block;
+    float: right;
+    top: 0;
+}
 a {
     text-decoration: none;
     color: #fff;
