@@ -39,4 +39,7 @@ Route::get('/sendmessage', ['uses' => 'PostController@sendMessage',
 'as'=> 'sendmessage']);
 //profil
 Route::get('/user={id}', 'UserController@profile')->name('user.profile');
+//Zmiana hasła
+Route::get('change-password', 'ChangePasswordController@index');
+Route::post('change-password', 'ChangePasswordController@store')->name('change.password');
 ?>

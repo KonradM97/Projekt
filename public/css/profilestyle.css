@@ -62,6 +62,10 @@ and open the template in the editor.
     cursor: pointer;
   }
   /* Reszta */
+  #changepasswordButton
+{
+    float: right;
+}
 .content
 {
     padding-right: 15px;
