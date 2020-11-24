@@ -45,9 +45,13 @@ and open the template in the editor.
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 30%;
+    text-align: center;
   }
-  
+  .modal-content input
+  {
+      width: 100%;
+  }
   /* The Close Button */
   .close {
     color: #aaaaaa;
@@ -68,10 +72,35 @@ and open the template in the editor.
     text-align: center;
     font-family: monospace;
 }
-.addbutton
+
+
+label
+{
+    text-align: center;
+}
+.userbutton
+{
+    float: left;
+}
+#imageinfo
+{
+    float: right;
+}
+#addbuttons
+{
+    width: 100%;
+    display: inline;
+}
+#addbuttons button
 {
     background-color: #0eb165;
+    border-radius: 5%;
     width: 20%;
+    height: 50px;
+}
+#userinfo
+{
+    height: 150px;
 }
 #albums
 {

@@ -21,23 +21,27 @@
                 ?>
             </div>
             <div class="row">
-                <div class="col-md-12 col-md-offset">
-                <img src="{{Auth::user()->avatar}}" style="width: 150px;height:150px; float: left; border-radius: 50%"/>
-                
-                <form enctype="multipart/form-data" action="home" method="POST">
-                <label>Nowe zdjęcie</label><br/>
-                <input type="file" name="avatar"><br/>
-                @csrf
-                <input type="submit" value="Dodaj zdjęcie" class="pull-right btn btn-sm btn-primary"><br/>
+                <div id="userinfo" class="col-md-12 col-md-offset">
+                    <button class="userbutton" id="changepasswordButton">Zmień hasło</button>
+                    <button class="userbutton" id="changenameButton">Zmień nazwę</button>
+                <div id="imageinfo">
+                    <img src="{{Auth::user()->avatar}}" style="width: 150px;height:150px; float: left; border-radius: 50%"/>
+                    
+                    <form enctype="multipart/form-data" action="home" method="POST">
+                    <label>Nowe zdjęcie</label><br/>
+                    <input type="file" name="avatar"><br/>
+                    @csrf
+                    <input type="submit" value="Dodaj zdjęcie" class="pull-right btn btn-sm btn-primary"><br/>
+                </div>
                 
             </form>
-            <button title="changepasswdBtn" id="changepasswordButton">Zmień hasło</button>
+            
         </div>
             </div>
-            <div class="row">
-                <button class="col-md-4 col-md-offset add" class="addbutton" id="addSong" onclick="showAddSong()" >Dodaj utwór</button>
-                 <button class="col-md-4 col-md-offset add" class="addbutton" id="addAlbum"onclick="showAddAlbum()">Dodaj album</button>
-                <button class="col-md-4 col-md-offset add" class="addbutton" id="addPlaylist" onclick="showAddPlaylist()">Dodaj playlistę</button>
+            <div id="addbuttons" class="row">
+                <button class="col-md-4 col-md-offset add" id="addSong" onclick="showAddSong()" >Dodaj utwór</button>
+                 <button class="col-md-4 col-md-offset add" id="addAlbum" onclick="showAddAlbum()">Dodaj album</button>
+                <button class="col-md-4 col-md-offset add" id="addPlaylist" onclick="showAddPlaylist()">Dodaj playlistę</button>
             </div>
             <script type="text/javascript">
                 $(document).ready(function(){
