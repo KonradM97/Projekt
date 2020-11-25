@@ -4,7 +4,6 @@
 <link href="css/homebladestyle.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <div class="content">
-    <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="row">
                 <h1>Panel użytkownika {{ Auth::user()->name}}</h1>
@@ -22,26 +21,25 @@
             </div>
             <div class="row">
                 <div id="userinfo" class="col-md-12 col-md-offset">
-                    <button class="userbutton" id="changepasswordButton">Zmień hasło</button>
-                    <button class="userbutton" id="changenameButton">Zmień nazwę</button>
-                <div id="imageinfo">
-                    <img src="{{Auth::user()->avatar}}" style="width: 150px;height:150px; float: left; border-radius: 50%"/>
-                    
-                    <form enctype="multipart/form-data" action="home" method="POST">
-                    <label>Nowe zdjęcie</label><br/>
-                    <input type="file" name="avatar"><br/>
-                    @csrf
-                    <input type="submit" value="Dodaj zdjęcie" class="pull-right btn btn-sm btn-primary"><br/>
+                    <button class="userbutton" id="changepasswordButton">Zmień hasło</button>      
+                    <div id="imageinfo">
+                        <img src="{{Auth::user()->avatar}}" style="width: 50px;height:50px; float: right; border-radius: 50%"/>
+                        <label>Nowe zdjęcie</label><br/>
+                        <form enctype="multipart/form-data" action="home" method="POST">
+                        <input type="file" name="avatar"><br/>
+                        @csrf
+                        <input type="submit" value="Dodaj zdjęcie" class="pull-right btn btn-sm btn-primary"><br/>
+                        </form>
+                    </div>
                 </div>
-                
-            </form>
-            
-        </div>
             </div>
-            <div id="addbuttons" class="row">
-                <button class="col-md-4 col-md-offset add" id="addSong" onclick="showAddSong()" >Dodaj utwór</button>
-                 <button class="col-md-4 col-md-offset add" id="addAlbum" onclick="showAddAlbum()">Dodaj album</button>
-                <button class="col-md-4 col-md-offset add" id="addPlaylist" onclick="showAddPlaylist()">Dodaj playlistę</button>
+            <div class="row">
+                <div id="addbuttons">
+                    <button class="btn btn-primary btn-lg" id="addSong" onclick="showAddSong()" >Dodaj utwór</button>
+                    <button class="btn btn-primary btn-lg" id="addAlbum" onclick="showAddAlbum()">Dodaj album</button>
+                    <button class="btn btn-primary btn-lg" id="addPlaylist" onclick="showAddPlaylist()">Dodaj playlistę</button>
+                    <button class="btn btn-primary btn-lg" id="changenameButton">Zmień nazwę</button>
+                </div>
             </div>
             <script type="text/javascript">
                 $(document).ready(function(){
@@ -145,7 +143,6 @@
             </div>
 
         </div>
-    </div>
     <div id="chgpasswdform" class="modal">
 
 <!-- Modal content -->

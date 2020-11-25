@@ -83,17 +83,16 @@ label
 #imageinfo
 {
     float: right;
+    width: 30%;
 }
-#addbuttons
+#imageinfo img
 {
-    width: 100%;
-    display: inline;
+    
 }
 #addbuttons button
 {
     background-color: #0eb165;
     border-radius: 5%;
-    width: 20%;
     height: 50px;
 }
 #userinfo

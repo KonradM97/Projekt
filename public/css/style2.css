@@ -131,6 +131,10 @@ a {
     justify-self: flex-end;
     transition: transform 0.2s ease-in;
 }
+strong
+{
+    width: 100%;
+}
 .content
 {
     padding-right: 15px;
