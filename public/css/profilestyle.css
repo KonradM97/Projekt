@@ -66,15 +66,7 @@ and open the template in the editor.
 {
     float: right;
 }
-.content
-{
-    padding-right: 15px;
-    padding-left: 15px;
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
-    color: white;
-}
+
 
 #listing
 {

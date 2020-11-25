@@ -131,7 +131,15 @@ a {
     justify-self: flex-end;
     transition: transform 0.2s ease-in;
 }
-
+.content
+{
+    padding-right: 15px;
+    padding-left: 15px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+}
 .showcase-card {
     display: flex;
     justify-content: center;
