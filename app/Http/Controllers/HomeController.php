@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use Validator;
 use Image;
+use Laravel\Ui\Presets\React;
+
 class HomeController extends Controller
 {
     /**
@@ -175,5 +177,21 @@ class HomeController extends Controller
         }
         
        return view('home',array('user' => Auth::user()));
+    }
+    public function changeName(Request $request)
+    {
+        $validator =Validator::make($request->all(), [
+            'name' => ['same:confirm_name']
+            
+        ]);
+        if($validator->fails())
+        {
+            return view('home',array('error' => 'Złe dane w zmianie nazwy!'));
+        }
+        else
+        {
+            DB::update("UPDATE `users` SET `name` = '".$request['name']."' WHERE `users`.`id` = ".Auth::user()->id);
+        }
+        return view('home',array('user' => Auth::user(),'resultstatus' => "Zmieniono!"));
     }
 }

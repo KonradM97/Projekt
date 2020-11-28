@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,10 @@ Auth::routes();
 Route::post('/addAlbum','HomeController@addAlbum');\
 Route::post('/addPlaylist','HomeController@addPlaylist');
 Route::post('/addSong','HomeController@addSong');
+Route::post('/changeName', 'HomeController@changeName');
+//Zmiana hasła
+Route::get('change-password', 'ChangePasswordController@index');
+Route::post('change-password', 'ChangePasswordController@store')->name('change.password');
 Route::get('/home', 'HomeController@index')->name('home');
 //Kontroler wiadomości
 Route::get('/messages','MessagesController@mymessages')->name('messages');
@@ -39,7 +44,5 @@ Route::get('/sendmessage', ['uses' => 'PostController@sendMessage',
 'as'=> 'sendmessage']);
 //profil
 Route::get('/user={id}', 'UserController@profile')->name('user.profile');
-//Zmiana hasła
-Route::get('change-password', 'ChangePasswordController@index');
-Route::post('change-password', 'ChangePasswordController@store')->name('change.password');
+
 ?>

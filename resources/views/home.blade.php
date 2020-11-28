@@ -94,10 +94,10 @@
             <div class="form-group col-md-6" id="changeNametForm">
                             <p style="color: red">Uwaga! Zmiana nazwy użytkownika skutkuje tym, że osoby, które cię znały nie będą mogły cię nie znaleźć w wyszukiwarce!</p>
                             <form enctype="multipart/form-data" action="changeName" method="POST">
-                                <label>Nowa nazwa</label><input type="text" class="form-control" name="title" required><br/>
-                                <label>Potwierdź nazwę</label><input type="text" class="form-control" name="title" required><br/>
+                                <label>Nowa nazwa</label><input type="text" class="form-control" name="name" pattern=".{3,}" title="Nazwa musi mieć conajmniej 3 znaki"  required><br/>
+                                <label>Potwierdź nazwę</label><input type="text" class="form-control" name="confirm_name" required><br/>
                                 @csrf
-                                <button type="submit" name="changeName" class="btn btn-primary">Zmień</button>
+                                <input type="submit" name="changeName" value="Zmień" class="btn btn-primary">
                             </form>
             </div>   
             <div class="form-group col-md-6" id="addSongForm">
