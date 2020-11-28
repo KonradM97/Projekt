@@ -1,4 +1,5 @@
 <?php
+//Głośność, trwający utwór i play
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,6 +12,7 @@
  * @author Konrad
  */
 
+$_SESSION['id'] = 12;
 
 class Player {
     //dostęp do źródeł
@@ -436,12 +438,21 @@ class Player {
                 $('.custom-style-element-related-to-range').remove();
                 $('<style class="custom-style-element-related-to-range">input[type="range"]::-webkit-slider-thumb { box-shadow: -' + sliderWidth + 'px 0 0 ' + sliderWidth + 'px;}<style/>').appendTo('head');
               });
-
+              //początek//////////////
                 $(document).ready(function(){
                     $('#jukebox').slideUp(0);
-                    //początkowy dźwięk
                     var p = volBar.value;
+                    var t = progressBar;
+                    //początkowy dźwięk
+                    if (typeof(Storage) !== "undefined") {
+                    // Retrieve
+                    p = sessionStorage.getItem("volume");
+                    volBar.value=p;
+                    t = sessionStorage.getItem("time");
+                    }
+                    
                     modifyVolume(p);
+                    $['S']
                 });
                 var showed=false;
                 $( "#show" ).click(function() {
@@ -557,7 +568,7 @@ class Player {
                             }
                             else
                             {
-                                console.log(likes[currentSong],currentSong);
+                               
                                 document.getElementById("like").src="img/like.png";
                             }
                        
@@ -592,7 +603,10 @@ class Player {
                     //Postęp paska utworu w czasie
                     //progressBar.setAttribute('value',position*300);
                     progressBar.value = position*300;
-                    
+                    if (typeof(Storage) !== "undefined") {
+                    // Store
+                    sessionStorage.setItem("time", position*300);
+                    }
                     //powtórz 1
                     if(song.currentTime==song.duration&&repeatPressed == 0)
                     {
@@ -715,11 +729,18 @@ class Player {
 
                 }
                 volBar.addEventListener("click",function (e){
-                    
+                    if (typeof(Storage) !== "undefined") {
+                    // Store
+                    sessionStorage.setItem("volume", volBar.value);
+                    }
                     let p = volBar.value;
                     modifyVolume(p);
                 },false);
                 volBar.addEventListener("mousemove",function (e){
+                    if (typeof(Storage) !== "undefined") {
+                    // Store
+                    sessionStorage.setItem("volume", volBar.value);
+                    }
                         let p = volBar.value;
                         modifyVolume(p);
                 },false);
