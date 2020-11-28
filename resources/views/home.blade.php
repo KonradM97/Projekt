@@ -38,7 +38,7 @@
                     <button class="btn btn-primary btn-lg" id="addSong" onclick="showAddSong()" >Dodaj utwór</button>
                     <button class="btn btn-primary btn-lg" id="addAlbum" onclick="showAddAlbum()">Dodaj album</button>
                     <button class="btn btn-primary btn-lg" id="addPlaylist" onclick="showAddPlaylist()">Dodaj playlistę</button>
-                    <button class="btn btn-primary btn-lg" id="changenameButton">Zmień nazwę</button>
+                    <button class="btn btn-primary btn-lg" id="changenameButton" onclick="showChangeName()">Zmień nazwę</button>
                 </div>
             </div>
             <script type="text/javascript">
@@ -47,7 +47,7 @@
                      $('#addAlbumForm').slideUp(0);
                      $('#addPlaylistForm').slideUp(0);
                     $('#albums').hide();
-
+                    $('#changeNametForm').hide();
                 });
                 function hideall()
                 {
@@ -55,6 +55,7 @@
                     $('#addSongForm').slideUp(0);
                      $('#addAlbumForm').slideUp(0);
                     $('#albums').hide();
+                    $('#changeNametForm').hide();
                 }
                 function showAddSong()
                 {
@@ -80,12 +81,25 @@
                      hideall();
                      $('#addPlaylistForm').slideDown(500);
                 }
+                function showChangeName()
+                {
+                    hideall();
+                    $('#changeNametForm').slideDown(500);
+                }
                             </script>
-            <div class="row">
+            <div class="row" id="forms">
                 
 
 
-
+            <div class="form-group col-md-6" id="changeNametForm">
+                            <p style="color: red">Uwaga! Zmiana nazwy użytkownika skutkuje tym, że osoby, które cię znały nie będą mogły cię nie znaleźć w wyszukiwarce!</p>
+                            <form enctype="multipart/form-data" action="changeName" method="POST">
+                                <label>Nowa nazwa</label><input type="text" class="form-control" name="title" required><br/>
+                                <label>Potwierdź nazwę</label><input type="text" class="form-control" name="title" required><br/>
+                                @csrf
+                                <button type="submit" name="changeName" class="btn btn-primary">Zmień</button>
+                            </form>
+            </div>   
             <div class="form-group col-md-6" id="addSongForm">
                             <form enctype="multipart/form-data" action="addSong" method="POST">
                                 <label>Tytuł</label><input type="text" class="form-control" name="title" required><br/>

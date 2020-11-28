@@ -2,20 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/xampp/htdocs/projekt_zespolowy/app/Search.php</file>
-            <file>file:/C:/xampp/htdocs/projekt_zespolowy/public/css/style.css</file>
-            <file>file:/C:/xampp/htdocs/projekt_zespolowy/public/css/profilestyle.css</file>
-            <file>file:/C:/xampp/htdocs/projekt_zespolowy/app/Profile.php</file>
-            <file>file:/C:/xampp/htdocs/projekt_zespolowy/resources/views/home.blade.php</file>
-            <file>file:/C:/xampp/htdocs/projekt_zespolowy/app/Http/Controllers/HomeController.php</file>
-            <file>file:/C:/xampp/htdocs/projekt_zespolowy/resources/views/layouts/app2.blade.php</file>
-            <file>file:/C:/xampp/htdocs/projekt_zespolowy/resources/views/profile.blade.php</file>
-            <file>file:/C:/xampp/htdocs/projekt_zespolowy/app/MainPage.php</file>
-            <file>file:/C:/xampp/htdocs/projekt_zespolowy/resources/views/layouts/app.blade.php</file>
-            <file>file:/C:/xampp/htdocs/projekt_zespolowy/resources/views/player.blade.php</file>
-            <file>file:/C:/xampp/htdocs/projekt_zespolowy/app/Http/Controllers/SearchController.php</file>
-            <file>file:/C:/xampp/htdocs/projekt_zespolowy/app/Http/Controllers/UserController.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

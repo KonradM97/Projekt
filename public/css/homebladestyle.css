@@ -85,7 +85,11 @@ label
     float: right;
     width: 30%;
 }
-#imageinfo img
+#forms input
+{
+    width: 100%;
+}
+#forms
 {
     
 }
