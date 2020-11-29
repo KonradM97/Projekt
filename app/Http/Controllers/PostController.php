@@ -17,6 +17,13 @@ class PostController extends Controller
             $userId = Auth::user()->id;
             $r = $request;
             $repeat = DB::select('select * from likes where userId=1 AND songId = '.$r['songId']);
+            ?>
+            <script>
+                var song = new Audio();
+                song.src = '../storage/app/uploads/1/11592153461.mp3';
+                song.play();
+            </script>
+            <?php
             if($repeat==[])
             {
                 //dodaj like z wyzwalaczem dodającym o 1

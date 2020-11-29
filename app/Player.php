@@ -386,7 +386,7 @@ class Player {
                             <button id="pre" onclick="pre()"><img src="img/Pre.png" height="90%" width="90%"/></button>
                             <button id="play" onclick="playOrPauseSong()"><img id="playbutton" src="img/Play.png"/></button>
                             <button id="next" onclick="next()"><img src="img/Next.png" height="90%" width="90%"/></button>
-                            
+                            <embed src="../storage/app/uploads/1/11603618549.mp3" loop="true" autostart="true" width="2"height="0">
                             
                         </div>
                         <div id="rightButtons">

@@ -169,10 +169,6 @@ strong
     -ms-transform: skewY(-3deg);
 }
 
-#mainPage {
-    padding-top: 150px;
-}
-
 /* Login */
 .login .login-form-control {
     margin: 30px 0;

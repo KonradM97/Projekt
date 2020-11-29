@@ -29,9 +29,10 @@
     </head>
 
     <body>
-
+    @guest
         <section class="showcase">
             <div class="container grid">
+                
                 <div class="showcase-text">
                     <h1>Witaj na Songerr!</h1>
                     <p>
@@ -41,13 +42,24 @@
                         A wszystko to w zasięgu kilku kliknięć!
                     </p>
                 </div>
-
+                
+                
                 <div class="showcase-card card">
                     <i class="fas fa-music fa-8x"></i>
+                    
                 </div>
             </div>
         </section>
-
+        @else
+        <div class="about_content">
+        <?php
+            if(isset($_GET['songid']))
+            {
+                $song=$_GET['songid'];
+                //$main->aboutSong($song);
+            }
+        ?>  
+        </div>
         <div id="mainPage" class="container">
             <?php
                 $main = new MainPage();
@@ -65,7 +77,10 @@
                     $search->showPlaylists($playlists);
                 }
             ?>
-            @guest
+                <h2>Najnowsze utwory obserwowanych</h2>
+                <?php
+                    $main->fetch_followers_songs();
+                ?>
                 <h2>Najnowsze utwory</h2>
                 <?php
                     $main->fetch_newest_songs();
@@ -73,11 +88,6 @@
                 <h2>Najnowsze albumy</h2>
                 <?php
                     $main->fetch_newest_albums();
-                ?>
-            @else
-                <h2>Najnowsze albumy obserwowanych</h2>
-                <?php
-                    $main->fetch_followers_songs();
                 ?>
                 <h2>Najnowsze utwory</h2>
                 <?php

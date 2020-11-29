@@ -66,9 +66,42 @@ class MainPage {
         echo '</table>';
                      //Zkonwertuj tablice php na javascript
     }
-
-    public function fetch_followers_songs()
+    public function aboutSong($song)
     {
 
+    }
+    public function fetch_followers_songs()
+    {
+        $flwsongs = DB::select('SELECT * FROM `songs` s 
+        LEFT JOIN covers c on s.cover = c.idcovers
+        INNER JOIN users u ON u.id=s.author
+        INNER JOIN user_follows uf on uf.follows = s.author
+        WHERE uf.follower ='.Auth::user()->id.'
+        ORDER BY s.`created_at`
+        DESC LIMIT 10');
+        $this->show_followers_songs($flwsongs);
+    }
+    public function show_followers_songs($mysongs)
+    {
+        echo '<table id="searching" class="table table-hover table-borderless">';
+        echo '<thead>
+                    <th class="srodek">Tytuł</th>
+                    <th class="srodek">Gatunek</th>
+                    <th class="srodek">Album</th>
+                    <th class="srodek">Polubienia</th>
+                </tr>
+            </thead>';
+        foreach($mysongs as $val)
+        {
+            //dd($val);
+                echo '<tr style="cursor: pointer" class="clickable-row" data-href="?songid='.$val->idsongs.'">';
+                echo '<td class="srodek">'.$val->title.'</td>';
+                echo '<td class="srodek">'.$val->genre.'</td>';
+                echo '<td class="srodek">'.$val->author.'</td>';
+                echo '<td class="srodek">'.$val->likes.'</td>';
+                echo '<td class="srodek"><img src="'.$val->source.'" height="50px" width="50px" /></td>';
+                echo '</tr>';
+        }
+        echo '</table>';
     }
 }
