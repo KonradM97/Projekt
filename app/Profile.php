@@ -124,7 +124,7 @@ class Profile {
         foreach($plylists as $pl)
         {
             //<h3 style="float:right;">'.' Polubień: '.$pl->likes.'</h3> może kiedyś
-            echo '<h3>'.$pl->playlistName.'</h3><br />';
+            echo '<h3><a href="?playlist='.$pl->idplaylists.'">'.$pl->playlistName.'</a></h3><br />';
             echo '<table id="searching" class="table table-hover table-borderless">';
                                 echo '<thead>
                                             <th class="srodek">Tytuł</th>

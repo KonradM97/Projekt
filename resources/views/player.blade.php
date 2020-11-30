@@ -6,6 +6,8 @@
     session_start();
     use App\Search;
     use App\MainPage;
+    $main = new MainPage();
+    $search = new Search();
 ?>
 
 <!DOCTYPE html>
@@ -52,18 +54,25 @@
         </section>
         @else
         <div class="about_content">
-        <?php
-            if(isset($_GET['songid']))
-            {
-                $song=$_GET['songid'];
-                //$main->aboutSong($song);
-            }
-        ?>  
+
         </div>
         <div id="mainPage" class="container">
             <?php
-                $main = new MainPage();
-                $search = new Search();
+                if(isset($_GET['songid']))
+                {
+                    $song=$_GET['songid'];
+                    $main->aboutSong($song);
+                }
+                if(isset($_GET['album']))
+                {
+                    $album=$_GET['album'];
+                    $main->aboutAlbum($album);
+                }
+                if(isset($_GET['playlist']))
+                {
+                    $playlist=$_GET['playlist'];
+                    $main->aboutPlaylist($playlist);
+                }
                 if(isset($songs)&&$songs!=[]) {
                     $search->showSongs($songs);
                 }

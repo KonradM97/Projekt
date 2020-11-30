@@ -12,7 +12,6 @@
  * @author Konrad
  */
 
-$_SESSION['id'] = 12;
 
 class Player {
     //dostęp do źródeł
@@ -24,7 +23,6 @@ class Player {
         private $covers=array();
         private $ids=array();
         private $jukebox_size;
-	private $index;
         //dodanie polubień 26.10
         private $likes=array();
         //
@@ -51,11 +49,26 @@ class Player {
                     $id= htmlspecialchars($_GET['playlist']);
                     if($this->validate($id))
                     {
-                        $this->fetch_playlist($id);
+                        $query = "SELECT ispublic,author FROM playlists WHERE idplaylists=".$id;
+
+                    $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
+		            $r=mysqli_query($connect,$query);
+                     while($row=mysqli_fetch_assoc($r))
+                     {
+                            if($row['ispublic']==0&&Auth::user()->id!=$row['author'])
+                            {
+                                $this->fetch_most_liked();
+                            }
+                            else
+                            {
+                                $this->fetch_playlist($id);
+                            }
+                     }
+                       
                     }
                     else
                     {
-                                    $this->fetch_most_liked();
+                        $this->fetch_most_liked();
                     }
                 }
                 else if(isset($_GET['album']))

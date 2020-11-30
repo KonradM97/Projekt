@@ -16,6 +16,156 @@ use Auth;
  */
 class MainPage {
 
+    public function aboutSong($song)
+    {
+        $mysong = DB::select('SELECT idsongs, s.source as ssource, s.title as stitle, s.genre as sgenre, s.likes as slikes,license, a.title as atitle,u.name as uname,
+         u.id, c.source as csource FROM `songs` s LEFT JOIN covers c on s.cover = c.idcovers INNER JOIN users u on s.author=u.id LEFT JOIN albums a on s.album=a.idalbums WHERE s.idsongs ='.$song);
+        
+        foreach($mysong as $val)
+        {
+            //głowne informacje o utworze pokazywane zawsze
+            
+            echo '<h1>Właśnie odtwarzasz:</h1>';
+            echo '<div id="song_info">';
+            echo '<div id="song_image">';
+            echo '<img src="'.$val->csource.'" height="100px" width="100px" />';
+            echo '</div>';
+            echo '<div id="song_likes">';
+            echo 'Polubienia<br />'.
+            $val->slikes.'<br />';
+            echo 'Album<br />'.
+            $val->atitle;
+            echo '</div>';
+            echo '<div id="song_title">'.$val->stitle.'</div>';
+            
+
+            echo
+            'Autor<br/>'.
+            '<a href="user='.$val->id.'">'.$val->uname.'</a><br />';
+            
+            //zamknij song_info
+            echo '</div>';
+            //dodatkowo licencja i gatunek
+            if($val->license!=null)
+            {
+                echo 'Licencja<br />'.
+                ''.$val->license.'<br />';
+            }
+            if($val->sgenre!=null)
+            {
+                echo 'Gatunek:'.
+                ''.$val->sgenre.'<br />';
+            }
+            
+        }
+        
+    }
+    public function aboutAlbum($albumid)
+    {
+        $album = DB::select('SELECT title, genre, c.source as source, u.name as uname FROM `albums` a LEFT JOIN covers c on a.cover = c.idcovers INNER JOIN users u on u.id=a.author WHERE a.idalbums ='.$albumid);
+        
+        foreach($album as $val)
+        {
+            //głowne informacje o albumie pokazywane zawsze
+            
+            echo '<h1>Właśnie odtwarzasz:</h1>';
+            echo '<div id="album_info">';
+            echo '<div id="album_name">'.
+            $val->title;
+            echo '</div>';
+            echo '<div id="album_image">';
+            echo '<img src="'.$val->source.'" height="200px" width="200px" />';
+            echo '</div>';
+            echo '<div id="album_author">Autor:<br />'.
+            $val->uname;
+            echo '</div>';
+            //dodatkowo gatunek
+            if($val->genre!=null)
+            {
+                echo 'Gatunek:'.
+                ''.$val->genre.'<br />';
+            }
+            //zamknij album_info
+            echo '</div>';
+            echo '<h1>Utwory albumu:</h1>';
+            $mysongs = DB::select('SELECT * FROM `songs` s WHERE album ='.$albumid);
+            echo '<table id="searching" class="table table-hover table-borderless">';
+            echo '<thead>
+                    <tr>
+                        <th class="srodek">Tytuł</th>
+                        <th class="srodek">Gatunek</th>
+                        <th class="srodek">Album</th>
+                        <th class="srodek">Polubienia</th>
+                    </tr>
+                </thead>';
+            foreach($mysongs as $val)
+            {
+                //dd($val);
+                    echo '<tr style="cursor: pointer" class="clickable-row" data-href="?songid='.$val->idsongs.'">';
+                    echo '<td class="srodek">'.$val->title.'</td>';
+                    echo '<td class="srodek">'.$val->genre.'</td>';
+                    echo '<td class="srodek">'.$val->author.'</td>';
+                    echo '<td class="srodek">'.$val->likes.'</td>';
+                    echo '</tr>';
+            }
+            echo '</table>';
+            
+            
+        }
+        
+    }
+    public function aboutPlaylist($playlistid)
+    {
+        $playlist = DB::select('SELECT playlistName,ispublic,author, u.name as uname FROM `playlists` p INNER JOIN users u on u.id=p.author WHERE p.idplaylists ='.$playlistid);
+        
+        foreach($playlist as $val)
+        {
+            //sprawdź co to playlista prywatna
+            if($val->ispublic==0&&Auth::user()->id!=$val->author)
+            {
+                echo '<p style="color: red">Playlista prywatna!</p>';
+                return;
+            }
+            //głowne informacje o playliście pokazywane zawsze
+            
+            echo '<h1>Właśnie odtwarzasz:</h1>';
+            echo '<div id="album_info">';
+            echo '<div id="album_name">'.
+            $val->playlistName;
+            echo '</div>';
+            echo '<div id="album_author">Autor:<br />'.
+            $val->uname;
+            echo '</div>';
+            //dodatkowo gatunek
+            //zamknij album_info
+            echo '</div>';
+            echo '<h1>Utwory playlisty:</h1>';
+            $mysongs = DB::select('SELECT * FROM `songs` s WHERE album ='.$playlistid);
+            echo '<table id="searching" class="table table-hover table-borderless">';
+            echo '<thead>
+                    <tr>
+                        <th class="srodek">Tytuł</th>
+                        <th class="srodek">Gatunek</th>
+                        <th class="srodek">Album</th>
+                        <th class="srodek">Polubienia</th>
+                    </tr>
+                </thead>';
+            foreach($mysongs as $val)
+            {
+                //dd($val);
+                    echo '<tr style="cursor: pointer" class="clickable-row" data-href="?songid='.$val->idsongs.'">';
+                    echo '<td class="srodek">'.$val->title.'</td>';
+                    echo '<td class="srodek">'.$val->genre.'</td>';
+                    echo '<td class="srodek">'.$val->author.'</td>';
+                    echo '<td class="srodek">'.$val->likes.'</td>';
+                    echo '</tr>';
+            }
+            echo '</table>';
+            
+            
+        }
+        
+    }
     public function fetch_newest_songs()
     {
        $mysongs = DB::select('SELECT * FROM `songs` s LEFT JOIN covers c on s.cover = c.idcovers ORDER BY s.`created_at` DESC LIMIT 10');
@@ -26,6 +176,7 @@ class MainPage {
     {
         echo '<table id="searching" class="table table-hover table-borderless">';
         echo '<thead>
+                <tr>
                     <th class="srodek">Tytuł</th>
                     <th class="srodek">Gatunek</th>
                     <th class="srodek">Album</th>
@@ -66,10 +217,6 @@ class MainPage {
         echo '</table>';
                      //Zkonwertuj tablice php na javascript
     }
-    public function aboutSong($song)
-    {
-
-    }
     public function fetch_followers_songs()
     {
         $flwsongs = DB::select('SELECT * FROM `songs` s 
@@ -83,8 +230,8 @@ class MainPage {
     }
     public function show_followers_songs($mysongs)
     {
-        echo '<table id="searching" class="table table-hover table-borderless">';
-        echo '<thead>
+        echo '<table class="table table-hover table-borderless">';
+        echo '<thead><tr>
                     <th class="srodek">Tytuł</th>
                     <th class="srodek">Gatunek</th>
                     <th class="srodek">Album</th>
@@ -97,7 +244,7 @@ class MainPage {
                 echo '<tr style="cursor: pointer" class="clickable-row" data-href="?songid='.$val->idsongs.'">';
                 echo '<td class="srodek">'.$val->title.'</td>';
                 echo '<td class="srodek">'.$val->genre.'</td>';
-                echo '<td class="srodek">'.$val->author.'</td>';
+                echo '<td class="srodek" ">'.$val->author.'</td>';
                 echo '<td class="srodek">'.$val->likes.'</td>';
                 echo '<td class="srodek"><img src="'.$val->source.'" height="50px" width="50px" /></td>';
                 echo '</tr>';
