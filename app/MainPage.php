@@ -62,7 +62,7 @@ class MainPage {
     }
     public function aboutAlbum($albumid)
     {
-        $album = DB::select('SELECT title, genre, c.source as source, u.name as uname FROM `albums` a LEFT JOIN covers c on a.cover = c.idcovers INNER JOIN users u on u.id=a.author WHERE a.idalbums ='.$albumid);
+        $album = DB::select('SELECT title, genre,a.describe, c.source as source, u.name as uname FROM `albums` a LEFT JOIN covers c on a.cover = c.idcovers INNER JOIN users u on u.id=a.author WHERE a.idalbums ='.$albumid);
         
         foreach($album as $val)
         {
@@ -85,6 +85,11 @@ class MainPage {
                 echo 'Gatunek:'.
                 ''.$val->genre.'<br />';
             }
+            if($val->describe!=null)
+            {
+                echo 'Opis:'.
+                ''.$val->describe.'<br />';
+            }
             //zamknij album_info
             echo '</div>';
             echo '<h1>Utwory albumu:</h1>';
@@ -93,8 +98,6 @@ class MainPage {
             echo '<thead>
                     <tr>
                         <th class="srodek">Tytuł</th>
-                        <th class="srodek">Gatunek</th>
-                        <th class="srodek">Album</th>
                         <th class="srodek">Polubienia</th>
                     </tr>
                 </thead>';
@@ -103,8 +106,6 @@ class MainPage {
                 //dd($val);
                     echo '<tr style="cursor: pointer" class="clickable-row" data-href="?songid='.$val->idsongs.'">';
                     echo '<td class="srodek">'.$val->title.'</td>';
-                    echo '<td class="srodek">'.$val->genre.'</td>';
-                    echo '<td class="srodek">'.$val->author.'</td>';
                     echo '<td class="srodek">'.$val->likes.'</td>';
                     echo '</tr>';
             }
@@ -168,30 +169,37 @@ class MainPage {
     }
     public function fetch_newest_songs()
     {
-       $mysongs = DB::select('SELECT * FROM `songs` s LEFT JOIN covers c on s.cover = c.idcovers ORDER BY s.`created_at` DESC LIMIT 10');
+       $mysongs = DB::select('SELECT s.idsongs, s.title,u.name as author ,c.source, s.genre,a.title as atitle,s.likes FROM `songs` s 
+       LEFT JOIN covers c on s.cover = c.idcovers
+       LEFT JOIN albums a on s.album = a.idalbums
+       INNER JOIN users u on u.id = s.author
+        ORDER BY s.`created_at` DESC LIMIT 10');
        $this->show_songs($mysongs);
     }
 
     public function show_songs($mysongs)
     {
-        echo '<table id="searching" class="table table-hover table-borderless">';
+        echo '<table class="">';
         echo '<thead>
-                <tr>
                     <th class="srodek">Tytuł</th>
                     <th class="srodek">Gatunek</th>
+                    <th class="srodek">Autor</th>
                     <th class="srodek">Album</th>
                     <th class="srodek">Polubienia</th>
+                    <th></th>
+                    
                 </tr>
             </thead>';
         foreach($mysongs as $val)
         {
             //dd($val);
                 echo '<tr style="cursor: pointer" class="clickable-row" data-href="?songid='.$val->idsongs.'">';
-                echo '<td class="srodek">'.$val->title.'</td>';
-                echo '<td class="srodek">'.$val->genre.'</td>';
-                echo '<td class="srodek">'.$val->author.'</td>';
-                echo '<td class="srodek">'.$val->likes.'</td>';
-                echo '<td class="srodek"><img src="'.$val->source.'" height="50px" width="50px" /></td>';
+                echo '<td>'.$val->title.'</td>';
+                echo '<td class="text-center">'.$val->genre.'</td>';
+                echo '<td class="text-center">'.$val->author.'</td>';
+                echo '<td class="text-center">'.$val->atitle.'</td>';
+                echo '<td class="text-center">'.$val->likes.'</td>';
+                echo '<td class="text-center"><img src="'.$val->source.'" height="50px" width="50px" /></td>';
                 echo '</tr>';
         }
         echo '</table>';
@@ -199,7 +207,10 @@ class MainPage {
 
     public function fetch_newest_albums()
     {
-       $myalbums = DB::select('SELECT * FROM `albums` s LEFT JOIN covers c on s.cover = c.idcovers ORDER BY s.`created_at` DESC LIMIT 10');
+       $myalbums = DB::select('SELECT u.id, s.idalbums,s.title, u.name, c.source FROM `albums` s
+       INNER JOIN users u on u.id = s.author
+        LEFT JOIN covers c on s.cover = c.idcovers
+        ORDER BY s.`created_at` DESC LIMIT 10');
        $this->show_albums($myalbums);
     }
 
@@ -207,48 +218,28 @@ class MainPage {
     {
         foreach($myalbums as $val)
         {
-        echo '<div class="singlealbum">'
+        echo '<div class="album-tile card text-center" style="background-color:var(--secondary-color);color:#fff;">'
             . '<a href="?album='.$val->idalbums.'">'
                 . '<img src="'.$val->source.'" height="100px" width="100px" />'
-                . $val->title
-                . '</a>'
-                . '</div>';
+                . '<br />'
+                . '<b>'.$val->title.'<b></a><br />'
+                . '<a href="user='.$val->id.'">'
+                .$val->name
+                . '</a></div>';
         }
-        echo '</table>';
                      //Zkonwertuj tablice php na javascript
     }
     public function fetch_followers_songs()
     {
-        $flwsongs = DB::select('SELECT * FROM `songs` s 
+        $flwsongs = DB::select('SELECT s.idsongs, s.title,u.name as author ,c.source, s.genre,a.title as atitle,s.likes FROM `songs` s 
         LEFT JOIN covers c on s.cover = c.idcovers
+        LEFT JOIN albums a on s.album = a.idalbums
         INNER JOIN users u ON u.id=s.author
         INNER JOIN user_follows uf on uf.follows = s.author
         WHERE uf.follower ='.Auth::user()->id.'
         ORDER BY s.`created_at`
         DESC LIMIT 10');
-        $this->show_followers_songs($flwsongs);
+        $this->show_songs($flwsongs);
     }
-    public function show_followers_songs($mysongs)
-    {
-        echo '<table class="table table-hover table-borderless">';
-        echo '<thead><tr>
-                    <th class="srodek">Tytuł</th>
-                    <th class="srodek">Gatunek</th>
-                    <th class="srodek">Album</th>
-                    <th class="srodek">Polubienia</th>
-                </tr>
-            </thead>';
-        foreach($mysongs as $val)
-        {
-            //dd($val);
-                echo '<tr style="cursor: pointer" class="clickable-row" data-href="?songid='.$val->idsongs.'">';
-                echo '<td class="srodek">'.$val->title.'</td>';
-                echo '<td class="srodek">'.$val->genre.'</td>';
-                echo '<td class="srodek" ">'.$val->author.'</td>';
-                echo '<td class="srodek">'.$val->likes.'</td>';
-                echo '<td class="srodek"><img src="'.$val->source.'" height="50px" width="50px" /></td>';
-                echo '</tr>';
-        }
-        echo '</table>';
-    }
+   
 }

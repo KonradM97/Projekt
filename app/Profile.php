@@ -38,20 +38,22 @@ class Profile {
     }
     public function fetch_newest_songs($id)
     {
-       $mysongs = DB::select('SELECT s.idsongs,s.title,u.name,s.genre,s.likes,c.source FROM `songs` s
+       $mysongs = DB::select('SELECT s.idsongs,s.title,a.title as album,u.name,s.genre,s.likes,c.source FROM `songs` s
        LEFT JOIN covers c on s.cover = c.idcovers
-       INNER JOIN users u on u.id = s.author
-       WHERE author='.$id.' ORDER BY s.`created_at` DESC');
+       LEFT JOIN albums a on a.idalbums=s.album 
+       INNER JOIN users u on u.id = s.author 
+       WHERE s.author='.$id.' ORDER BY s.`created_at` DESC');
        $this->show_songs($mysongs);
     }
 
     public function fetch_most_liked_songs($id)
     {
-        $mysongs = DB::select('SELECT s.idsongs,s.title,u.name,s.genre,s.likes,c.source FROM `songs` s
-       LEFT JOIN covers c on s.cover = c.idcovers
-       INNER JOIN users u on u.id = s.author
-       WHERE author='.$id.' ORDER BY s.`likes` DESC
-       LIMIT 10' );
+        $mysongs = DB::select('SELECT s.idsongs,s.title,a.title as album,u.name,s.genre,s.likes,c.source FROM `songs` s
+        LEFT JOIN covers c on s.cover = c.idcovers
+        LEFT JOIN albums a on a.idalbums=s.album 
+        INNER JOIN users u on u.id = s.author 
+        WHERE s.author='.$id.' ORDER BY s.`likes` DESC
+        LIMIT 10' );
        $this->show_songs($mysongs);
     }
     function show_songs($mysongs)
@@ -60,8 +62,9 @@ class Profile {
                             echo '<thead>
                                         <th class="srodek">Tytuł</th>
                                         <th class="srodek">Gatunek</th>
-                                        <th class="srodek">Twórca</th>
+                                        <th class="srodek">Album</th>
                                         <th class="srodek">Polubienia</th>
+                                        <th class="srodek"><th>
                                     </tr>
                                 </thead>';
                      foreach($mysongs as $val)
@@ -70,7 +73,7 @@ class Profile {
                                echo '<tr style="cursor: pointer" class="clickable-row" data-href="?songid='.$val->idsongs.'">';
                                echo '<td class="srodek">'.$val->title.'</td>';
                                echo '<td class="srodek">'.$val->genre.'</td>';
-                               echo '<td class="srodek">'.$val->name.'</td>';
+                               echo '<td class="srodek">'.$val->album.'</td>';
                                echo '<td class="srodek">'.$val->likes.'</td>';
                                echo '<td class="srodek"><img src="'.$this->check_cover($val->source).'" height="50px" width="50px" /></td>';
                                echo '</tr>';
@@ -87,12 +90,11 @@ class Profile {
     {
                      foreach($myalbums as $val)
                      {
-                        echo '<div class="singlealbum">'
-                         . '<a href="?album='.$val->idalbums.'">'
-                                . '<img src="'.$this->check_cover($val->source).'" height="100px" width="100px" />'
-                                . $val->title
-                                . '</a>'
-                                . '</div>';
+                        echo '<div class="album-tile card text-center" style="background-color:var(--secondary-color);color:#fff;">'
+            . '<a href="?album='.$val->idalbums.'">'
+                . '<img src="'.$val->source.'" height="100px" width="100px" />'
+                . '<br />'
+                . '<b>'.$val->title.'<b></a><br /></div>';
                      }
         echo '</table>';
 

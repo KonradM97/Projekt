@@ -1,9 +1,54 @@
+.add
+{
+    height: 100px;
+}
+#forms
+{
+    text-align: center;
+    font-family: monospace;
+}
+#addSong
+{
+    background-color: #0099ff;
+
+}
+#addAlbum
+{
+    background-color: #339900;
+}
+#addPlaylist
+{
+    background-color: #cccc00;
+}
+#addSongToPlaylist
+{
+    background-color: #ccff00;
+}
+#albums
+{
+margin-top: 100px;
+}
+#albums a
+{
+    text-decoration: none;
+    color: darkblue;
+}
+#albums a:hover
+{
+    background-color: #0099ff;
+    color: lightgray;
+}
+
+
+
+
+
 /*
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
-/* 
+/*
     Created on : 28 paź 2020, 21:12:47
     Author     : Konrad
 */
@@ -59,7 +104,7 @@ and open the template in the editor.
     font-size: 28px;
     font-weight: bold;
   }
-  
+
   .close:hover,
   .close:focus {
     color: #000;
@@ -85,13 +130,9 @@ label
     float: right;
     width: 30%;
 }
-#forms input
+#imageinfo img
 {
-    width: 100%;
-}
-#forms
-{
-    
+
 }
 #addbuttons button
 {
@@ -116,6 +157,8 @@ margin-top: 100px;
     background-color: #0eb165;
     color: lightgray;
 }
+
+
 
 
 

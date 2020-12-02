@@ -94,7 +94,6 @@ $profile = new Profile();
                 }
                 function sendmessage()
                 {
-                    console.log('Ja latam!');
                     modal.style.display = "none";
                     //Ajax to zło (robione od 21-23:30 bo cudzysłowy)
                     //Zrobić walidację
@@ -118,7 +117,7 @@ $profile = new Profile();
                 }
                 @endguest
   </script>
-<div class="content">
+<div class="container">
    <div id="listing">
     <div id="choose">
         <button onclick="showAll()">Wszystko</button>
@@ -134,9 +133,11 @@ $profile = new Profile();
             $profile->fetch_most_liked_songs($user->id);
              ?>
             <h2>Albumy</h2>
+            <div class="grid grid-4 showlist" >
             <?php
             $profile->fetch_albums($user->id);
             ?>
+            </div>
             <h2>Playlisty</h2>
             <?php
             $profile->fetch_playlists($user->id);
@@ -148,12 +149,13 @@ $profile = new Profile();
             $profile->fetch_newest_songs($user->id);
             ?>
         </div>
-        <div class="showlist" id="profile_albums">
-           <h1> Albumy</h1><br/>
+        <div id="profile_albums"><h1> Albumy</h1><br/>
+        <div class="grid grid-4 showlist" >
+           
            <?php
            $profile->fetch_albums($user->id);
            ?>
-        </div>
+        </div></div>
         <div class="showlist" id="profile_playlist">
            <h1>Playlisty</h1><br/>
 

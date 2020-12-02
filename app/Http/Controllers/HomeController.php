@@ -110,7 +110,7 @@ class HomeController extends Controller
             $filecovername = Auth::user()->id.time().".".$filecover->getClientOriginalExtension();
             $coversource = $request->file('cover')->storePubliclyAs('covers/'.Auth::user()->id,$filecovername);
             $cover = DB::table('covers')->insertGetId(
-            ['source' => '../storage/app/'.$coversource, 'name'=>$filecovername]
+            ['source' => '../storage/app/'.$coversource]
             );
         }
         

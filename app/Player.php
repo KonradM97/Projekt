@@ -41,7 +41,7 @@ class Player {
                     }
                     else
                     {
-                                    $this->fetch_most_liked();
+                        $this->fetch_most_liked();
                     }
                 }
                 else if(isset($_GET['playlist']))
@@ -399,7 +399,7 @@ class Player {
                             <button id="pre" onclick="pre()"><img src="img/Pre.png" height="90%" width="90%"/></button>
                             <button id="play" onclick="playOrPauseSong()"><img id="playbutton" src="img/Play.png"/></button>
                             <button id="next" onclick="next()"><img src="img/Next.png" height="90%" width="90%"/></button>
-                            <embed src="../storage/app/uploads/1/11603618549.mp3" loop="true" autostart="true" width="2"height="0">
+                            
                             
                         </div>
                         <div id="rightButtons">
@@ -451,6 +451,8 @@ class Player {
                 $('.custom-style-element-related-to-range').remove();
                 $('<style class="custom-style-element-related-to-range">input[type="range"]::-webkit-slider-thumb { box-shadow: -' + sliderWidth + 'px 0 0 ' + sliderWidth + 'px;}<style/>').appendTo('head');
               });
+              var p = volBar.value;
+                var t = progressBar;
               //początek//////////////
                 $(document).ready(function(){
                     $('#jukebox').slideUp(0);
@@ -460,6 +462,7 @@ class Player {
                     if (typeof(Storage) !== "undefined") {
                     // Retrieve
                     p = sessionStorage.getItem("volume");
+                    
                     volBar.value=p;
                     t = sessionStorage.getItem("time");
                     }
@@ -522,21 +525,21 @@ class Player {
                 //
 
                 var song = new Audio();//Obiekt odpowiedzialny za muzykę
-                song.autoplay=false;
-                song.autostart=false;
                          
                 var repeatPressed = 1; //czy włączony repeat
                 var shufflePressed = false; //czy włączone losowe wybieranie
                 //
                 //Odtwórz przy odpaleniu strony
-                window.onload = playSong();
+                
                
-               //Pobierz dane utworu do odtwarzacza i odtwórz
+               //Pobierz dane utworu do odtwarzacza
                  function playSong(){
                      if(!shufflePressed){
                          song.src = songs[currentSong];
                          songTitle.textContent = titles[currentSong];
-                         author.textContent = authors[currentSong];//authors[currentSong];
+                         author.textContent = authors[currentSong];
+                            song.play();
+                         
                          }
                      else{
                         
@@ -585,28 +588,28 @@ class Player {
                                 document.getElementById("like").src="img/like.png";
                             }
                        
-                      if(playing)
-                      {
-                          song.play();
-                      }
                     
                 }
+                //Przy załadowaniu strony
+                window.onload = playSong();
 		//Wybiera co zrobić po kliknięciu play/pause
                 function playOrPauseSong(){
-
                     if(song.paused){
-                        playing=true;
                         song.play();
-                        
+                        if (typeof(Storage) !== "undefined") {
+                        // Store
+                        sessionStorage.setItem("start", true);
+                        }
                         document.getElementById('playbutton').src='img/Pause.png';
                     }
                     else{
-                        playing=false;
                         song.pause();
+                        sessionStorage.setItem("start", false);
                         document.getElementById('playbutton').src='img/Play.png';
                     }
                 }
-
+                
+                
                 song.addEventListener('timeupdate',function(){ 
 
                     var position = song.currentTime / song.duration;
@@ -721,7 +724,7 @@ class Player {
                 }
                 /////////////////////////Obsługa paska czasu utworu////////////////////
 
-                                function getPosition () {
+                    function getPosition () {
 					let p = (seekBar.offsetLeft) / seekBar.clientWidth;
 					p = clamp(0, p, 1);
 					return p;

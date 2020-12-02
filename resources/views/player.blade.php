@@ -95,17 +95,14 @@
                     $main->fetch_newest_songs();
                 ?>
                 <h2>Najnowsze albumy</h2>
-                <?php
-                    $main->fetch_newest_albums();
-                ?>
-                <h2>Najnowsze utwory</h2>
-                <?php
-                    $main->fetch_newest_songs();
-                ?>
-                <h2>Najnowsze albumy</h2>
-                <?php
-                    $main->fetch_newest_albums();
-                ?>
+                <div class="grid grid-3">
+                    <?php
+                        $main->fetch_newest_albums();
+                    ?>
+                </div>
+           
+                
+            
             @endguest
         </div>
     </body>

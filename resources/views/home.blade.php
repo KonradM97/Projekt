@@ -3,7 +3,7 @@
 @section('content')
 <link href="css/homebladestyle.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-<div class="content">
+<div class="container">
         <div class="col-md-12">
             <div class="row">
                 <h1>Panel użytkownika {{ Auth::user()->name}}</h1>
