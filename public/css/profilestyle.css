@@ -119,6 +119,29 @@ table td, th
     border-bottom-style: solid;
     background-color: #0eb165
 }
+.delete
+{
+    background: transparent;
+    border-radius: 50%;
+}
+.delete:hover
+{
+    top: 0;
+    background-color: red;
+}
+.fromalbum
+{
+    float: right;
+}
+.playlistsname
+{
+    font-weight: bolder;
+    font-size: larger;
+}
+.playlistsname:hover
+{
+    background-color: #0eb165;
+}
 #userinfo button
 {
     background-color: #0eb165;
@@ -129,7 +152,11 @@ table td, th
     margin-left: 0;
     width: 50%;
     cursor: pointer;
-}*/
+}
+#userinfo .delete
+{
+    background-color: red;
+}
 #userinfo button:hover
 {
     background-color: #00582b;

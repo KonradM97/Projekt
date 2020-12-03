@@ -45,6 +45,6 @@ class UserController extends Controller
             echo '<div id="error"><h1 style="font-family:monospace">Nie ma takiego użytkownika!</h1>';
         }
     }
-    
+
     
 }

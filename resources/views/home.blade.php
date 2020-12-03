@@ -21,7 +21,7 @@
             </div>
             <div class="row">
                 <div id="userinfo" class="col-md-12 col-md-offset">
-                    <button class="userbutton" id="changepasswordButton">Zmień hasło</button>      
+                          
                     <div id="imageinfo">
                         <img src="{{Auth::user()->avatar}}" style="width: 50px;height:50px; float: right; border-radius: 50%"/>
                         <label>Nowe zdjęcie</label><br/>
@@ -39,6 +39,7 @@
                     <button class="btn btn-primary btn-lg" id="addAlbum" onclick="showAddAlbum()">Dodaj album</button>
                     <button class="btn btn-primary btn-lg" id="addPlaylist" onclick="showAddPlaylist()">Dodaj playlistę</button>
                     <button class="btn btn-primary btn-lg" id="changenameButton" onclick="showChangeName()">Zmień nazwę</button>
+                    <button class="btn btn-primary btn-lg" id="changepasswordButton">Zmień hasło</button>
                 </div>
             </div>
             <script type="text/javascript">

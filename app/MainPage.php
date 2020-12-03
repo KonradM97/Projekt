@@ -16,9 +16,18 @@ use Auth;
  */
 class MainPage {
 
+    public function myplaylists()
+    {
+        $playlists=DB::select('SELECT * FROM playlists WHERE author ='.Auth::user()->id);
+        foreach($playlists as $val)
+        {
+            echo '<input type="radio" value="'.$val->idplaylists.'" class="myplaylists" name="choseplaylist">';
+            echo '<label for="playlist'.$val->idplaylists.'">'.$val->playlistName.'</label><br />';
+        }
+    }
     public function aboutSong($song)
     {
-        $mysong = DB::select('SELECT idsongs, s.source as ssource, s.title as stitle, s.genre as sgenre, s.likes as slikes,license, a.title as atitle,u.name as uname,
+        $mysong = DB::select('SELECT idsongs, s.source as ssource, a.idalbums, s.title as stitle, s.genre as sgenre, s.likes as slikes,license, a.title as atitle,u.name as uname,
          u.id, c.source as csource FROM `songs` s LEFT JOIN covers c on s.cover = c.idcovers INNER JOIN users u on s.author=u.id LEFT JOIN albums a on s.album=a.idalbums WHERE s.idsongs ='.$song);
         
         foreach($mysong as $val)
@@ -34,10 +43,10 @@ class MainPage {
             echo 'Polubienia<br />'.
             $val->slikes.'<br />';
             echo 'Album<br />'.
-            $val->atitle;
-            echo '</div>';
+            '<a href="?album='.$val->idalbums.'">'.$val->atitle;
+            echo '</a></div>';
             echo '<div id="song_title">'.$val->stitle.'</div>';
-            
+            echo '<button id="addtoplaylist" title="Dodaj do playlisty" onclick="shuffle()"><img id="addplaylistButton" src="img/addtoplaylist.png" height="80%" width="80%"/></button>';
 
             echo
             'Autor<br/>'.
@@ -62,7 +71,7 @@ class MainPage {
     }
     public function aboutAlbum($albumid)
     {
-        $album = DB::select('SELECT title, genre,a.describe, c.source as source, u.name as uname FROM `albums` a LEFT JOIN covers c on a.cover = c.idcovers INNER JOIN users u on u.id=a.author WHERE a.idalbums ='.$albumid);
+        $album = DB::select('SELECT title, genre,a.describe, c.source as source, u.id, u.name as uname FROM `albums` a LEFT JOIN covers c on a.cover = c.idcovers INNER JOIN users u on u.id=a.author WHERE a.idalbums ='.$albumid);
         
         foreach($album as $val)
         {
@@ -77,8 +86,8 @@ class MainPage {
             echo '<img src="'.$val->source.'" height="200px" width="200px" />';
             echo '</div>';
             echo '<div id="album_author">Autor:<br />'.
-            $val->uname;
-            echo '</div>';
+            '<a href="user='.$val->id.'">'.$val->uname;
+            echo '</a></div>';
             //dodatkowo gatunek
             if($val->genre!=null)
             {

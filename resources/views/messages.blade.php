@@ -16,8 +16,8 @@ $profile = new Profile();
        foreach($result as $var)
        {
            echo '<div class="message-box">';
-           echo '<div class="icon"><img height="50px" src="'.$var->avatar.'"></div>';
-            echo '<div class="sender">'.$var->name.'</div>';
+           echo '<a href="user='.$var->sender.'"><div class="icon"><img height="50px" src="'.$var->avatar.'"></div>';
+            echo '<div class="sender">'.$var->name.'</div></a>';
            echo '<div class="text">'.$var->messagetext.'</div>';
            echo '<div class="sent"> Wysłano: '.$var->added.'</div>';
             

@@ -42,7 +42,19 @@ Route::post('/follow', ['uses' => 'PostController@followPost',
 //Kontroler wiadomości
 Route::get('/sendmessage', ['uses' => 'PostController@sendMessage',
 'as'=> 'sendmessage']);
+//Usuwanie
+Route::get('/deletesong', ['uses' => 'PostController@deleteSong',
+'as'=> 'deletesong']);
+Route::get('/deletealbum', ['uses' => 'PostController@deleteAlbum',
+'as'=> 'deletealbum']);
+Route::get('/deleteplaylist', ['uses' => 'PostController@deletePlaylist',
+'as'=> 'deleteplaylist']);
+Route::get('/deleteuser', ['uses' => 'PostController@deleteUser',
+'as'=> 'deleteUser']);
 //profil
 Route::get('/user={id}', 'UserController@profile')->name('user.profile');
+//Dodanie playlisty
+Route::get('/addtoplaylist',['uses' => 'PostController@addplaylist',
+'as' => 'addplaylist']);
 
 ?>

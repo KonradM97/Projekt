@@ -22,11 +22,13 @@
         <title>Player</title>
         <!-- Styles -->
 
-        <link href="css/style.css" rel="stylesheet">
+        <link href="css/style2.css" rel="stylesheet">
     </head>
 
     <body>
+    <div class="container">
         <h1>Wyniki wyszukiwania</h1>
+        
         <?php
 
             $search = new Search();

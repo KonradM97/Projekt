@@ -32,6 +32,10 @@
 {
     border-color: #008700;
 }
+#album_author a:hover
+{
+    border-color: #008700;
+}
 /*Wybrany album*/
 #album_info
 {
@@ -245,7 +249,19 @@ tr:hover
     background-color: var(--primary-color);
     color: #fff;
 }
-
+input[type='file']
+{
+    background-color: #008700;
+}
+input[type='submit']
+{
+    background-color: #008700;
+}
+#addtoplaylist
+{
+    border-radius: 50%;
+    background-color: transparent;
+}
 .login input:focus {
     outline: none;
 }

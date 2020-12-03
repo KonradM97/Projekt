@@ -22,6 +22,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link href="css/mainpagestyle.css" rel="stylesheet">
         <title>Player</title>
         <!-- Styles -->
 
@@ -86,6 +87,48 @@
                     $search->showPlaylists($playlists);
                 }
             ?>
+            <div id="addtoplaylistform" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Do jakiej playlisty chcesz dodać</h2>
+            <?php
+                $main->myplaylists();
+            ?>
+                <button onclick="addplaylist()">
+                        Dodaj
+                    </button>
+            </div>
+            <script>
+                //można zmienić na chceckboxy ale to robota dla frontendu
+                function getplaylist()
+                {
+                    var id = document.querySelector('input[name="choseplaylist"]:checked').value;
+                    return id;
+                }
+                function addplaylist()
+                {
+        
+                    var pid = getplaylist();
+                    var sid = <?php if(isset($_GET['songid'])){echo json_encode($_GET['songid']);}else{echo 0;} ?>;
+                    $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            $.ajax({
+                                type: 'GET',
+                                url: 'addtoplaylist',
+                                data: {pid: pid,sid: sid},
+                                contentType: 'application/json; charset=utf-8',
+                                dataType: 'json',
+                                
+                            });
+                    modal.style.display = "none";
+                }
+            </script>
+            </form>
+            </div>
                 <h2>Najnowsze utwory obserwowanych</h2>
                 <?php
                     $main->fetch_followers_songs();
@@ -102,11 +145,28 @@
                 </div>
            
                 
-            
-            @endguest
         </div>
+            @endguest
+        
     </body>
     <script>
+        //dodanie do playlisty
+        var modal = document.getElementById("addtoplaylistform");
+        var sendmessagebtn = document.getElementById("sendmessage");
+        var btn = document.getElementById("addtoplaylist");
+        var span = document.getElementsByClassName("close")[0];
+        btn.onclick = function() {
+        modal.style.display = "block";
+        }
+        span.onclick = function() {
+        modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+        }
+        ///////////////////////
         $(document).ready(function(){
             //$('#wyszukaj').hide();
             $('#albums').hide();

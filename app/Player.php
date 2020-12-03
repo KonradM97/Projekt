@@ -133,7 +133,6 @@ class Player {
 
         public function fetch_song($id)
         {
-            
 		 $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
 		if(!$connect)
 		{
@@ -163,7 +162,6 @@ class Player {
 
         public function fetch_playlist($id)
         {
-            
                 $this->titles=array();
                 $this->sources=array();
                  $this->authors=array();
@@ -202,7 +200,6 @@ class Player {
         }
         public function fetch_album($id)
         {
-            
                 $this->titles=array();
                 $this->sources=array();
                  $this->authors=array();
@@ -276,13 +273,7 @@ class Player {
                 }
             
         }
-        //do debugowania
-        function alarm()
-        {
-            ?>
-<script type="text/javascript">alert("w7ywol");</script>
-        <?php
-            }
+        
         
         //Konwersja tablicy na tą dla javascript
         
@@ -290,7 +281,6 @@ class Player {
         {
             ?>
                 <script type="text/javascript">
-                    
                 var songs = <?php echo json_encode($this->sources); ?>;
                  var titles = <?php echo json_encode($this->titles); ?>;
                   var authors = <?php echo json_encode($this->authors); ?>;
@@ -300,6 +290,7 @@ class Player {
                    var covers = <?php echo json_encode($this->covers); ?>;
                    var likes= <?php echo json_encode($this->likes); ?>;
                    var currentSong = 0;
+                   
                    //Dostanie id użytkownika który teraz korzysta z playera
                    var myId = <?php
                     if(isset(Auth::user()->id))
@@ -310,8 +301,9 @@ class Player {
                     {
                         echo json_encode(null);
                     }
-                   ?>;
                     
+                   ?>;
+                   
                   var shuffled_songs=songs.slice();
                  var shuffled_songsTitle=titles.slice();
                   var shuffled_author=authors.slice();
@@ -355,6 +347,8 @@ class Player {
                        function index(c)
                        {
                            currentSong=c;
+                           
+                           
                            song.src = songs[currentSong];
                             songTitle.textContent = titles[currentSong];
                             author.textContent = authors[currentSong];
@@ -389,8 +383,8 @@ class Player {
                             
                             <!-- Guziki powtórzenia i losowania-->
                         <div id="atendofsong">
-                            <button id="repeat" onclick="repeat()"><img id="replayButton" src="img/replay.png" height="90%" width="90%"/></button>
-                            <button id="shuffle" onclick="shuffle()"><img id="shuffleButton" src="img/inorder.png" height="90%" width="90%"/></button>
+                            <button id="repeat" title="" onclick="repeat()"><img id="replayButton" src="img/replay.png" height="80%" width="80%"/></button>
+                            <button id="shuffle" onclick="shuffle()"><img id="shuffleButton" src="img/inorder.png" height="80%" width="80%"/></button>
                         </div>
                         </div>
                     <div id="player">
@@ -435,6 +429,23 @@ class Player {
                 </div>
             </body>
             <script type="text/javascript">
+            //Zapisz w sesion storage pobrane utwory
+            function saveArrays()
+        {
+            if(sessionStorage.getItem("currentSong")!=null)
+                           {
+                 
+                  /*var authorsids =  <?php echo json_encode($this->authorsId); ?>;
+                  var ids = <?php echo json_encode($this->ids); ?>;
+                   var p_size = <?php echo json_encode($this->jukebox_size); ?>;
+                   var covers = <?php echo json_encode($this->covers); ?>;
+                   var likes= <?php echo json_encode($this->likes); ?>;
+                   var currentSong = 0;*/
+                            sessionStorage.setItem("Song",songs);
+                            sessionStorage.setItem("Title",titles);
+                            sessionStorage.setItem("Authors",authors);
+                           }
+        }
                 //Czy odpalony play
                 var playing=false;
                 ////pasek czasu utworu
@@ -462,9 +473,11 @@ class Player {
                     if (typeof(Storage) !== "undefined") {
                     // Retrieve
                     p = sessionStorage.getItem("volume");
-                    
+                    if(p==null)
+                    {
+                        p=80;
+                    }
                     volBar.value=p;
-                    t = sessionStorage.getItem("time");
                     }
                     
                     modifyVolume(p);
@@ -538,8 +551,15 @@ class Player {
                          song.src = songs[currentSong];
                          songTitle.textContent = titles[currentSong];
                          author.textContent = authors[currentSong];
+                         //
+                         /*if(sessionStorage.getItem("time")!=null)
+                         {
+                             var actualTime=sessionStorage.getItem("time");
+                             //alert(actualTime);
+                            song.currentTime=actualTime;
+                         }*/
                             song.play();
-                         
+                            document.getElementById('playbutton').src='img/Pause.png';
                          }
                      else{
                         
@@ -591,7 +611,8 @@ class Player {
                     
                 }
                 //Przy załadowaniu strony
-                window.onload = playSong();
+
+                    window.onload = playSong();
 		//Wybiera co zrobić po kliknięciu play/pause
                 function playOrPauseSong(){
                     if(song.paused){
@@ -619,9 +640,10 @@ class Player {
                     //Postęp paska utworu w czasie
                     //progressBar.setAttribute('value',position*300);
                     progressBar.value = position*300;
+                    //zapis
                     if (typeof(Storage) !== "undefined") {
                     // Store
-                    sessionStorage.setItem("time", position*300);
+                    sessionStorage.setItem("time", song.currentTime);
                     }
                     //powtórz 1
                     if(song.currentTime==song.duration&&repeatPressed == 0)
@@ -698,11 +720,16 @@ class Player {
                         shufflePressed = false;
                     }
                    }
-                   
+                   function reset_time()
+                   {
+                    if (typeof(Storage) !== "undefined") {
+                    // Store
+                    sessionStorage.setItem("time", 0);
+                    }
+                   }
                    ///////////////Następny i poprzedni utwór
                    function next(){
                     if(currentSong <p_size-1){
-                        
                             currentSong++;
                         playSong();
                     }
