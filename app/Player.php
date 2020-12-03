@@ -290,7 +290,18 @@ class Player {
                    var covers = <?php echo json_encode($this->covers); ?>;
                    var likes= <?php echo json_encode($this->likes); ?>;
                    var currentSong = 0;
-                   
+                   //do zmiany, aby działało dla pierwszego utworu
+                   if(songs[0]!=sessionStorage.getItem("song"))
+                   {
+                    if (typeof(Storage) !== "undefined") {
+                    // Store
+                    sessionStorage.setItem("time", 0);
+                    }
+                   }
+                   if (typeof(Storage) !== "undefined") {
+                    // Store
+                    sessionStorage.setItem("song", songs[0]);
+                    }
                    //Dostanie id użytkownika który teraz korzysta z playera
                    var myId = <?php
                     if(isset(Auth::user()->id))
@@ -348,7 +359,7 @@ class Player {
                        {
                            currentSong=c;
                            
-                           
+                           reset_time();
                            song.src = songs[currentSong];
                             songTitle.textContent = titles[currentSong];
                             author.textContent = authors[currentSong];
@@ -552,14 +563,14 @@ class Player {
                          songTitle.textContent = titles[currentSong];
                          author.textContent = authors[currentSong];
                          //
-                         /*if(sessionStorage.getItem("time")!=null)
+                         if(sessionStorage.getItem("time")!=null)
                          {
                              var actualTime=sessionStorage.getItem("time");
-                             //alert(actualTime);
+                             
                             song.currentTime=actualTime;
-                         }*/
+                         }
                             song.play();
-                            document.getElementById('playbutton').src='img/Pause.png';
+                         
                          }
                      else{
                         
@@ -568,7 +579,7 @@ class Player {
                         author.textContent = shuffled_author[currentSong];
                         
                         }
-                     
+                        document.getElementById('playbutton').src='img/Pause.png';
                     //pobierz okładkę
                      if(!shufflePressed){
                           //Jeśli utwór ma okładkę
@@ -613,6 +624,7 @@ class Player {
                 //Przy załadowaniu strony
 
                     window.onload = playSong();
+
 		//Wybiera co zrobić po kliknięciu play/pause
                 function playOrPauseSong(){
                     if(song.paused){
@@ -630,9 +642,8 @@ class Player {
                     }
                 }
                 
-                
+                //Obsługa zmiany czasu utworu i paska i co ma zrobić przy skończonym
                 song.addEventListener('timeupdate',function(){ 
-
                     var position = song.currentTime / song.duration;
                     
                     //document.getElementById('time').textContent = song.currentTime //pasek czasu na razie nieaktywny bo potrzebuje funkcji rozkładające
@@ -648,6 +659,7 @@ class Player {
                     //powtórz 1
                     if(song.currentTime==song.duration&&repeatPressed == 0)
                     {
+                        reset_time();
                         song.play();
                     }
                     //nie powtarzaj
@@ -655,9 +667,10 @@ class Player {
                     {
                         if(currentSong <p_size-1){
                         currentSong++;
+                        reset_time();
                         playSong();
                         }
-
+                       
                         
                     }
                     //powtórz całą playlistę
@@ -669,7 +682,9 @@ class Player {
                         else if(currentSong == p_size-1){
                         currentSong=0;
                         }
+                        reset_time();
                         playSong();
+                        
                     }
                 });
                 /////////////////////////////////////////////////
@@ -729,6 +744,7 @@ class Player {
                    }
                    ///////////////Następny i poprzedni utwór
                    function next(){
+                    reset_time();
                     if(currentSong <p_size-1){
                             currentSong++;
                         playSong();
@@ -743,6 +759,7 @@ class Player {
                     document.getElementById('playbutton').src='img/Pause.png';
                      }
                 function pre(){
+                    reset_time()
                     if(currentSong > 0){
                         currentSong--;
                     }

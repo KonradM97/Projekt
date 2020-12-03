@@ -16,18 +16,11 @@ class PostController extends Controller
        {
             $userId = Auth::user()->id;
             $r = $request;
-            $repeat = DB::select('select * from likes where userId=1 AND songId = '.$r['songId']);
-            ?>
-            <script>
-                var song = new Audio();
-                song.src = '../storage/app/uploads/1/11592153461.mp3';
-                song.play();
-            </script>
-            <?php
+            $repeat = DB::select('select * from likes where userId='.$userId.' AND songId = '.$r['songId']);
             if($repeat==[])
             {
                 //dodaj like z wyzwalaczem dodającym o 1
-                $result = DB::insert("INSERT INTO `likes` (`userId`, `songId`) VALUES ('1', '".$r['songId']."')");      
+                $result = DB::insert("INSERT INTO `likes` (`userId`, `songId`) VALUES ('".$userId."', '".$r['songId']."')");      
             }
             else 
             {
@@ -87,7 +80,7 @@ class PostController extends Controller
     public function addplaylist(Request $r)
     {
         //DB nie pozwala na powtórki więc nie trzeba sprawdzać
-        
+
         DB::insert('INSERT INTO `songs_in_playlists` (`song`, `playlist`) VALUES ('.$r['pid'].','.$r['sid'].')');
     }
 }
