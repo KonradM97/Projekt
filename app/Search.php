@@ -47,16 +47,20 @@ class Search {
                    echo '<table id="searching" class="table table-hover table-borderless">';
                             echo '<thead>
                                         <th class="srodek">Nazwa</th>
-
+                                        <th class="srodek">Śledzący</th>
                                         <th class="srodek">Avatar</th>
+                                        <th class="srodek">Utworzono</th>
                                     </tr>
                                 </thead>';
                      foreach($users as $val)
                      {
                          //dd($val);
                                echo '<tr style="cursor: pointer" class="clickable-row" data-href="user='.$val->id.'">';
+
                                echo '<td class="srodek">'.$val->name.'</td>';
+                               echo '<td class="srodek">'.$val->followers.'</td>';
                                echo '<td class="srodek"><img id="cover" src="'.$val->avatar.'" height="50px" width="50px" /></td>';
+                               echo '<td class="srodek">'.$val->created_at.'</td>';
                                echo '</tr></a>';
                      }
                      echo '</table></div>';

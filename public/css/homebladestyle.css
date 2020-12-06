@@ -4,8 +4,14 @@
 }
 #forms
 {
-    text-align: center;
-    /*font-family: monospace;*/
+    float: left;
+    text-align: left;
+    font-family: monospace;
+    width: 70%;
+}
+input[type='submit']
+{
+    background-color: #008700;
 }
 #addSong
 {
@@ -115,8 +121,7 @@ and open the template in the editor.
 #forms
 {
     text-align: center;
-    /*font-family: monospace;*/
-    margin-bottom: 100px;
+    font-family: monospace;
 }
 label
 {
@@ -128,7 +133,7 @@ label
 }
 #imageinfo
 {
-    float: right;
+    float: left;
     width: 30%;
 }
 #imageinfo img
@@ -159,12 +164,6 @@ margin-top: 100px;
     color: lightgray;
 }
 
-/*--------------------------------------------------------*/
-
-.test-container {
-    flex-direction: column;
-    /*align-items: flex-start;*/
-}
 
 
 

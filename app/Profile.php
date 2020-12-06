@@ -43,7 +43,7 @@ class Profile {
        LEFT JOIN albums a on a.idalbums=s.album 
        INNER JOIN users u on u.id = s.author 
        WHERE s.author='.$id.' ORDER BY s.`created_at` DESC');
-       $this->show_songs($mysongs);
+       $this->show_songs($mysongs,$id);
     }
 
     public function fetch_most_liked_songs($id)
@@ -54,9 +54,9 @@ class Profile {
         INNER JOIN users u on u.id = s.author 
         WHERE s.author='.$id.' ORDER BY s.`likes` DESC
         LIMIT 10' );
-       $this->show_songs($mysongs);
+       $this->show_songs($mysongs,$id);
     }
-    function show_songs($mysongs)
+    function show_songs($mysongs,$id)
     {
         echo '<table id="searching" class="table table-hover table-borderless">';
                             echo '<thead>
@@ -70,13 +70,18 @@ class Profile {
                      foreach($mysongs as $val)
                      {
                          //dd($val);
-                               echo '<tr style="cursor: pointer" class="clickable-row" data-href="?songid='.$val->idsongs.'">';
-                               echo '<td class="srodek">'.$val->title.'</td>';
-                               echo '<td class="srodek">'.$val->genre.'</td>';
-                               echo '<td class="srodek">'.$val->album.'</td>';
-                               echo '<td class="srodek">'.$val->likes.'</td>';
+                               echo '<tr style="cursor: pointer">';
+                               echo '<td class="srodek"><a href="?songid='.$val->idsongs.'">'.$val->title.'</a></td>';
+                               echo '<td class="srodek"><a href="?songid='.$val->idsongs.'">'.$val->genre.'</a></td>';
+                               echo '<td class="srodek"><a href="?songid='.$val->idsongs.'">'.$val->album.'</a></td>';
+                               echo '<td class="srodek"><a href="?songid='.$val->idsongs.'">'.$val->likes.'</a></td>';
                                echo '<td class="srodek"><img src="'.$this->check_cover($val->source).'" height="50px" width="50px" /></td>';
+                               if(Auth::user()->id==$id||Auth::user()->Admin==1)
+                               {
+                                echo '<td class="srodek"><button onclick="deleteSong('.$val->idsongs.')" class="delete"><img src="img/delete.png" height="25px" width="25px"></button>';
+                               }
                                echo '</tr>';
+                               
                      }
         echo '</table>';
 
@@ -84,17 +89,25 @@ class Profile {
     public function fetch_albums($id)
     {
        $myalbums = DB::select('SELECT * FROM `albums` s LEFT JOIN covers c on s.cover = c.idcovers WHERE author='.$id);
-       $this->show_albums($myalbums);
+       $this->show_albums($myalbums,$id);
     }
-    public function show_albums($myalbums)
+    public function show_albums($myalbums,$id)
     {
                      foreach($myalbums as $val)
                      {
-                        echo '<div class="album-tile card text-center" style="background-color:var(--secondary-color);color:#fff;">'
-            . '<a href="?album='.$val->idalbums.'">'
+                         
+                        echo '<div class="album-tile card text-center" style="background-color:var(--secondary-color);color:#fff;">';
+                        if(Auth::user()->id==$id||Auth::user()->Admin==1)
+                {
+                            echo '<button onclick="deleteAlbum('.$val->idalbums.')" class="delete fromalbum"><img src="img/delete.png" height="25px" width="25px"></button>';
+                }
+                echo '<a href="?album='.$val->idalbums.'">'
                 . '<img src="'.$val->source.'" height="100px" width="100px" />'
                 . '<br />'
-                . '<b>'.$val->title.'<b></a><br /></div>';
+                . '<b>'.$val->title.'<b></a><br />';
+                
+                echo '</div>';
+
                      }
         echo '</table>';
 
@@ -118,15 +131,19 @@ class Profile {
         }
        $mysongs_in_playlists = DB::select($SELECT);
        $myplaylists = DB::select($SELECT_Playlists);
-       $this->show_playlists($myplaylists,$mysongs_in_playlists);
+       $this->show_playlists($myplaylists,$mysongs_in_playlists,$id);
     }
 
-    function show_playlists($plylists,$songsIP)
+    function show_playlists($plylists,$songsIP,$id)
     {
         foreach($plylists as $pl)
         {
             //<h3 style="float:right;">'.' Polubień: '.$pl->likes.'</h3> może kiedyś
-            echo '<h3><a href="?playlist='.$pl->idplaylists.'">'.$pl->playlistName.'</a></h3><br />';
+            echo '<p class="playlistsname"><a href="?playlist='.$pl->idplaylists.'">'.$pl->playlistName.'</a></p>';
+            if(Auth::user()->id==$id||Auth::user()->Admin==1)
+                {
+                            echo '<button onclick="deletePlaylist('.$pl->idplaylists.')" class="delete"><img src="img/delete.png" height="25px" width="25px"></button>';
+                }
             echo '<table id="searching" class="table table-hover table-borderless">';
                                 echo '<thead>
                                             <th class="srodek">Tytuł</th>

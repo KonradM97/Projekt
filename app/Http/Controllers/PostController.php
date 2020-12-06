@@ -16,18 +16,11 @@ class PostController extends Controller
        {
             $userId = Auth::user()->id;
             $r = $request;
-            $repeat = DB::select('select * from likes where userId=1 AND songId = '.$r['songId']);
-            ?>
-            <script>
-                var song = new Audio();
-                song.src = '../storage/app/uploads/1/11592153461.mp3';
-                song.play();
-            </script>
-            <?php
+            $repeat = DB::select('select * from likes where userId='.$userId.' AND songId = '.$r['songId']);
             if($repeat==[])
             {
                 //dodaj like z wyzwalaczem dodającym o 1
-                $result = DB::insert("INSERT INTO `likes` (`userId`, `songId`) VALUES ('1', '".$r['songId']."')");      
+                $result = DB::insert("INSERT INTO `likes` (`userId`, `songId`) VALUES ('".$userId."', '".$r['songId']."')");      
             }
             else 
             {
@@ -55,12 +48,39 @@ class PostController extends Controller
     public function sendMessage(Request $request)
     {
         //walidacja
-        
+
             $r=$request;
             $sender = Auth::user()->id;
             $reciver =$r['rec'];
             $te = $r['textval'];
             DB::insert('INSERT INTO `messages` (`sender`, `reciver`, `messagetext`) VALUES ("'.$sender.'", "'.$reciver.'", "'.$te.'")');
 
+    }
+    public function deleteSong(Request $request)
+    {
+        $r = $request;
+        DB::delete("DELETE FROM `songs` WHERE idsongs =".$r['id']);
+    }
+    public function deleteAlbum(Request $request)
+    {
+        $r = $request;
+        DB::delete("DELETE FROM `albums` WHERE idalbums =".$r['id']);
+    }
+    public function deletePlaylist(Request $request)
+    {
+        $r = $request;
+        DB::delete("DELETE FROM `playlists` WHERE idplaylists =".$r['id']);
+    }
+    public function deleteUser(Request $request)
+    {
+        $r = $request;
+        DB::delete("DELETE FROM `users` WHERE id =".$r['id']);
+    }
+    ///playlisty
+    public function addplaylist(Request $r)
+    {
+        //DB nie pozwala na powtórki więc nie trzeba sprawdzać
+
+        DB::insert('INSERT INTO `songs_in_playlists` (`song`, `playlist`) VALUES ('.$r['pid'].','.$r['sid'].')');
     }
 }

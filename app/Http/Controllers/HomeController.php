@@ -53,7 +53,7 @@ class HomeController extends Controller
         ]);
         
         $validator = Validator::make($request->all(), [
-            'source' => 'required|mimetypes:audio/mp3,application/octet-stream,audio/ogg,audio/wav',
+            'source' => 'required',
             'title' => 'required|min:3,max:45'
         ]);
         if($validator->fails())
