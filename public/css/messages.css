@@ -29,7 +29,7 @@
 }
 .message-box
 {
-    background-color: #222;
+    background-color: #fff;
     margin-bottom: 20px;
 }
 .message-box p
@@ -39,6 +39,33 @@
 .message-box img
 {
     float: right;
-    width: 50px;
-    height: 50px; 
+    width: 100px;
+    height: 100px;
+}
+
+/*----------------------------------------*/
+
+#messages-container {
+    margin-bottom: 50px;
+}
+
+.message {
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.message-avatar img {
+    width: 120px;
+    height: 120px;
+}
+
+.message-content {
+    padding-left: 20px;
+    word-wrap: break-word;
+    height: 100%;
+    width: 100%;
+}
+
+.message-content:hover {
+    background-color: #444;
 }
