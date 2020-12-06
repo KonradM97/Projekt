@@ -47,22 +47,17 @@ class HomeController extends Controller
     }
     public function addSong(Request $request)
     {
-        $data = $request->validate([
-            'title' => 'required|max:45',
-            'source' => 'required',
-        ]);
-        
-        $validator = Validator::make($request->all(), [
-            'source' => 'required',
+        $validator = Validator::make($request->all(), [//Walidacja najważniejszych treści
+            'source' => 'required|mimetypes:audio/mpeg,audio/ogg',//Rodzaj pliku przesyłanego
             'title' => 'required|min:3,max:45'
         ]);
-        if($validator->fails())
+        if($validator->fails())//Kiedy walidacja się nie powiedzie
         {
-            return view('home',array('error' => 'Błąd w nazwie lub typie pliku!'));
+            return view('home',array('error' => 'Błąd w nazwie lub typie pliku!'));//Zwróć błąd
         }
         else
         {
-        if(!is_dir('../storage/app/uploads/'.Auth::user()->id))
+        if(!is_dir('../storage/app/uploads/'.Auth::user()->id))//Dodaj miejsce przechowania pliku
                 {
                     mkdir ( '../storage/app/uploads/'.Auth::user()->id);
                 }
@@ -74,12 +69,12 @@ class HomeController extends Controller
         $filename = Auth::user()->id.time().".".$file->getClientOriginalExtension();
         $source = $request->file('source')->storePubliclyAs('uploads/'.Auth::user()->id,$filename);
         $cover=null;
-        if($request['cover']!=null)
+        if($request['cover']!=null)//Jeśli okładka jest
         {
             $filecover = $request->file('cover');
             $filecovername = Auth::user()->id.time().".".$filecover->getClientOriginalExtension();
             $coversource = $request->file('cover')->storePubliclyAs('uploads/covers/'.Auth::user()->id,$filecovername);
-            $cover = DB::table('covers')->insertGetId(
+            $cover = DB::table('covers')->insertGetId(//dodaj okładkę do bazy danych
             ['source' => '../storage/app/'.$coversource]
             );
         }
@@ -89,9 +84,8 @@ class HomeController extends Controller
                 'album'=> $request['album'],'genre'=> $request['genre'],'feat' =>$request['feat'],
                 'license' => $request['license'],'cover'=>$cover]
         );
-        //okładka
         }
-        return view('home',array('user' => Auth::user()));
+        return view('home',array('user' => Auth::user()));//Wróć do panelu użytkownika
     }
     
     //Dodaj album

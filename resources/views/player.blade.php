@@ -127,7 +127,6 @@
                     modal.style.display = "none";
                 }
             </script>
-            </form>
             </div>
                 <h2>Najnowsze utwory obserwowanych</h2>
                 <?php

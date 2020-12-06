@@ -44,6 +44,10 @@
             if(isset($playlists)&&$playlists!=[]){
                 $search->showPlaylists($playlists);
             }
+            if($songs==[]&&$users==[]&&$albums==[]&&$playlists==[])
+            {
+                echo '<h1>Brak wyników dla zapytania: '.$_GET['searchFor'];
+            }
         ?>
 
     </body>

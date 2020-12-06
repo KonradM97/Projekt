@@ -114,6 +114,7 @@ table td, th
 }
 #choose button:hover
 {
+    cursor: pointer;
     margin-bottom: 0px;
     border-color: black;
     border-bottom-style: solid;

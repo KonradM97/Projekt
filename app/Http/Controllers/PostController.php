@@ -81,6 +81,6 @@ class PostController extends Controller
     {
         //DB nie pozwala na powtórki więc nie trzeba sprawdzać
 
-        DB::insert('INSERT INTO `songs_in_playlists` (`song`, `playlist`) VALUES ('.$r['pid'].','.$r['sid'].')');
+        DB::insert('INSERT INTO `songs_in_playlists` (`song`, `playlist`) VALUES ('.$r['sid'].','.$r['pid'].')');
     }
 }

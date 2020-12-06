@@ -556,70 +556,57 @@ class Player {
                 //Odtwórz przy odpaleniu strony
                 
                
-               //Pobierz dane utworu do odtwarzacza
+               //Pobierz dane utworu do odtwarzacza i odtwórz
                  function playSong(){
-                     if(!shufflePressed){
-                         song.src = songs[currentSong];
-                         songTitle.textContent = titles[currentSong];
-                         author.textContent = authors[currentSong];
-                         //
-                         if(sessionStorage.getItem("time")!=null)
+                    if(sessionStorage.getItem("time")!=null)
                          {
-                             var actualTime=sessionStorage.getItem("time");
+                             var actualTime=sessionStorage.getItem("time"); //Pobierz aktualny czas
                              
                             song.currentTime=actualTime;
                          }
-                            song.play();
-                         
+                     if(!shufflePressed){ //Rozdzielenie między przypadkami kliknięcia losuj, a nie
+                         song.src = songs[currentSong];
+                         songTitle.textContent = titles[currentSong];
+                         author.textContent = authors[currentSong];  
+                        song.play();
                          }
-                     else{
+                     else{  // W przypadku pomieszanej kolejki...
                         
                         song.src = shuffled_songs[currentSong];
                         songTitle.textContent = shuffled_songsTitle[currentSong];
                         author.textContent = shuffled_author[currentSong];
-                        
+                        song.play();
                         }
                         document.getElementById('playbutton').src='img/Pause.png';
-                    //pobierz okładkę
-                     if(!shufflePressed){
-                          //Jeśli utwór ma okładkę
-                            if(covers[currentSong])
+                     if(!shufflePressed){//pobierz okładkę
+                            if(covers[currentSong])//Jeśli utwór ma okładkę
                             {
                                  document.getElementById("cover").src= covers[currentSong];   
                             }
-                             else
+                             else //Jeśli nie
                             {
-                                document.getElementById("cover").src= "img/nullcover.png";
+                                document.getElementById("cover").src= "img/nullcover.png";//Pobierz domyślną
                             }    
                         }
                         else
-                        {
-                             //Jeśli utwór ma okładkę
-                            if(shuffled_covers[currentSong])
+                        {   
+                            if(shuffled_covers[currentSong]) //Jeśli utwór ma okładkę
                             {
                                  document.getElementById("cover").src= shuffled_covers[currentSong];   
                             }
-                             else
+                             else//Jeśli utwór nie ma okładki pobierz domyślna
                             {
                                 document.getElementById("cover").src= "img/nullcover.png";
                             }    
-                                
                         }
-                       //Pobierz polubienie
-                       //26.10
-                            if(likes[currentSong])
+                            if(likes[currentSong])//Pobierz polubienie
                             {
                                 document.getElementById("like").src="img/liked.png";
-                                 
-                                 
                             }
                             else
                             {
-                               
                                 document.getElementById("like").src="img/like.png";
                             }
-                       
-                    
                 }
                 //Przy załadowaniu strony
 
