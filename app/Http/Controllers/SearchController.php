@@ -45,7 +45,7 @@ class SearchController extends Controller
                     . ' AND ispublic = 1 ORDER BY likes DESC');
             }
             
-            $users = DB::select('select id, email, name,avatar, followers, created_at'
+            $users = DB::select('select id, email, name, avatar, followers, created_at'
                     . ' from users u'
                     . ' where UPPER(name) LIKE UPPER("%'.$r['searchFor'].'%") OR UPPER(username) LIKE UPPER("%'.$r['searchFor'].'%")');
         }

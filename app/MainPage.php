@@ -126,7 +126,7 @@ class MainPage {
     }
     public function aboutPlaylist($playlistid)
     {
-        $playlist = DB::select('SELECT playlistName,ispublic,author, u.name as uname FROM `playlists` p INNER JOIN users u on u.id=p.author WHERE p.idplaylists ='.$playlistid);
+        $playlist = DB::select('SELECT playlistName,ispublic,author, u.name as uname, u.id FROM `playlists` p INNER JOIN users u on u.id=p.author WHERE p.idplaylists ='.$playlistid);
         
         foreach($playlist as $val)
         {
@@ -144,8 +144,8 @@ class MainPage {
             $val->playlistName;
             echo '</div>';
             echo '<div id="album_author">Autor:<br />'.
-            $val->uname;
-            echo '</div>';
+            '<a href="user='.$val->id.'">'.$val->uname;
+            echo '</a></div>';
             //dodatkowo gatunek
             //zamknij album_info
             echo '</div>';

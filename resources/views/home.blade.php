@@ -104,7 +104,7 @@
             <div class="form-group col-md-6" id="addSongForm">
                             <form enctype="multipart/form-data" action="addSong" method="POST">
                                 <label>Tytuł</label><input type="text" class="form-control" name="title" required><br/>
-                                <label>Plik</label><input type="file" class="form-control" name="source" required accept="audio/*"><br/>
+                                <label>Plik</label><input type="file" class="form-control" name="source" required accept=".mp3,.ogg|audio/*"><br/>
                                 <label>Album(opcj.)</label><input type="number" class="form-control" name="album" id="albumset" onclick="showAlbums()"><br/>
                                 <label>Gatunek(opcj.)</label><input type="text" class="form-control" name="genre" ><br/>
                                 <label>Okładka(opcj.)</label><input type="file" class="form-control" name="cover"><br/>

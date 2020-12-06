@@ -59,7 +59,7 @@ class Search {
 
                                echo '<td class="srodek">'.$val->name.'</td>';
                                echo '<td class="srodek">'.$val->followers.'</td>';
-                               echo '<td class="srodek"><img id="cover" src="'.$val->avatar.'" height="50px" width="50px" /></td>';
+                               echo '<td class="srodek"><img id="avatar" src="'.$val->avatar.'" height="50px" width="50px" /></td>';
                                echo '<td class="srodek">'.$val->created_at.'</td>';
                                echo '</tr></a>';
                      }

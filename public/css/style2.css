@@ -5,7 +5,7 @@
     display: inline-block;
     width: 100%;
 }
-#song_info a:hover
+#mainPage a:hover
 {
     background-color: #008700;
 }

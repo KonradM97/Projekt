@@ -22,14 +22,12 @@
         <title>Player</title>
         <!-- Styles -->
 
-        <!-- <link href="css/style.css" rel="stylesheet"> -->
+        <link href="css/style2.css" rel="stylesheet">
     </head>
 
     <body>
-
-        <div class="container">
-            <h1>Wyniki wyszukiwania</h1>
-        </div>
+    <div class="container">
+        <h1>Wyniki wyszukiwania</h1>
 
         <?php
 
@@ -45,6 +43,10 @@
             }
             if(isset($playlists)&&$playlists!=[]){
                 $search->showPlaylists($playlists);
+            }
+            if($songs==[]&&$users==[]&&$albums==[]&&$playlists==[])
+            {
+                echo '<h1>Brak wyników dla zapytania: '.$_GET['searchFor'];
             }
         ?>
 

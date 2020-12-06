@@ -32,26 +32,26 @@ use Illuminate\Support\Facades\Auth
 
             <a href="{{ url('/') }}" class="logo">{{ config('app.name', 'Songerr') }}</a>
 
-            <form action="search" method="GET" name="search_form">
+            <form action="search" method="GET" name="search_form"><!-- Pasek wyszukiwania -->
                 <input id="pasek" type="text" size="50" name="searchFor" value="" pattern="[0-9a-zA-Z\s]{3,}" title="Zapytanie wyszukiwania powinno mieć conajmniej 3 znaki!"/>
                 <button id="przycisk" class="btn szukaj" type="submit"><i class="fas fa-search"></i></button>
             </form>
-
             <nav>
                 <ul>
-                    @guest
+                    @guest<!--Kiedy nie jesteś zalogowany -->
                         <li>
                             <a href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
-                        @if (Route::has('register'))
+                        @if (Route::has('register'))<!-- Kiedy masz domyślną rejestrację -->
                             <li>
                                 <a href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @endif
-                    @else
+                    @else<!-- Kiedy jesteś zalogowany -->
                         <li><button onclick='window.location.href="{{ route('messages') }}"' height=70px width=70px><img src="img/message.png"><p id="unread_count"><p></button></li>
+                        <!-- Okno wiadomości -->
                         <script>
-                            document.getElementById("unread_count").innerHTML = <?php echo json_encode($messages->getMessageCount()); ?>;
+                            document.getElementById("unread_count").innerHTML = <?php echo json_encode($messages->getMessageCount()); ?>;//Lista wiadomości
                         </script>
                         <li><a href="{{ route('home') }}">{{ __('Panel') }}</a></li>
                         <li><a href="user={{ Auth::user()->id }}">{{ __('Profil') }}</a></li>
@@ -59,10 +59,6 @@ use Illuminate\Support\Facades\Auth
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
-                        <script>
-
-
-    </script>
                     @endguest
                 </ul>
             </nav>
@@ -70,7 +66,7 @@ use Illuminate\Support\Facades\Auth
         </div>
     </div>
 
-    <main class="py-2">
+    <main class="py-4">
                 @yield('content')
             </main>
 
