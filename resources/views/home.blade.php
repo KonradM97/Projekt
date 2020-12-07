@@ -5,43 +5,45 @@
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <div class="container">
         <div class="col-md-12">
+
             <div class="row">
-                <h1>Panel użytkownika {{ Auth::user()->name}}</h1>
+                <h1 class="my-1">Panel użytkownika {{ Auth::user()->name}}</h1>
                 <!-- komunikaty-->
                 <?php
-                if(isset($error))
-                {
-                    echo '<p style="color:red">Błąd: '.$error.'!</p>';
-                }
-                if(isset($resultstatus))
-                {
-                    echo '<p style="color:green">Zmieniono!</p>';
-                }
+                    if(isset($error))
+                    {
+                        echo '<p style="color:red">Błąd: '.$error.'!</p>';
+                    }
+                    if(isset($resultstatus))
+                    {
+                        echo '<p style="color:green">Zmieniono!</p>';
+                    }
                 ?>
             </div>
-            <div class="row">
-                <div id="userinfo" class="col-md-12 col-md-offset">
 
+            <div class="row">
+                <div id="userinfo">
                     <div id="imageinfo">
                         <img src="{{Auth::user()->avatar}}" style="width: 50px;height:50px; float: right; border-radius: 50%"/>
-                        <label>Nowe zdjęcie</label><br/>
                         <form enctype="multipart/form-data" action="home" method="POST">
-                        <input type="file" name="avatar"><br/>
-                        @csrf
-                        <input type="submit" value="Dodaj zdjęcie" class="pull-right btn btn-sm btn-primary"><br/>
+                            <input type="file" name="avatar"><br/>
+                            @csrf
+                            <input type="submit" value="Dodaj zdjęcie" class="btn btn-primary"><br/>
                         </form>
                     </div>
                 </div>
             </div>
+
             <div class="row">
-                <div id="addbuttons">
-                    <button class="btn btn-primary btn-lg" id="addSong" onclick="showAddSong()" >Dodaj utwór</button>
-                    <button class="btn btn-primary btn-lg" id="addAlbum" onclick="showAddAlbum()">Dodaj album</button>
-                    <button class="btn btn-primary btn-lg" id="addPlaylist" onclick="showAddPlaylist()">Dodaj playlistę</button>
-                    <button class="btn btn-primary btn-lg" id="changenameButton" onclick="showChangeName()">Zmień nazwę</button>
-                    <button class="btn btn-primary btn-lg" id="changepasswordButton">Zmień hasło</button>
+                <div id="addbuttons" class="flex">
+                    <button class="btn btn-primary" id="addSong" onclick="showAddSong()" >Dodaj utwór</button>
+                    <button class="btn btn-primary" id="addAlbum" onclick="showAddAlbum()">Dodaj album</button>
+                    <button class="btn btn-primary" id="addPlaylist" onclick="showAddPlaylist()">Dodaj playlistę</button>
+                    <button class="btn btn-primary" id="changenameButton" onclick="showChangeName()">Zmień nazwę</button>
+                    <button class="btn btn-primary" id="changepasswordButton">Zmień hasło</button>
                 </div>
             </div>
+
             <script type="text/javascript">
                 $(document).ready(function(){
                     $('#addSongForm').slideUp(0);
@@ -87,77 +89,80 @@
                     hideall();
                     $('#changeNametForm').slideDown(500);
                 }
-                            </script>
-            <div class="row" id="forms">
+            </script>
 
+            <div id="forms">
 
+                <div class="form-group col-md-6" id="changeNametForm">
+                    <p style="color: red">Uwaga! Zmiana nazwy użytkownika skutkuje tym, że osoby, które cię znały nie będą mogły cię nie znaleźć w wyszukiwarce!</p>
+                    <form enctype="multipart/form-data" action="changeName" method="POST">
+                        <label>Nowa nazwa</label><input type="text" class="form-control" name="name" pattern=".{3,}" title="Nazwa musi mieć conajmniej 3 znaki"  required><br/>
+                        <label>Potwierdź nazwę</label><input type="text" class="form-control" name="confirm_name" required><br/>
+                        @csrf
+                        <input type="submit" name="changeName" value="Zmień" class="btn btn-secondary">
+                    </form>
+                </div>
 
-            <div class="form-group col-md-6" id="changeNametForm">
-                            <p style="color: red">Uwaga! Zmiana nazwy użytkownika skutkuje tym, że osoby, które cię znały nie będą mogły cię nie znaleźć w wyszukiwarce!</p>
-                            <form enctype="multipart/form-data" action="changeName" method="POST">
-                                <label>Nowa nazwa</label><input type="text" class="form-control" name="name" pattern=".{3,}" title="Nazwa musi mieć conajmniej 3 znaki"  required><br/>
-                                <label>Potwierdź nazwę</label><input type="text" class="form-control" name="confirm_name" required><br/>
-                                @csrf
-                                <input type="submit" name="changeName" value="Zmień" class="btn btn-primary">
-                            </form>
-            </div>
-            <div class="form-group col-md-6" id="addSongForm">
-                            <form enctype="multipart/form-data" action="addSong" method="POST">
-                                <label>Tytuł</label><input type="text" class="form-control" name="title" required><br/>
-                                <label>Plik</label><input type="file" class="form-control" name="source" required accept=".mp3,.ogg|audio/*"><br/>
-                                <label>Album(opcj.)</label><input type="number" class="form-control" name="album" id="albumset" onclick="showAlbums()"><br/>
-                                <label>Gatunek(opcj.)</label><input type="text" class="form-control" name="genre" ><br/>
-                                <label>Okładka(opcj.)</label><input type="file" class="form-control" name="cover"><br/>
-                                <label>Autor towarzyszący(opcj.)</label><input type="text" class="form-control" name="feat"><br/>
-                                <label>Licencja(opcj.)</label><input type="text" class="form-control" name="license"><br/>
-                                @csrf
+                <div class="form-group col-md-6" id="addSongForm">
+                    <form enctype="multipart/form-data" action="addSong" method="POST">
+                        <label>Tytuł</label><input type="text" class="form-control" name="title" required><br/>
+                        <label>Plik</label><input type="file" class="form-control" name="source" required accept=".mp3,.ogg|audio/*"><br/>
+                        <label>Album(opcj.)</label><input type="number" class="form-control" name="album" id="albumset" onclick="showAlbums()"><br/>
+                        <label>Gatunek(opcj.)</label><input type="text" class="form-control" name="genre" ><br/>
+                        <label>Okładka(opcj.)</label><input type="file" class="form-control" name="cover"><br/>
+                        <label>Autor towarzyszący(opcj.)</label><input type="text" class="form-control" name="feat"><br/>
+                        <label>Licencja(opcj.)</label><input type="text" class="form-control" name="license"><br/>
+                        @csrf
 
-                                <button type="submit" name="addSong" class="btn btn-primary">Dodaj</button>
-                            </form>
-            </div>
+                        <button type="submit" name="addSong" class="btn btn-secondary">Dodaj</button>
+                    </form>
+                </div>
+
                 <div class="form-group col-md-6" id="albums">
-                                <h2>Dostępne albumy</h2>
-                                <?php
-                                    $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
-                                    if(!$connect)
-                                    {
-                                            echo 'Błąd połączenia z serwerem';
-                                    }
-                                    $query = "SELECT idalbums, title from albums WHERE author = ".Auth::user()->id;
-                                    $albums=mysqli_query($connect,$query);
-                                    foreach ($albums as $a)
-                                    {
-                                        echo '<div class="col-md-12" id="album"><a href="#" onclick="setAlbum('.$a['idalbums'].')">'
-                                       .$a['title'].'</a></div>';
-                                    }
+                    <h2>Dostępne albumy</h2>
+                    <?php
+                        $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
+                        if(!$connect)
+                        {
+                                echo 'Błąd połączenia z serwerem';
+                        }
+                        $query = "SELECT idalbums, title from albums WHERE author = ".Auth::user()->id;
+                        $albums=mysqli_query($connect,$query);
+                        foreach ($albums as $a)
+                        {
+                            echo '<div class="col-md-12" id="album"><a href="#" onclick="setAlbum('.$a['idalbums'].')">'
+                            .$a['title'].'</a></div>';
+                        }
+                    ?>
+                </div>
 
-                                ?>
-                            </div>
-            <div class="form-group col-md-12" id="addAlbumForm">
-                            <form enctype="multipart/form-data" action="addAlbum" method="POST">
-                                <label>Tytuł</label><input type="text" class="form-control" name="title" required><br/>
-                                <label>Opis</label><input type="text" class="form-control" name="describe" ><br/>
-                                <label>Gatunek(opcj.)</label><input type="text" class="form-control" name="genre" ><br/>
-                                <label>Okładka(opcj.)</label><input type="file" class="form-control" name="cover"><br/>
-                                @csrf
+                <div class="form-group col-md-12" id="addAlbumForm">
+                    <form enctype="multipart/form-data" action="addAlbum" method="POST">
+                        <label>Tytuł</label><input type="text" class="form-control" name="title" required><br/>
+                        <label>Opis</label><input type="text" class="form-control" name="describe" ><br/>
+                        <label>Gatunek(opcj.)</label><input type="text" class="form-control" name="genre" ><br/>
+                        <label>Okładka(opcj.)</label><input type="file" class="form-control" name="cover"><br/>
+                        @csrf
 
-                                <button type="submit" name="addAlbum" class="btn btn-primary">Dodaj</button>
-                            </form>
-            </div>
+                        <button type="submit" name="addAlbum" class="btn btn-secondary">Dodaj</button>
+                    </form>
+                </div>
+
                 <div class="form-group col-md-12" id="addPlaylistForm">
-                            <form enctype="multipart/form-data" action="addPlaylist" method="POST">
-                                <label>Tytuł</label><input type="text" class="form-control" name="name" required><br/>
-                                <label>Publiczna?</label><input type="checkbox" class="form-control" name="public" value="publiczna" ><br/>
-                                @csrf
+                    <form enctype="multipart/form-data" action="addPlaylist" method="POST">
+                        <label>Tytuł</label><input type="text" class="form-control" name="name" required><br/>
+                        <label>Publiczna?</label><input type="checkbox" class="form-control" name="public" value="publiczna" ><br/>
+                        @csrf
 
-                                <button type="submit" name="addPlaylist" class="btn btn-primary">Dodaj</button>
-                            </form>
-            </div>
+                        <button type="submit" name="addPlaylist" class="btn btn-secondary">Dodaj</button>
+                    </form>
+                </div>
 
 
             </div>
 
         </div>
+
     <div id="chgpasswdform" class="modal">
 
 <!-- Modal content -->

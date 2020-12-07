@@ -66,9 +66,9 @@ use Illuminate\Support\Facades\Auth
         </div>
     </div>
 
-    <main class="py-4">
-                @yield('content')
-            </main>
+    <main class="py-2">
+        @yield('content')
+    </main>
 
     <?php
         $player = new Player();

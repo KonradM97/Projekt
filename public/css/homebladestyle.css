@@ -2,62 +2,48 @@
 {
     height: 100px;
 }
+
+label
+{
+    margin-right: 10px;
+}
+
 #forms
 {
-    float: left;
-    text-align: left;
-    font-family: monospace;
-    width: 70%;
+    margin-bottom: 75px;
+    margin-left: 200px;
+    margin-right: 200px;
 }
-input[type='submit']
-{
-    background-color: #008700;
-}
-#addSong
-{
-    background-color: #0099ff;
 
+#forms input[type='text'] {
+    border: 0;
+    border-bottom: 1px solid var(--secondary-color);
+    width: 50%;
+    padding: 3px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    background-color: var(--primary-color);
+    color: #fff;
+    margin-bottom: 5px;
 }
-#addAlbum
-{
-    background-color: #339900;
-}
-#addPlaylist
-{
-    background-color: #cccc00;
-}
-#addSongToPlaylist
-{
-    background-color: #ccff00;
-}
+
 #albums
 {
-margin-top: 100px;
+    margin-top: 20px;
+    margin-bottom: 50px;
 }
+
 #albums a
 {
     text-decoration: none;
     color: darkblue;
 }
+
 #albums a:hover
 {
     background-color: #0099ff;
     color: lightgray;
 }
-
-
-
-
-
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/*
-    Created on : 28 paź 2020, 21:12:47
-    Author     : Konrad
-*/
 
 /* Okienko zmiany hasła*/
 .modal {
@@ -72,25 +58,28 @@ and open the template in the editor.
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
 
-  }
-  .modal textarea
-  {
-      width: 100%;
-      height:100px;
-  }
-  .modal button
-  {
-      background-color: #0eb165;
-        width: 20%;
-        float: right;
-  }
-  .modal button:hover
-  {
-      background-color: #00582b;
-  }
-  /* Modal Content */
-  .modal-content {
+.modal textarea
+{
+    width: 100%;
+    height:100px;
+}
+
+.modal button
+{
+    background-color: #0eb165;
+    width: 20%;
+    float: right;
+}
+
+.modal button:hover
+{
+    background-color: #00582b;
+}
+
+/* Modal Content */
+.modal-content {
     background-color: #fefefe;
     color: black;
     margin: auto;
@@ -98,35 +87,30 @@ and open the template in the editor.
     border: 1px solid #888;
     width: 30%;
     text-align: center;
-  }
-  .modal-content input
-  {
-      width: 100%;
-  }
-  /* The Close Button */
-  .close {
+}
+
+.modal-content input
+{
+    width: 100%;
+}
+
+/* The Close Button */
+.close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-  }
+}
 
-  .close:hover,
-  .close:focus {
+.close:hover,
+.close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
-  }
+}
+
 /*Reszta*/
-#forms
-{
-    text-align: center;
-    font-family: monospace;
-}
-label
-{
-    text-align: center;
-}
+
 .userbutton
 {
     float: left;
@@ -136,24 +120,24 @@ label
     float: left;
     width: 30%;
 }
-#imageinfo img
-{
 
+#addbuttons {
+    justify-content: space-evenly;
+    margin-bottom: 20px;
 }
+
 #addbuttons button
 {
-    background-color: #0eb165;
+    background-color: var(--secondary-color);
     border-radius: 5%;
     height: 50px;
 }
+
 #userinfo
 {
     height: 150px;
 }
-#albums
-{
-margin-top: 100px;
-}
+
 #albums a
 {
     text-decoration: none;
@@ -163,10 +147,3 @@ margin-top: 100px;
     background-color: #0eb165;
     color: lightgray;
 }
-
-
-
-
-
-
-
