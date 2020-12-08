@@ -21,17 +21,13 @@
                 ?>
             </div>
 
-            <div class="row">
-                <div id="userinfo">
-                    <div id="imageinfo">
-                        <img src="{{Auth::user()->avatar}}" style="width: 50px;height:50px; float: right; border-radius: 50%"/>
-                        <form enctype="multipart/form-data" action="home" method="POST">
-                            <input type="file" name="avatar"><br/>
-                            @csrf
-                            <input type="submit" value="Dodaj zdjęcie" class="btn btn-primary"><br/>
-                        </form>
-                    </div>
-                </div>
+            <div id="userinfo" class="text-center my-1">
+                <img src="{{Auth::user()->avatar}}" />
+                <form enctype="multipart/form-data" action="home" method="POST">
+                    <input type="file" name="avatar"><br/>
+                    @csrf
+                    <input type="submit" value="Zmień zdjęcie" class="btn btn-primary"><br/>
+                </form>
             </div>
 
             <div class="row">
@@ -94,7 +90,7 @@
             <div id="forms">
 
                 <div class="form-group col-md-6" id="changeNametForm">
-                    <p style="color: red">Uwaga! Zmiana nazwy użytkownika skutkuje tym, że osoby, które cię znały nie będą mogły cię nie znaleźć w wyszukiwarce!</p>
+                    <p style="color: red">Uwaga! Zmiana nazwy użytkownika skutkuje tym, że osoby, które cię znały nie będą mogły cię znaleźć w wyszukiwarce!</p>
                     <form enctype="multipart/form-data" action="changeName" method="POST">
                         <label>Nowa nazwa</label><input type="text" class="form-control" name="name" pattern=".{3,}" title="Nazwa musi mieć conajmniej 3 znaki"  required><br/>
                         <label>Potwierdź nazwę</label><input type="text" class="form-control" name="confirm_name" required><br/>

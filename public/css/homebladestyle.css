@@ -3,6 +3,10 @@
     height: 100px;
 }
 
+button, input {
+    font-family: inherit;
+}
+
 label
 {
     margin-right: 10px;
@@ -11,8 +15,6 @@ label
 #forms
 {
     margin-bottom: 75px;
-    margin-left: 200px;
-    margin-right: 200px;
 }
 
 #forms input[type='text'] {
@@ -36,12 +38,11 @@ label
 #albums a
 {
     text-decoration: none;
-    color: darkblue;
 }
 
 #albums a:hover
 {
-    background-color: #0099ff;
+    background-color: #0eb165;
     color: lightgray;
 }
 
@@ -111,14 +112,15 @@ label
 
 /*Reszta*/
 
-.userbutton
+#userinfo img
 {
-    float: left;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
 }
-#imageinfo
-{
-    float: left;
-    width: 30%;
+
+#userinfo input[type='file'] {
+    margin-bottom: 10px;
 }
 
 #addbuttons {
@@ -131,19 +133,4 @@ label
     background-color: var(--secondary-color);
     border-radius: 5%;
     height: 50px;
-}
-
-#userinfo
-{
-    height: 150px;
-}
-
-#albums a
-{
-    text-decoration: none;
-}
-#albums a:hover
-{
-    background-color: #0eb165;
-    color: lightgray;
 }

@@ -15,7 +15,7 @@ $profile = new Profile();
                 window.location = $(this).data("href");
             });
         });
-        
+
         </script>
   <script type="text/javascript">
                 $(document).ready(function(){
@@ -63,7 +63,7 @@ $profile = new Profile();
                 @guest
                 @else
                 function follow()
-                {  
+                {
                     var follower = <?php echo json_encode($user->id); ?>;
                     event.preventDefault();
                             var isLike = event.target.previousElementSibling == null;
@@ -90,7 +90,7 @@ $profile = new Profile();
                         document.getElementById("follow").innerHTML='<img  id="followicon" src="img/unfollow.png"  width="20px" height="20px">Obserwujesz';
                         icon=true;
                     }
-                    
+
                 }
                 //usuwanko
                 var id;
@@ -189,15 +189,15 @@ $profile = new Profile();
                                 data: {textval: val, rec: reciver},
                                 contentType: 'application/json; charset=utf-8',
                                 dataType: 'json',
-                                
+
                             });
-                        
+
                 }
                 @endguest
   </script>
 <div class="container">
    <div id="listing">
-    <div id="choose">
+    <div id="choose" class="flex">
         <button onclick="showAll()">Wszystko</button>
         <button onclick="showSongs()">Utwory</button>
         <button onclick="showAlbums()">Albumy</button>
@@ -229,7 +229,7 @@ $profile = new Profile();
         </div>
         <div id="profile_albums"><h1> Albumy</h1><br/>
         <div class="grid grid-4 showlist" >
-           
+
            <?php
            $profile->fetch_albums($user->id);
            ?>
