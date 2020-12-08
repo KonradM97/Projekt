@@ -28,7 +28,7 @@
     <body>
     <div class="container">
         <h1>Wyniki wyszukiwania</h1>
-        
+
         <?php
 
             $search = new Search();
