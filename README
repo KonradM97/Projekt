@@ -1,0 +1,6 @@
+Aby projekt działał należy wpierw:
+-stworzyć bazę danych o nazwie 'medium_strumieniowe' w mysql w localhost o loginie roota root bez hasła
+-załadowac skrypt medium_strumieniowe.sql do nowej bazy danych
+-skopiować zawartość vendor.zip do folderu głównego
+odpalić serwer artisan lub xampp
+-przeglądarka powinna mieć też włączony autoplay utworów
