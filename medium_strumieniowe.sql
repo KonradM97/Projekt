@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 20 Lis 2020, 19:38
+-- Czas generowania: 08 Gru 2020, 21:01
 -- Wersja serwera: 10.4.11-MariaDB
 -- Wersja PHP: 7.4.1
 
@@ -34,7 +34,7 @@ CREATE TABLE `albums` (
   `likes` int(11) DEFAULT 0,
   `describe` varchar(400) DEFAULT NULL,
   `genre` varchar(45) DEFAULT NULL,
-  `cover` int(11) DEFAULT NULL,
+  `cover` int(11) DEFAULT 1,
   `author` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -45,7 +45,17 @@ CREATE TABLE `albums` (
 
 INSERT INTO `albums` (`idalbums`, `title`, `likes`, `describe`, `genre`, `cover`, `author`, `created_at`) VALUES
 (1, 'Under Construction', 0, NULL, 'Rock', 4, 1, '2020-10-29 13:49:56'),
-(10, 'EKT- Najlepsze Shanty', 0, NULL, 'Szanty', 1, 1, '2020-10-29 13:49:56');
+(14, 'David Bowie - The Best Songs', 0, NULL, 'Rock', 1, 3, '2020-12-02 21:00:41'),
+(15, 'Darkest pieces of classical music', 0, NULL, 'Classical', 24, 8, '2020-12-02 21:24:46'),
+(16, 'EKT- Najlepsze Shanty', 0, NULL, 'Szanty', 25, 1, '2020-12-02 21:40:00');
+
+--
+-- Wyzwalacze `albums`
+--
+DELIMITER $$
+CREATE TRIGGER `deletealbum_songs` BEFORE DELETE ON `albums` FOR EACH ROW DELETE FROM songs WHERE album = old.idalbums
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -81,7 +91,12 @@ INSERT INTO `covers` (`idcovers`, `source`) VALUES
 (14, '../storage/app/uploads/covers/1/11592159209.jpg'),
 (19, '../storage/app/uploads/covers/1/11603045004.jpg'),
 (20, '../storage/app/uploads/covers/1/11605136746.jpg'),
-(21, '../storage/app/uploads/covers/1/11605136795.jpg');
+(21, '../storage/app/uploads/covers/1/11605136795.jpg'),
+(22, '../storage/app/uploads/covers/3/31606645871.jpg'),
+(23, '../storage/app/covers/1/11606855873.jpg'),
+(24, '../storage/app/covers/8/81606940686.jpg'),
+(25, '../storage/app/covers/1/11606941600.jpg'),
+(26, '../storage/app/uploads/covers/3/31607278876.jpg');
 
 -- --------------------------------------------------------
 
@@ -115,8 +130,9 @@ CREATE TABLE `likes` (
 --
 
 INSERT INTO `likes` (`likeId`, `userId`, `songId`) VALUES
-(114, 1, 75),
-(116, 1, 63);
+(140, 3, 103),
+(141, 3, 101),
+(148, 3, 97);
 
 --
 -- Wyzwalacze `likes`
@@ -146,11 +162,10 @@ CREATE TABLE `messages` (
 --
 
 INSERT INTO `messages` (`idmessages`, `sender`, `reciver`, `messagetext`, `isviewed`, `added`) VALUES
-(50, 1, 1, 'Zapisz sobie', b'1', '2020-11-19 12:32:25'),
-(51, 1, 1, 'Lol', b'1', '2020-11-19 12:35:18'),
-(52, 3, 1, 'Hello\nTest', b'1', '2020-11-19 16:06:21'),
-(53, 3, 1, 'TESTTEST', b'1', '2020-11-19 16:06:44'),
-(54, 1, 1, 'Napisz', b'1', '2020-11-19 16:11:06');
+(66, 3, 1, 'Witaj', b'1', '2020-12-02 21:03:42'),
+(67, 1, 3, 'Witam', b'1', '2020-12-02 21:31:34'),
+(68, 1, 3, 'Panie adminu', b'1', '2020-12-03 12:53:51'),
+(69, 1, 3, 'Mam taką sprawę... Czy mogę zostać adminem?', b'1', '2020-12-06 21:18:02');
 
 -- --------------------------------------------------------
 
@@ -212,10 +227,8 @@ CREATE TABLE `playlists` (
 
 INSERT INTO `playlists` (`idplaylists`, `playlistName`, `author`, `ispublic`, `likes`) VALUES
 (1, 'Rock alternatywny', 1, b'0', 0),
-(88, 'Dupaa', 1, b'1', 0),
 (89, 'Rock', 3, b'1', 0),
-(90, 'Tak', 1, b'1', 0),
-(91, 'Tak', 1, b'1', 0);
+(94, 'Moja', 1, b'1', 0);
 
 -- --------------------------------------------------------
 
@@ -242,13 +255,22 @@ CREATE TABLE `songs` (
 --
 
 INSERT INTO `songs` (`idsongs`, `source`, `title`, `author`, `album`, `genre`, `feat`, `likes`, `license`, `created_at`, `cover`) VALUES
-(34, '../storage/app/uploads/1/11592153461.mp3', 'Another brick in the wall', 1, 1, 'Rock', NULL, 0, NULL, NULL, 4),
-(63, '../storage/app/uploads/1/11592218721.mp3', 'Happiest Days of Our Lives', 1, 1, 'Rock', NULL, 1, NULL, NULL, 4),
-(65, '../storage/app/uploads/1/11592326179.mp3', 'Is there Anybody Out There', 1, 1, NULL, NULL, 0, NULL, '2020-06-16 16:49:39', 4),
-(66, '../storage/app/uploads/1/11602775483.mp3', 'The trial', 1, 1, 'Rock', NULL, 0, NULL, '2020-10-15 15:24:43', 4),
-(67, '../storage/app/uploads/1/11602776831.mp3', 'Test', 1, 1, NULL, NULL, 0, NULL, '2020-10-15 15:47:11', 4),
-(70, '../storage/app/uploads/1/11603618549.mp3', 'Bijatyka', 1, 10, NULL, 'EKT', 0, NULL, '2020-10-25 11:30:45', 1),
-(74, '../storage/app/uploads/1/11605136746.mp3', 'Test', 1, 1, NULL, NULL, 0, NULL, '2020-11-11 23:19:06', 1);
+(87, '../storage/app/uploads/1/11606938599.mp3', 'In the flesh', 1, 1, 'Rock', NULL, 0, NULL, '2020-12-02 19:49:59', 4),
+(88, '../storage/app/uploads/1/11606938665.mp3', 'Another brick in the wall pt.1', 1, 1, 'Rock', NULL, 0, NULL, '2020-12-02 19:51:05', 4),
+(89, '../storage/app/uploads/1/11606938687.mp3', 'Happiest Days of Our Lives', 1, 1, NULL, NULL, 0, NULL, '2020-12-02 19:51:27', 4),
+(91, '../storage/app/uploads/1/11606938837.mp3', 'Mother', 1, 1, NULL, NULL, 1, NULL, '2020-12-02 19:53:57', 4),
+(93, '../storage/app/uploads/3/31606939779.mp3', 'Blackstar', 3, 14, NULL, NULL, 0, NULL, '2020-12-02 20:09:39', 1),
+(94, '../storage/app/uploads/3/31606939813.mp3', 'Heroes', 3, 14, NULL, NULL, 0, NULL, '2020-12-02 20:10:13', 1),
+(95, '../storage/app/uploads/3/31606939907.mp3', 'Rebel rebel', 3, 14, NULL, NULL, 0, NULL, '2020-12-02 20:11:47', 1),
+(96, '../storage/app/uploads/3/31606939952.mp3', 'Space odity', 3, 14, NULL, NULL, 0, NULL, '2020-12-02 20:12:32', 1),
+(97, '../storage/app/uploads/3/31606940000.mp3', 'Lazarus', 3, 14, NULL, NULL, 1, NULL, '2020-12-02 20:13:20', 1),
+(98, '../storage/app/uploads/8/81606940724.mp3', 'Canon D', 8, 15, NULL, 'Pachelbel', 0, NULL, '2020-12-02 20:25:24', 24),
+(99, '../storage/app/uploads/8/81606940766.mp3', 'Bach Toccata in D minor', 8, 15, 'Classical', NULL, 0, 'No license', '2020-12-02 20:26:06', 24),
+(100, '../storage/app/uploads/8/81606941486.mp3', 'Handel Hallelujah', 8, 15, NULL, NULL, 0, NULL, '2020-12-02 20:38:06', 24),
+(101, '../storage/app/uploads/1/11606942815.mp3', 'Bijatyka', 1, 16, NULL, 'EKT', 1, NULL, '2020-12-02 21:00:15', 25),
+(102, '../storage/app/uploads/1/11606942861.mp3', 'I będzie przebiegać', 1, 16, 'Shanty', 'EKT', 0, NULL, '2020-12-02 21:01:01', 25),
+(103, '../storage/app/uploads/1/11606942902.mp3', 'Ballado', 1, 16, NULL, 'EKT', 1, NULL, '2020-12-02 21:01:42', 25),
+(104, '../storage/app/uploads/3/31607278876.mp3', 'Empty spaces', 3, NULL, 'Rock', NULL, 0, NULL, '2020-12-06 18:21:16', 26);
 
 --
 -- Wyzwalacze `songs`
@@ -277,10 +299,8 @@ CREATE TABLE `songs_in_playlists` (
 --
 
 INSERT INTO `songs_in_playlists` (`song`, `playlist`) VALUES
-(65, 88),
 (74, 1),
-(75, 1),
-(89, 88);
+(97, 89);
 
 -- --------------------------------------------------------
 
@@ -299,7 +319,7 @@ CREATE TABLE `users` (
   `followers` int(11) DEFAULT 0,
   `following` int(11) DEFAULT 0,
   `name` varchar(255) DEFAULT NULL,
-  `avatar` varchar(255) DEFAULT 'uploads/avatars/default.jpg',
+  `avatar` varchar(255) DEFAULT 'img/headphones.png',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
@@ -311,8 +331,25 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `Admin`, `username`, `password`, `country`, `email`, `songs`, `followers`, `following`, `name`, `avatar`, `created_at`, `updated_at`, `remember_token`, `last_song`) VALUES
-(1, NULL, NULL, '$2y$10$YlfPDrmzL7WluRNwHpSBmeSgII7.kbjkOjR0kO4uscBG2sDe2YIwG', NULL, 'konrad.mazur97@wp.pl', 0, 2, 2, 'Konrad Mazur', '../storage/app/uploads/avatars/1/11603927801jpg', '2020-06-13 17:33:59', '2020-10-28 22:30:01', 'Rca4kGIeIRnVhIOXZLaOey4Xdg5nzxP01Eld0kWp3TKiaxlXZcd2xGTu6dVX', NULL),
-(3, NULL, NULL, '$2y$10$HjPL.rvlcpEUXhbPfigF/.pwWpzVYe73.eYmT6Tc2mf0LHotppCN2', NULL, 'fazi230@wp.pl', 0, 1, 1, 'Maks Mazur', '../storage/app/uploads/avatars/3/31603964721jpg', '2020-10-28 19:03:44', '2020-10-29 08:45:22', NULL, NULL);
+(1, NULL, NULL, '$2y$10$krfyVNIoh4a2.cP5NcAGrexM3Fega193vtn57J.0pt4/hR9J2b8rC', NULL, 'konrad.mazur97@wp.pl', 0, 2, 2, 'Konrad Mazur', '../storage/app/uploads/avatars/1/11606938736jpg', '2020-06-13 17:33:59', '2020-12-02 18:52:16', 'NNP6zLf7YQhPVVE9bXPsyKo1YBEM6KvuFZndcSg0CYHguwLsLhB3NvJ4Ikqy', NULL),
+(3, b'1', NULL, '$2y$10$HjPL.rvlcpEUXhbPfigF/.pwWpzVYe73.eYmT6Tc2mf0LHotppCN2', NULL, 'fazi230@wp.pl', 0, 2, 2, 'Pan admin', '../storage/app/uploads/avatars/3/31603964721jpg', '2020-10-28 19:03:44', '2020-10-29 08:45:22', NULL, NULL),
+(8, NULL, NULL, '$2y$10$s/WbnuxncWYPALOugGUEHuXBQIwMmFiOth1waa1wTZF3gpsy5MLly', NULL, 'zag@zig.pl', 0, 0, 0, 'Ziggy', '../storage/app/uploads/avatars/8/81606940072jpg', '2020-12-02 19:14:20', '2020-12-02 19:14:32', NULL, NULL);
+
+--
+-- Wyzwalacze `users`
+--
+DELIMITER $$
+CREATE TRIGGER `deleteUser_albums` AFTER DELETE ON `users` FOR EACH ROW DELETE FROM albums WHERE author = old.id
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `deleteUser_playlist` AFTER DELETE ON `users` FOR EACH ROW DELETE FROM playlists WHERE author = old.id
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `deleteUser_songs` AFTER DELETE ON `users` FOR EACH ROW DELETE FROM songs WHERE author = old.id
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -332,7 +369,9 @@ CREATE TABLE `user_follows` (
 INSERT INTO `user_follows` (`follower`, `follows`) VALUES
 (1, 1),
 (1, 3),
-(3, 1);
+(3, 1),
+(3, 3),
+(4, 4);
 
 --
 -- Wyzwalacze `user_follows`
@@ -445,43 +484,43 @@ ALTER TABLE `user_follows`
 -- AUTO_INCREMENT dla tabeli `albums`
 --
 ALTER TABLE `albums`
-  MODIFY `idalbums` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idalbums` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT dla tabeli `covers`
 --
 ALTER TABLE `covers`
-  MODIFY `idcovers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idcovers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT dla tabeli `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `likeId` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `likeId` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 
 --
 -- AUTO_INCREMENT dla tabeli `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `idmessages` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `idmessages` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT dla tabeli `playlists`
 --
 ALTER TABLE `playlists`
-  MODIFY `idplaylists` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `idplaylists` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT dla tabeli `songs`
 --
 ALTER TABLE `songs`
-  MODIFY `idsongs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `idsongs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
