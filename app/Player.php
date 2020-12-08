@@ -220,12 +220,12 @@ class Player {
 		 $r=mysqli_query($connect,$query);
 		 while($row=mysqli_fetch_assoc($r))
 		 {
-                        $this->ids[]=$row['idsongs'];
+            $this->ids[]=$row['idsongs'];
 			$this->titles[]= $row['title'];
 			$this->sources[]= $row['songsource'];
 			$this->authors[] = $row['name'];
-                        $this->covers[] = $row['coversource'];
-                        $this->authorsId[] = $row['author'];
+            $this->covers[] = $row['coversource'];
+            $this->authorsId[] = $row['author'];
 		 }
                  $this->jukebox_size=count($this->ids);
                  //Zkonwertuj tablice php na javascript
