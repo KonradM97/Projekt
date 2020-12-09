@@ -99,6 +99,7 @@ class Player {
         }
         public function fetch_most_liked() {
                      $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
+                     mysqli_set_charset ( $connect , "UTF8" );
                     if(!$connect)
                     {
                             echo 'Błąd połączenia z serwerem';
@@ -128,7 +129,8 @@ class Player {
 
         public function fetch_song($id)
         {
-		 $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
+         $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
+         mysqli_set_charset ( $connect , "UTF8" );
 		if(!$connect)
 		{
 			echo 'Błąd połączenia z serwerem';
@@ -168,7 +170,8 @@ class Player {
                 $this->covers=array();
                  $this->ids=array();
 		//weź ostatnin nutwór użytkownika
-		 $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
+         $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
+         mysqli_set_charset ( $connect , "UTF8" );
 		if(!$connect)
 		{
 			echo 'Błąd połączenia z serwerem';
@@ -206,7 +209,8 @@ class Player {
                 $this->authorsId=array();
                 $this->covers=array();
                  $this->ids=array();
-		 $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
+         $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
+         mysqli_set_charset ( $connect , "UTF8" );
 		if(!$connect)
 		{
 			echo 'Błąd połączenia z serwerem';
@@ -303,6 +307,7 @@ class Player {
                 localStorage.setItem("likes", JSON.stringify(likes));
                 localStorage.setItem("p_size", p_size);
                 localStorage.setItem("currentSong", currentSong);
+                
                 }
                 else
                 {
@@ -317,6 +322,7 @@ class Player {
                     likes = JSON.parse(localStorage.getItem("likes"));
                     currentSong = localStorage.getItem("currentSong");
                 }
+                
                    if(songs[0]!=sessionStorage.getItem("song"))
                    {
                     if (typeof(Storage) !== "undefined") {
@@ -361,11 +367,12 @@ class Player {
     function showPlayer()
     {
     ?>
+    <head>
                 <link href="css/playerstyle.css" rel="stylesheet"/>
                   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
                 <link href="css/jukeboxstyle.css" rel="stylesheet"/>
                 <div id="main">
-                    
+    </head>                
 	<div  id="jukebox">
             <h2>Kolejka</h2>
             
@@ -384,7 +391,7 @@ class Player {
                        function index(c)
                        {
                            currentSong=c;
-                           
+                           localStorage.setItem("currentSong", currentSong);
                            reset_time();
                            song.src = songs[currentSong];
                             songTitle.textContent = titles[currentSong];
@@ -610,7 +617,7 @@ class Player {
                                 document.getElementById("cover").src= "img/nullcover.png";
                             }    
                         }
-                        alert(localStorage.getItem("currentSong"));
+                        
                         if(likes[currentSong])//Pobierz polubienie
                             {
                                 document.getElementById("like").src="img/liked.png";
@@ -684,8 +691,9 @@ class Player {
                     {
                         if(currentSong <p_size-1){
                         currentSong++;
-                        reset_time();
+                        localStorage.setItem("currentSong", currentSong);
                         setAdapter();
+                        song.play();
                         }
                     }
                     //powtórz całą playlistę
@@ -693,13 +701,15 @@ class Player {
                     {
                         if(currentSong <p_size-1){
                         currentSong++;
+                        localStorage.setItem("currentSong", currentSong);
                         }
                         else if(currentSong == p_size-1){
                         currentSong=0;
+                        localStorage.setItem("currentSong", currentSong);
                         }
                         reset_time();
                         setAdapter();
-                        
+                        song.play();
                     }
                 });
                 /////////////////////////////////////////////////
@@ -756,6 +766,7 @@ class Player {
                     // Store
                     sessionStorage.setItem("time", 0);
                     }
+                    song.currentTime = 0;
                    }
                    ///////////////Następny i poprzedni utwór
                    function next(){
@@ -763,6 +774,8 @@ class Player {
                     if(currentSong <p_size-1){
                             currentSong++;
                         setAdapter();
+                        reset_time();
+                        song.play();
                     }
                     else if(currentSong == p_size-1){
                         if(repeatPressed == 2)
@@ -779,6 +792,8 @@ class Player {
                         currentSong--;
                     }
                     setAdapter();
+                    reset_time();
+                    song.play();
                     document.getElementById('playbutton').src='img/Pause.png';
                 }
                 /////////////////////////Obsługa paska czasu utworu////////////////////
