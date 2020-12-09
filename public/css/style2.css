@@ -124,6 +124,11 @@ a {
 .navbar .logo:hover {
     border: 0;
 }
+.invalid-feedback
+{
+    display: block;
+    width: 100%;
+}
 
 #pasek {
     border: 0;

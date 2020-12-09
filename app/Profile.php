@@ -188,12 +188,12 @@ class Profile {
     {
         foreach($followers as $val)
         {
-            echo '<div class="follower">'
-                    . '<a href="user='.$val->id.'">'
+            echo '<a href="user='.$val->id.'">' 
+                    . '<div class="follower">'
+                    . '<p>'.$val->name.'</p>'
                     . '<img src="'.$this->check_cover($val->avatar).'" height="50px" width="50px" />'
-                    . $val->name
-                    . '</a>'
-                    . '</div>';
+                    . '</div>'
+                    . '</a>';
         }
     }
     public function fetch_following($id)//obserwujący

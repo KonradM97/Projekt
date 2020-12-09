@@ -158,6 +158,13 @@ class HomeController extends Controller
     public function update_avatar(Request $request)
     {
         if($request->hasFile('avatar')){
+            $validator = Validator::make($request->all(), [//Walidacja najważniejszych treści
+                'avatar' => 'required|image',//Rodzaj pliku przesyłanego
+            ]);
+            if($validator->fails())//Kiedy walidacja się nie powiedzie
+            {
+            return view('home',array('error' => 'Błąd z rodzajem pliku!'));//Zwróć błąd
+            }
             $avatar = $request->file('avatar');
             $filename = Auth::user()->id.time().$avatar->getClientOriginalExtension();
             if(!is_dir('../storage/app/uploads/avatars/'.Auth::user()->id))

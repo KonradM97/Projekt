@@ -103,6 +103,20 @@ table td, th
     font-style: normal;
 }
 
+.follower img
+{
+    border-radius: 50%;
+}
+.follower p
+{
+    float: left;
+    padding-left: 2%;
+}
+.follower p:hover
+{
+    background-color: #222;
+    border-radius: 10%;
+}
 #choose {
     justify-content: space-evenly;
 }

@@ -30,32 +30,32 @@ use Illuminate\Support\Facades\Auth
     <div class="navbar">
         <div class="container flex">
 
-            <a href="{{ url('/') }}" class="logo">{{ config('app.name', 'Songerr') }}</a>
+            <a title="Strona główna" href="{{ url('/') }}" class="logo">{{ config('app.name', 'Songerr') }}</a>
 
             <form action="search" method="GET" name="search_form"><!-- Pasek wyszukiwania -->
                 <input id="pasek" type="text" size="50" name="searchFor" value="" pattern="[0-9a-zA-Z\s]{3,}" title="Zapytanie wyszukiwania powinno mieć conajmniej 3 znaki!"/>
-                <button id="przycisk" class="btn szukaj" type="submit"><i class="fas fa-search"></i></button>
+                <button id="przycisk" title="Szukaj" class="btn szukaj" type="submit"><i class="fas fa-search"></i></button>
             </form>
             <nav>
                 <ul>
                     @guest<!--Kiedy nie jesteś zalogowany -->
                         <li>
-                            <a href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a title="Zaloguj się" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         @if (Route::has('register'))<!-- Kiedy masz domyślną rejestrację -->
                             <li>
-                                <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a title="Zarejestruj się" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @endif
                     @else<!-- Kiedy jesteś zalogowany -->
-                        <li><button onclick='window.location.href="{{ route('messages') }}"' height=70px width=70px><img src="img/message.png"><p id="unread_count"><p></button></li>
+                        <li><button title="Wiadomości" onclick='window.location.href="{{ route('messages') }}"' height=70px width=70px><img src="img/message.png"><p id="unread_count"><p></button></li>
                         <!-- Okno wiadomości -->
                         <script>
                             document.getElementById("unread_count").innerHTML = <?php echo json_encode($messages->getMessageCount()); ?>;//Lista wiadomości
                         </script>
-                        <li><a href="{{ route('home') }}">{{ __('Panel') }}</a></li>
-                        <li><a href="user={{ Auth::user()->id }}">{{ __('Profil') }}</a></li>
-                        <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Wyloguj') }}</a></li>
+                        <li><a title="Panel użytkownika" href="{{ route('home') }}">{{ __('Panel') }}</a></li>
+                        <li><a title="Twój profil" href="user={{ Auth::user()->id }}">{{ __('Profil') }}</a></li>
+                        <li><a title="Wyloguj się" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Wyloguj') }}</a></li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>

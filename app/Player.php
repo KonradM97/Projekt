@@ -427,22 +427,22 @@ class Player {
                             
                             <!-- Guziki powtórzenia i losowania-->
                         <div id="atendofsong">
-                            <button id="repeat" title="" onclick="repeat()"><img id="replayButton" src="img/replay.png" height="80%" width="80%"/></button>
-                            <button id="shuffle" onclick="shuffle()"><img id="shuffleButton" src="img/inorder.png" height="80%" width="80%"/></button>
+                            <button id="repeat" title="" onclick="repeat()"><img id="replayButton" title="Powtórz raz/całą listę" src="img/replay.png" height="80%" width="80%"/></button>
+                            <button id="shuffle" onclick="shuffle()"><img id="shuffleButton" title="Pomieszaj listę" src="img/inorder.png" height="80%" width="80%"/></button>
                         </div>
                         </div>
                     <div id="player">
                         <!-- Guziki odtwarzacza-->
                         <div id="buttons">
-                            <button id="pre" onclick="pre()"><img src="img/Pre.png" height="90%" width="90%"/></button>
-                            <button id="play" onclick="playOrPauseSong()"><img id="playbutton" src="img/Play.png"/></button>
-                            <button id="next" onclick="next()"><img src="img/Next.png" height="90%" width="90%"/></button>
+                            <button id="pre" onclick="pre()"><img src="img/Pre.png" title="Poprzedni utwór" height="90%" width="90%"/></button>
+                            <button id="play" onclick="playOrPauseSong()"><img id="playbutton" title="Odtwórz/Pauza" src="img/Play.png"/></button>
+                            <button id="next" onclick="next()"><img src="img/Next.png" title="Następny utwór" height="90%" width="90%"/></button>
                             
                             
                         </div>
                         <div id="rightButtons">
-                        <img id="show" src="img/playlist.png" />
-                        <img id="like" class="like" src="img/like.png"/>
+                        <img id="show" title="Pokaż listę odtwarzania" src="img/playlist.png" />
+                        <img id="like" title="Polub słuchany utwór" class="like" src="img/like.png"/>
                         </div>
                         <div id="image">
                             <img id="cover" src="img/nullcover.png"/>
@@ -595,7 +595,7 @@ class Player {
                         songTitle.textContent = shuffled_songsTitle[currentSong];
                         author.textContent = shuffled_author[currentSong];
                         }
-                        document.getElementById('playbutton').src='img/Pause.png';
+                        //document.getElementById('playbutton').src='img/Pause.png';
                      if(!shufflePressed){//pobierz okładkę
                             if(covers[currentSong])//Jeśli utwór ma okładkę
                             {
@@ -639,6 +639,7 @@ class Player {
                             if(logic==1)
                             {
                                 song.play();
+                                document.getElementById('playbutton').src='img/Pause.png';
                             }
                             else
                             {
@@ -685,6 +686,7 @@ class Player {
                     {
                         reset_time();
                         song.play();
+                        document.getElementById('playbutton').src='img/Pause.png';
                     }
                     //nie powtarzaj
                     else if(song.currentTime==song.duration&&repeatPressed == 1)
@@ -694,6 +696,7 @@ class Player {
                         localStorage.setItem("currentSong", currentSong);
                         setAdapter();
                         song.play();
+                        document.getElementById('playbutton').src='img/Pause.png';
                         }
                     }
                     //powtórz całą playlistę
@@ -710,6 +713,7 @@ class Player {
                         reset_time();
                         setAdapter();
                         song.play();
+                        document.getElementById('playbutton').src='img/Pause.png';
                     }
                 });
                 /////////////////////////////////////////////////
@@ -773,23 +777,25 @@ class Player {
                     reset_time();
                     if(currentSong <p_size-1){
                             currentSong++;
-                        setAdapter();
+                            localStorage.setItem("currentSong", currentSong);
                         reset_time();
-                        song.play();
                     }
                     else if(currentSong == p_size-1){
                         if(repeatPressed == 2)
                         {
                             currentSong=0;
+                            localStorage.setItem("currentSong", currentSong);
                         }
                     }
                     setAdapter();
+                    song.play();
                     document.getElementById('playbutton').src='img/Pause.png';
                      }
                 function pre(){
                     reset_time()
                     if(currentSong > 0){
                         currentSong--;
+                        localStorage.setItem("currentSong", currentSong);
                     }
                     setAdapter();
                     reset_time();
