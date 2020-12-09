@@ -38,7 +38,7 @@ class Profile {
     }
     public function fetch_newest_songs($id)
     {
-       $mysongs = DB::select('SELECT s.idsongs,s.title,a.title as album,u.name,s.genre,s.likes,c.source FROM `songs` s
+       $mysongs = DB::select('SELECT s.idsongs,s.title,a.title as album,a.idalbums,u.name,s.genre,s.likes,c.source FROM `songs` s
        LEFT JOIN covers c on s.cover = c.idcovers
        LEFT JOIN albums a on a.idalbums=s.album 
        INNER JOIN users u on u.id = s.author 
@@ -48,7 +48,7 @@ class Profile {
 
     public function fetch_most_liked_songs($id)
     {
-        $mysongs = DB::select('SELECT s.idsongs,s.title,a.title as album,u.name,s.genre,s.likes,c.source FROM `songs` s
+        $mysongs = DB::select('SELECT s.idsongs,s.title,a.title as album,a.idalbums,u.name,s.genre,s.likes,c.source FROM `songs` s
         LEFT JOIN covers c on s.cover = c.idcovers
         LEFT JOIN albums a on a.idalbums=s.album 
         INNER JOIN users u on u.id = s.author 
@@ -71,9 +71,9 @@ class Profile {
                      {
                          //dd($val);
                                echo '<tr style="cursor: pointer">';
-                               echo '<td class="srodek"><a href="?songid='.$val->idsongs.'">'.$val->title.'</a></td>';
+                               echo '<td class="srodek"><a href="?songid='.$val->idsongs.'">'.$val->title.'</td></a>';
                                echo '<td class="srodek"><a href="?songid='.$val->idsongs.'">'.$val->genre.'</a></td>';
-                               echo '<td class="srodek"><a href="?songid='.$val->idsongs.'">'.$val->album.'</a></td>';
+                               echo '<td class="srodek"><a href="?album='.$val->idalbums.'">'.$val->album.'</a></td>';
                                echo '<td class="srodek"><a href="?songid='.$val->idsongs.'">'.$val->likes.'</a></td>';
                                echo '<td class="srodek"><img src="'.$this->check_cover($val->source).'" height="50px" width="50px" /></td>';
                                if(Auth::user()->id==$id||Auth::user()->Admin==1)

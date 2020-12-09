@@ -63,8 +63,7 @@ class Player {
                             {
                                 $this->fetch_playlist($id);
                             }
-                     }
-                       
+                     }  
                     }
                     else
                     {
@@ -87,7 +86,6 @@ class Player {
                 $this->transferArrays();
                 $this->showPlayer();
                 ?>
-
         <?php
                 
 	}
@@ -100,9 +98,6 @@ class Player {
             }
         }
         public function fetch_most_liked() {
-                    
-                   
-
                      $connect=mysqli_connect('localhost','root','','medium_strumieniowe');
                     if(!$connect)
                     {
@@ -154,7 +149,11 @@ class Player {
                             $this->authorsId[] = $row['author'];
                      }
                      $this->jukebox_size=count($this->ids);
-                     //Zkonwertuj tablice php na javascript
+                     ?>
+                <script type="text/javascript">
+                    sessionStorage.setItem("first", 1);
+                </script>
+                <?php
                      
                      
                  return true;
@@ -191,11 +190,12 @@ class Player {
                         $this->authorsId[] = $row['author'];
 		 }
                  $this->jukebox_size=count($this->ids);
-                 //Zkonwertuj tablice php na javascript
-                 
-
-                 //$this->refresh_player();
-                // $this->set_song_by_index($index);  
+                 //Ładuj informację o nowym utworze
+                 ?>
+                <script type="text/javascript">
+                    sessionStorage.setItem("first", 1);
+                </script>
+                <?php
                  return true;
         }
         public function fetch_album($id)
@@ -228,11 +228,11 @@ class Player {
             $this->authorsId[] = $row['author'];
 		 }
                  $this->jukebox_size=count($this->ids);
-                 //Zkonwertuj tablice php na javascript
-                 
-
-                 //$this->refresh_player();
-                // $this->set_song_by_index($index);  
+                 ?>
+                <script type="text/javascript">
+                    sessionStorage.setItem("first", 1);
+                </script>
+                <?php
                  return true;
         }
         public function fetch_likes()
@@ -276,25 +276,51 @@ class Player {
         
         
         //Konwersja tablicy na tą dla javascript
-        
         function transferArrays()
         {
             ?>
                 <script type="text/javascript">
-                var songs = <?php echo json_encode($this->sources); ?>;
-                 var titles = <?php echo json_encode($this->titles); ?>;
-                  var authors = <?php echo json_encode($this->authors); ?>;
-                  var authorsids =  <?php echo json_encode($this->authorsId); ?>;
-                  var ids = <?php echo json_encode($this->ids); ?>;
-                   var p_size = <?php echo json_encode($this->jukebox_size); ?>;
-                   var covers = <?php echo json_encode($this->covers); ?>;
-                   var likes= <?php echo json_encode($this->likes); ?>;
-                   var currentSong = 0;
-                   //do zmiany, aby działało dla pierwszego utworu
+                
+               var songs, titles, authors, authorids, ids, p_size, covers, likescurrentSong;
+                // Jeżeli jesteś pierwszy raz albo załadowane są nowe dane
+                if(sessionStorage.getItem("first")==null||sessionStorage.getItem("first")==1)
+                { 
+                songs = <?php echo json_encode($this->sources); ?>;
+                titles = <?php echo json_encode($this->titles); ?>;
+                authors = <?php echo json_encode($this->authors); ?>;
+                authorsids =  <?php echo json_encode($this->authorsId); ?>;
+                ids = <?php echo json_encode($this->ids); ?>;
+                p_size = <?php echo json_encode($this->jukebox_size); ?>;
+                covers = <?php echo json_encode($this->covers); ?>;
+                likes= <?php echo json_encode($this->likes); ?>;
+                currentSong = 0;
+                localStorage.setItem("songs", JSON.stringify(songs));
+                localStorage.setItem("titles", JSON.stringify(titles));
+                localStorage.setItem("authors", JSON.stringify(authors));
+                localStorage.setItem("authorsids", JSON.stringify(authorsids));
+                localStorage.setItem("ids", JSON.stringify(ids));
+                localStorage.setItem("covers", JSON.stringify(covers));
+                localStorage.setItem("likes", JSON.stringify(likes));
+                localStorage.setItem("p_size", p_size);
+                localStorage.setItem("currentSong", currentSong);
+                }
+                else
+                {
+                    //Jeśli nie ładuj z session storage
+                    songs = JSON.parse(localStorage.getItem("songs"));
+                    titles = JSON.parse(localStorage.getItem("titles"));
+                    authors = JSON.parse(localStorage.getItem("authors"));
+                    authorsids = JSON.parse(localStorage.getItem("authorsids"));
+                    ids = JSON.parse(localStorage.getItem("ids"));
+                    p_size = localStorage.getItem("p_size");
+                    covers = JSON.parse(localStorage.getItem("covers"));
+                    likes = JSON.parse(localStorage.getItem("likes"));
+                    currentSong = localStorage.getItem("currentSong");
+                }
                    if(songs[0]!=sessionStorage.getItem("song"))
                    {
                     if (typeof(Storage) !== "undefined") {
-                    // Store
+                    // Resetuj czas jeżeli 
                     sessionStorage.setItem("time", 0);
                     }
                    }
@@ -441,22 +467,7 @@ class Player {
             </body>
             <script type="text/javascript">
             //Zapisz w sesion storage pobrane utwory
-            function saveArrays()
-        {
-            if(sessionStorage.getItem("currentSong")!=null)
-                           {
-                 
-                  /*var authorsids =  <?php echo json_encode($this->authorsId); ?>;
-                  var ids = <?php echo json_encode($this->ids); ?>;
-                   var p_size = <?php echo json_encode($this->jukebox_size); ?>;
-                   var covers = <?php echo json_encode($this->covers); ?>;
-                   var likes= <?php echo json_encode($this->likes); ?>;
-                   var currentSong = 0;*/
-                            sessionStorage.setItem("Song",songs);
-                            sessionStorage.setItem("Title",titles);
-                            sessionStorage.setItem("Authors",authors);
-                           }
-        }
+
                 //Czy odpalony play
                 var playing=false;
                 ////pasek czasu utworu
@@ -530,13 +541,14 @@ class Player {
                             {
                                 document.getElementById("like").src="img/liked.png";
                                 likes[currentSong]=true;
+                                localStorage.setItem("likes", JSON.stringify(likes));
                             }
                             else
                             {
                                 document.getElementById("like").src="img/like.png";
                                 likes[currentSong]=false;
+                                localStorage.setItem("likes", JSON.stringify(likes));
                             }
-                            
                         }
                         else
                         {
@@ -557,7 +569,8 @@ class Player {
                 
                
                //Pobierz dane utworu do odtwarzacza i odtwórz
-                 function playSong(){
+                 function setAdapter(){
+                    localStorage.setItem("currentSong", currentSong);
                     if(sessionStorage.getItem("time")!=null)
                          {
                              var actualTime=sessionStorage.getItem("time"); //Pobierz aktualny czas
@@ -568,14 +581,12 @@ class Player {
                          song.src = songs[currentSong];
                          songTitle.textContent = titles[currentSong];
                          author.textContent = authors[currentSong];  
-                        song.play();
                          }
                      else{  // W przypadku pomieszanej kolejki...
                         
                         song.src = shuffled_songs[currentSong];
                         songTitle.textContent = shuffled_songsTitle[currentSong];
                         author.textContent = shuffled_author[currentSong];
-                        song.play();
                         }
                         document.getElementById('playbutton').src='img/Pause.png';
                      if(!shufflePressed){//pobierz okładkę
@@ -599,7 +610,8 @@ class Player {
                                 document.getElementById("cover").src= "img/nullcover.png";
                             }    
                         }
-                            if(likes[currentSong])//Pobierz polubienie
+                        alert(localStorage.getItem("currentSong"));
+                        if(likes[currentSong])//Pobierz polubienie
                             {
                                 document.getElementById("like").src="img/liked.png";
                             }
@@ -609,22 +621,40 @@ class Player {
                             }
                 }
                 //Przy załadowaniu strony
-
-                    window.onload = playSong();
-
+                window.onload = startIfPlaying();
+                function startIfPlaying()
+                {
+                    setAdapter();
+                    if (typeof(Storage) !== "undefined") {
+                        if(sessionStorage.getItem("start")!=null)
+                        {
+                            var logic = sessionStorage.getItem("start")
+                            if(logic==1)
+                            {
+                                song.play();
+                            }
+                            else
+                            {
+                                document.getElementById('playbutton').src='img/Play.png';
+                            }
+                        }
+                        sessionStorage.setItem("first", 0);
+                    }
+                }
 		//Wybiera co zrobić po kliknięciu play/pause
                 function playOrPauseSong(){
                     if(song.paused){
+                        sessionStorage.setItem("start", 1);
                         song.play();
                         if (typeof(Storage) !== "undefined") {
                         // Store
-                        sessionStorage.setItem("start", true);
+                        
                         }
                         document.getElementById('playbutton').src='img/Pause.png';
                     }
                     else{
+                        sessionStorage.setItem("start", 0);
                         song.pause();
-                        sessionStorage.setItem("start", false);
                         document.getElementById('playbutton').src='img/Play.png';
                     }
                 }
@@ -655,10 +685,8 @@ class Player {
                         if(currentSong <p_size-1){
                         currentSong++;
                         reset_time();
-                        playSong();
+                        setAdapter();
                         }
-                       
-                        
                     }
                     //powtórz całą playlistę
                     else if(song.currentTime==song.duration&&repeatPressed  == 2)
@@ -670,7 +698,7 @@ class Player {
                         currentSong=0;
                         }
                         reset_time();
-                        playSong();
+                        setAdapter();
                         
                     }
                 });
@@ -734,7 +762,7 @@ class Player {
                     reset_time();
                     if(currentSong <p_size-1){
                             currentSong++;
-                        playSong();
+                        setAdapter();
                     }
                     else if(currentSong == p_size-1){
                         if(repeatPressed == 2)
@@ -742,7 +770,7 @@ class Player {
                             currentSong=0;
                         }
                     }
-                    playSong();
+                    setAdapter();
                     document.getElementById('playbutton').src='img/Pause.png';
                      }
                 function pre(){
@@ -750,7 +778,7 @@ class Player {
                     if(currentSong > 0){
                         currentSong--;
                     }
-                    playSong();
+                    setAdapter();
                     document.getElementById('playbutton').src='img/Pause.png';
                 }
                 /////////////////////////Obsługa paska czasu utworu////////////////////
