@@ -76,10 +76,13 @@ class Profile {
                                echo '<td class="srodek"><a href="?album='.$val->idalbums.'">'.$val->album.'</a></td>';
                                echo '<td class="srodek"><a href="?songid='.$val->idsongs.'">'.$val->likes.'</a></td>';
                                echo '<td class="srodek"><img src="'.$this->check_cover($val->source).'" height="50px" width="50px" /></td>';
-                               if(Auth::user()->id==$id||Auth::user()->Admin==1)
+                               if(isset(Auth::user()->id))
                                {
-                                echo '<td class="srodek"><button onclick="deleteSong('.$val->idsongs.')" class="delete"><img src="img/delete.png" height="25px" width="25px"></button>';
-                               }
+                                if(Auth::user()->id==$id||Auth::user()->Admin==1)
+                                {
+                                    echo '<td class="srodek"><button onclick="deleteSong('.$val->idsongs.')" class="delete"><img src="img/delete.png" height="25px" width="25px"></button>';
+                                }
+                            }
                                echo '</tr>';
                                
                      }
@@ -97,10 +100,13 @@ class Profile {
                      {
                          
                         echo '<div class="album-tile card text-center" style="background-color:var(--secondary-color);color:#fff;">';
-                        if(Auth::user()->id==$id||Auth::user()->Admin==1)
-                {
-                            echo '<button onclick="deleteAlbum('.$val->idalbums.')" class="delete fromalbum"><img src="img/delete.png" height="25px" width="25px"></button>';
-                }
+                        if(isset(Auth::user()->id))
+                               {
+                            if(Auth::user()->id==$id||Auth::user()->Admin==1)
+                                {
+                                     echo '<button onclick="deleteAlbum('.$val->idalbums.')" class="delete fromalbum"><img src="img/delete.png" height="25px" width="25px"></button>';
+                                }
+            }
                 echo '<a href="?album='.$val->idalbums.'">'
                 . '<img src="'.$val->source.'" height="100px" width="100px" />'
                 . '<br />'
@@ -140,10 +146,13 @@ class Profile {
         {
             //<h3 style="float:right;">'.' Polubień: '.$pl->likes.'</h3> może kiedyś
             echo '<p class="playlistsname"><a href="?playlist='.$pl->idplaylists.'">'.$pl->playlistName.'</a></p>';
+            if(isset(Auth::user()->id))
+                               {
             if(Auth::user()->id==$id||Auth::user()->Admin==1)
                 {
                             echo '<button onclick="deletePlaylist('.$pl->idplaylists.')" class="delete"><img src="img/delete.png" height="25px" width="25px"></button>';
                 }
+            }
             echo '<table id="searching" class="table table-hover table-borderless">';
                                 echo '<thead>
                                             <th class="srodek">Tytuł</th>

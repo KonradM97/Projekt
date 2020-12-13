@@ -451,10 +451,8 @@ class Player {
                         
                         <!-- Informacje o autorze i nazwie utworu-->
                         <div id="info">
-                            
-                           
-                            <div id="songTitle">Demo</div><br/>
-                             <div id="author">DemoAuthor</div>
+                            <div id="songTitle">Demo</div>
+                            <div id="author">DemoAuthor</div>
                         </div>
                         
                     </div>
@@ -483,6 +481,7 @@ class Player {
                 var seekBar= document.getElementById("seek-bar");
                 ///pasek głośności
                 var volBar = document.getElementById("volRange");
+                
                 document.getElementById("volRange").oninput = function() {
                     this.style.background = 'linear-gradient(to right, #82CFD0 0%, #82CFD0 ' + this.value + '%, #fff ' + this.value + '%, white 100%)'
                   };
@@ -512,6 +511,14 @@ class Player {
                     modifyVolume(p);
                     $['S']
                 });
+                //Pokazanie/schowanie listy odtwarzania
+                var showlist = document.getElementById("show");
+                window.onclick = function(event) {
+                    if (event.target != showlist) {
+                        $( "#jukebox" ).slideUp( "slow","swing","complete");
+                        showed=false;
+                    }
+                }
                 var showed=false;
                 $( "#show" ).click(function() {
                     

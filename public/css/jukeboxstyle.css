@@ -26,9 +26,18 @@
 #tytul
 {
     float: left;
-    
 }
 .autor
 {
     float: right;
+}
+@media screen and (max-width: 850px) {
+    #jukebox
+    {
+        bottom: 150px;
+        width: 100%;
+        position: absolute;
+    }
+    
+
 }

@@ -17,8 +17,10 @@
 
 #songTitle{
     float: right;
-    text-align: center;
+    width: 100%;
+    text-align: right;
     font-family: monospace;
+
     font-size: 17px;
     margin-top: 10px;
     margin-right: 10px;
@@ -247,29 +249,48 @@
 }
 @media screen and (max-width: 850px) {
     #main{
-       height: 170px; 
+       height: 150px; 
     } 
     #info{
         width: 100%;
-        text-align: center;
     }
     #songTitle
     {
         float: none;
         text-align: center;
-        margin-top: 5px;
+        margin-top: 0;
     }
+
     #author
     {
+        margin-top: 0;
+        margin-bottom: 10px;
+        text-align: center;
         float: none;
-        margin-top: 5px;
     }
     #rightButtons
     {
         float: right;
         
     }
-
+    #show
+    {
+        visibility: hidden;
+    }
+    #volume-bar
+    {
+        display: none;
+        visibility: hidden;
+    }
+    #bar input[type="range"]{
+        display: none;
+        visibility: hidden;
+    }
+    
+    #bar input[type="range"]{
+      display: none;
+      visibility: hidden;
+    }
     
 }
 
