@@ -354,7 +354,7 @@ input[type='submit']
 @media(max-width: 850px) {
 
     .navbar {
-        height: 180px;
+        height: 190px;
     }
 
     .navbar .flex {
@@ -363,5 +363,10 @@ input[type='submit']
 
     .navbar ul {
         padding: 10px;
+    }
+    .container
+    {
+        width: 100%;
+        padding: 0;
     }
 }

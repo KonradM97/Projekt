@@ -196,6 +196,41 @@ $profile = new Profile();
                 @endguest
   </script>
 <div class="container">
+<div id="userinfo">
+        <h1>{{$user->name}}</h1>
+        <img src="{{$user->avatar}}" width="180px" height="180px"><br />
+        @guest
+        @else
+        <button onclick="follow()" id="follow" class="follow" title="Obserwuj"><img  id="followicon" src="img/follow.png"  width="20px" height="20px">Obserwuj</button><br />
+        <button  title="Wiadomość" id="message"><img src="img/message.png" width="20px" height="20px">Wiadomość</button>
+        <?php
+        if(Auth::user()->Admin==1)
+        {
+                    echo '<button onclick="deleteUser('.$user->id.')" class="delete"><img src="img/delete.png" height="25px" width="25px"></button>';
+        }
+        ?>
+<div id="messageform" class="modal">
+
+<!-- Modal content -->
+<div class="modal-content">
+  <span class="close">&times;</span>
+  <h2>Nowa wiadomość</h2>
+
+      <textarea id="messageText" >Napisz</textarea>
+      <button id="sendmessage" onclick="sendmessage()">Wyślij</button>
+</div>
+
+</div>
+        @endguest
+        <h3>Obserwujący <?php $profile->count_followers($user->id);?></h3>
+        <?php
+           $profile->fetch_followers($user->id);
+        ?>
+        <h3>Obserwowani <?php $profile->count_following($user->id);?></h3>
+        <?php
+          $profile->fetch_following($user->id);
+        ?>
+    </div>
    <div id="listing">
     <div id="choose" class="flex">
         <button onclick="showAll()">Wszystko</button>
@@ -244,41 +279,6 @@ $profile = new Profile();
         </div>
     </div>
    </div>
-    <div id="userinfo">
-        <h1>{{$user->name}}</h1>
-        <img src="{{$user->avatar}}" width="180px" height="180px"><br />
-        @guest
-        @else
-        <button onclick="follow()" id="follow" class="follow" title="Obserwuj"><img  id="followicon" src="img/follow.png"  width="20px" height="20px">Obserwuj</button><br />
-        <button  title="Wiadomość" id="message"><img src="img/message.png" width="20px" height="20px">Wiadomość</button>
-        <?php
-        if(Auth::user()->Admin==1)
-        {
-                    echo '<button onclick="deleteUser('.$user->id.')" class="delete"><img src="img/delete.png" height="25px" width="25px"></button>';
-        }
-        ?>
-<div id="messageform" class="modal">
-
-<!-- Modal content -->
-<div class="modal-content">
-  <span class="close">&times;</span>
-  <h2>Nowa wiadomość</h2>
-
-      <textarea id="messageText" >Napisz</textarea>
-      <button id="sendmessage" onclick="sendmessage()">Wyślij</button>
-</div>
-
-</div>
-        @endguest
-        <h3>Obserwujący <?php $profile->count_followers($user->id);?></h3>
-        <?php
-           $profile->fetch_followers($user->id);
-        ?>
-        <h3>Obserwowani <?php $profile->count_following($user->id);?></h3>
-        <?php
-          $profile->fetch_following($user->id);
-        ?>
-    </div>
 
 </div>
 <script>

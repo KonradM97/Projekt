@@ -198,4 +198,12 @@ table td, th
     {
         width: 50%;
     }
+    table td,th
+    {
+        padding: 0;
+    }
+    #userinfo
+    {
+        text-align: center;
+    }
 }

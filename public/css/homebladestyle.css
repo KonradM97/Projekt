@@ -134,3 +134,14 @@ label
     border-radius: 5%;
     height: 50px;
 }
+@media(max-width: 850px) {
+    #addbuttons
+    {
+        display: block;
+    }
+#addbuttons button
+{
+    width: 40%;
+}
+    
+}
