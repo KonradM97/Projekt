@@ -34,7 +34,7 @@ class Search {
                                echo '<td class="srodek">'.$val->title.'</td>';
                                echo '<td class="text-center">'.$val->name.'</td>';
                                echo '<td class="text-center">'.$val->genre.'</td>';
-                               echo '<td class="text-center">'.$val->author.'</td>';
+                               echo '<td class="text-center">'.$val->album.'</td>';
                                echo '<td class="text-center">'.$val->likes.'</td>';
                                echo '<td class="text-center"><img id="cover" src="'.$val->source.'" height="50px" width="50px" /></td>';
                                echo '</tr>';
@@ -72,8 +72,7 @@ class Search {
                             echo '<thead>
                                         <th class="srodek">Nazwa</th>
                                         <th class="srodek">Gatunek</th>
-                                        <th class="srodek">Polubień</th>
-
+                                        <th class="srodek">Autor</th>
                                     </tr>
                                 </thead>';
                             foreach($albums as $val)
@@ -82,7 +81,7 @@ class Search {
                                echo '<tr style="cursor: pointer" class="clickable-row" data-href="?album='.$val->idalbums.'">';
                                echo '<td class="srodek">'.$val->title.'</td>';
                                echo '<td class="text-center">'.$val->genre.'</td>';
-                               echo '<td class="text-center">'.$val->likes.'</td>';
+                               echo '<td class="text-center">'.$val->name.'</td>';
                                echo '<td class="text-center"><img id="cover" src="'.$val->source.'" height="50px" width="50px" /></td>';
                                echo '</tr></a>';
                      }
@@ -94,7 +93,6 @@ class Search {
                             echo '<thead>
                                         <th class="srodek">Nazwa</th>
                                         <th class="srodek">Autor</th>
-                                        <th class="srodek">Polubień</th>
                                     </tr>
                                 </thead>';
                             foreach($playlists as $val)

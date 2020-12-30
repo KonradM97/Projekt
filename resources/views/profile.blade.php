@@ -64,23 +64,21 @@ $profile = new Profile();
                 @else
                 function follow()
                 {
-                    var follower = <?php echo json_encode($user->id); ?>;
+                    var following = <?php echo json_encode($user->id); ?>;//Przekonwetowanie id użytkownika profilu z języka PHP na Javascript
                     event.preventDefault();
-                            var isLike = event.target.previousElementSibling == null;
-                            $.ajaxSetup({
+                            $.ajaxSetup({ //Ustawienie konfiguracji AJAX
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 }
                             });
-                            $.ajax({
+                            $.ajax({//Wyślij asynchronicznie dane użytkownika
                                 type: "POST",
                                 url: "follow",
-                                data: '{"follower":'+follower+'}',
+                                data: '{"follower":'+following+'}',
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             });
-                    //sprawdź i zmień przycisk
-                    if(icon)
+                    if(icon) //Sprawdź i zmień przycisk. Zmienna icon jest ustawiana podczas otwierania strony. I zależna od tego, czy użytkownik już śledzi dany profil
                     {
                         document.getElementById("follow").innerHTML='<img  id="followicon" src="img/follow.png"  width="20px" height="20px">Obserwuj';
                         icon=false;
@@ -90,7 +88,6 @@ $profile = new Profile();
                         document.getElementById("follow").innerHTML='<img  id="followicon" src="img/unfollow.png"  width="20px" height="20px">Obserwujesz';
                         icon=true;
                     }
-
                 }
                 //usuwanko
                 var id;

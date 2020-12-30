@@ -62,4 +62,12 @@
 {
   width: 50%;
 }
+.modal-content {
+  background-color: #fefefe;
+  color: black;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
 }

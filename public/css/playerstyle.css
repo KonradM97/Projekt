@@ -168,6 +168,7 @@
 }
 #timeRange
 {
+margin-top: 5px;
   -webkit-appearance: none;
   width: 100%;
   height: 15px;
@@ -177,9 +178,10 @@
   border-radius: 5px;
   background-color: #fff;
 }
-
-
-
+#mobileTime
+{
+    color: transparent;
+}
 /** Dla Firefox*/
 
 #seek-bar input[type="range"]::-moz-range-progress {
@@ -217,6 +219,7 @@
     color: #0eb165;
 
   }
+
 }
 /*Dla IE*/
 
@@ -250,7 +253,7 @@
 @media screen and (max-width: 850px) {
     #main{
        height: 150px; 
-    } 
+    }
     #info{
         width: 100%;
     }
@@ -268,11 +271,7 @@
         text-align: center;
         float: none;
     }
-    #rightButtons
-    {
-        float: right;
-        
-    }
+
     #show
     {
         visibility: hidden;
@@ -291,7 +290,20 @@
       display: none;
       visibility: hidden;
     }
-    
+    #mobileTime
+    {
+        color: black;
+    }
+    #seek-bar
+    {
+        float: left;
+        left: 0%;
+    }
+    #currentTime, #mobileTime, #duration
+    {
+        display: flex;
+        margin-top: 0;
+    }
 }
 
 

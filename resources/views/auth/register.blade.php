@@ -4,7 +4,7 @@
 
 <section class="login text-center">
     <div class="container">
-        <h2>{{ __('Register') }}</h2>
+        <h2>{{ __('Zarejestruj się') }}</h2>
         <form method="POST" action="{{ route('register') }}">
             @csrf
             <div class="login-form-control">
@@ -38,7 +38,7 @@
                 <input id="password-confirm" type="password" placeholder="Powtórz hasło" name="password_confirmation" required autocomplete="new-password">
             </div>
             <button type="submit" class="btn btn-secondary">
-                {{ __('Register') }}
+                {{ __('Zarejestruj się') }}
             </button>
         </form>
     </div>

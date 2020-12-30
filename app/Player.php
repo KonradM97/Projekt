@@ -344,7 +344,6 @@ class Player {
                     {
                         echo json_encode(null);
                     }
-                    
                    ?>;
                    
                   var shuffled_songs=songs.slice();
@@ -459,8 +458,10 @@ class Player {
                     <div id="bar">
                         <!-- Postęp utworu-->
                         <div id="seek-bar">
-
+                                <p id="currentTime">0:00</p>
+                                <p id="mobileTime">/</p>
                                <input type="range" min="1" max="300" value="1" class="slider" id="timeRange">
+                               <p id="duration">0:00</p>
                         </div>
                         <div id="volume-bar">
                                 <input type="range" min="0" max="100" value="80" class="slider" id="volRange">
@@ -481,7 +482,8 @@ class Player {
                 var seekBar= document.getElementById("seek-bar");
                 ///pasek głośności
                 var volBar = document.getElementById("volRange");
-                
+                var cTime = document.getElementById("currentTime");
+                var duration = document.getElementById("duration");
                 document.getElementById("volRange").oninput = function() {
                     this.style.background = 'linear-gradient(to right, #82CFD0 0%, #82CFD0 ' + this.value + '%, #fff ' + this.value + '%, white 100%)'
                   };
@@ -581,7 +583,30 @@ class Player {
                 //
                 //Odtwórz przy odpaleniu strony
                 
-               
+               function calcminutes(time)
+               {
+                   time = parseInt(time/60);
+                   if(time <10)
+                   {
+                       return "0".concat(time.toString());
+                   }
+                   else
+                   {
+                        return time.toString();
+                   }
+               }
+               function calcseconds(time)
+               {
+                   time = parseInt(time)%60;
+                   if(time <10)
+                   {
+                       return "0".concat(time.toString());
+                   }
+                   else
+                   {
+                        return time.toString();
+                   }
+               }
                //Pobierz dane utworu do odtwarzacza i odtwórz
                  function setAdapter(){
                     localStorage.setItem("currentSong", currentSong);
@@ -633,6 +658,7 @@ class Player {
                             {
                                 document.getElementById("like").src="img/like.png";
                             }
+                            
                 }
                 //Przy załadowaniu strony
                 window.onload = startIfPlaying();
@@ -677,7 +703,8 @@ class Player {
                 //Obsługa zmiany czasu utworu i paska i co ma zrobić przy skończonym
                 song.addEventListener('timeupdate',function(){ 
                     var position = song.currentTime / song.duration;
-                    
+                    cTime.innerHTML = calcminutes(song.currentTime).concat(":",calcseconds(song.currentTime));
+                    duration.innerHTML = calcminutes(song.duration).concat(":",calcseconds(song.duration));
                     //document.getElementById('time').textContent = song.currentTime //pasek czasu na razie nieaktywny bo potrzebuje funkcji rozkładające
                     //
                     //Postęp paska utworu w czasie

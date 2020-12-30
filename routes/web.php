@@ -17,13 +17,14 @@ Route::get('/', function () {
     return view('player');
 });
 
-Route::get('/profile','UserController@profile')->name('profile');
-Route::post('/home', 'HomeController@update_avatar');
-Auth::routes();
-//Kontroler profilu home
-Route::post('/addAlbum','HomeController@addAlbum');\
-Route::post('/addPlaylist','HomeController@addPlaylist');
-Route::post('/addSong','HomeController@addSong');
+Route::get('/profile','UserController@profile')->name('profile');//Pobierz dane i wyswietl profil użytkownika
+
+Auth::routes();//Routing opcji rejestracji i logowania
+//Kontroler panelu użytkownika
+Route::post('/home', 'HomeController@update_avatar');//Zmień awatar
+Route::post('/addAlbum','HomeController@addAlbum');//Dodanie albumu w panelu
+Route::post('/addPlaylist','HomeController@addPlaylist');//Playlisty -||-
+Route::post('/addSong','HomeController@addSong');//Utworu
 Route::post('/changeName', 'HomeController@changeName');
 //Zmiana hasła
 Route::get('change-password', 'ChangePasswordController@index');
@@ -38,10 +39,13 @@ Route::post('/like', ['uses' => 'PostController@likePost',
     'as'=> 'like']);
 //kontroler followu
 Route::post('/follow', ['uses' => 'PostController@followPost',
-    'as'=> 'follow']);
+    'as'=> 'follow']);//Prześli dane do funkcji followPost kontrolera PostController
 //Kontroler wiadomości
 Route::get('/sendmessage', ['uses' => 'PostController@sendMessage',
 'as'=> 'sendmessage']);
+//Usuwanie wiadomości
+Route::get('/deletemessage', ['uses' => 'PostController@deleteMessage',
+'as'=> 'deletemessage']);
 //Usuwanie
 Route::get('/deletesong', ['uses' => 'PostController@deleteSong',
 'as'=> 'deletesong']);
@@ -51,6 +55,7 @@ Route::get('/deleteplaylist', ['uses' => 'PostController@deletePlaylist',
 'as'=> 'deleteplaylist']);
 Route::get('/deleteuser', ['uses' => 'PostController@deleteUser',
 'as'=> 'deleteUser']);
+
 //profil
 Route::get('/user={id}', 'UserController@profile')->name('user.profile');
 //Dodanie playlisty

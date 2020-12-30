@@ -190,7 +190,11 @@
 @media screen and (max-width: 850px) {
     .container {
         margin-bottom: 300px;
+        padding-left: 10px;
         width: 100%;
     }
-    
+    .card
+    {
+        padding: 0;
+    }
 }

@@ -32,12 +32,11 @@ class PostController extends Controller
     }
     public function followPost(Request $request)
     {
-        $userId = Auth::user()->id;
+        $userId = Auth::user()->id;//Pobierz 
         $follows = $request['follower'];
         $repeat = DB::select('SELECT follower, follows FROM user_follows WHERE follower='.$userId.' AND  follows='.$follows);
         if($repeat==[])
             {
-                //dodaj like z wyzwalaczem dodającym o 1
                 $result = DB::insert("INSERT INTO `user_follows` (`follower`, `follows`) VALUES ('".$userId."', '".$follows."')");      
             }
         else
@@ -55,6 +54,11 @@ class PostController extends Controller
             $te = $r['textval'];
             DB::insert('INSERT INTO `messages` (`sender`, `reciver`, `messagetext`) VALUES ("'.$sender.'", "'.$reciver.'", "'.$te.'")');
 
+    }
+    public function deleteMessage(Request $request)
+    {
+        $r = $request;
+        DB::delete("DELETE FROM `messages` WHERE idmessages =".$r['id']);
     }
     public function deleteSong(Request $request)
     {

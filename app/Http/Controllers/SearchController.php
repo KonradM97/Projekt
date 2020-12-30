@@ -19,11 +19,12 @@ class SearchController extends Controller
         }
         else
         {
-            $songs = DB::select('select idsongs,title,genre,s.source,likes,c.source,s.author,u.name '
+            $songs = DB::select('select idsongs,s.title, a.title as album,s.genre,s.source,s.likes,c.source,s.author,u.name '
                     . 'from songs s '
                     . 'INNER JOIN users u ON s.author = u.id '
+                    . 'LEFT JOIN albums a ON a.idalbums=s.album '
                     . 'LEFT JOIN covers c on s.cover = c.idcovers '
-                    . 'where UPPER(title) LIKE UPPER("%'.$r['searchFor'].'%")');
+                    . 'where UPPER(s.title) LIKE UPPER("%'.$r['searchFor'].'%")');
             $albums = DB::select('select * from albums a '
                     . 'INNER JOIN users u ON a.author = u.id'
                     . ' LEFT JOIN covers c on a.cover = c.idcovers'

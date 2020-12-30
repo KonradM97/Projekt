@@ -44,7 +44,7 @@ use Illuminate\Support\Facades\Auth
                         </li>
                         @if (Route::has('register'))<!-- Kiedy masz domyślną rejestrację -->
                             <li>
-                                <a title="Zarejestruj się" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a title="Zarejestruj się" href="{{ route('register') }}">{{ __('Rejestracja') }}</a>
                             </li>
                         @endif
                     @else<!-- Kiedy jesteś zalogowany -->
