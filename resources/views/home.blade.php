@@ -1,4 +1,4 @@
-@extends('layouts.app2')
+@extends('layouts.app')
 
 @section('content')
 <link href="css/homebladestyle.css" rel="stylesheet">
